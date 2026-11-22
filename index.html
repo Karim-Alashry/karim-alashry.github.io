@@ -1069,15 +1069,15 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
   <button class="b-restore" id="bRestore" type="button" aria-label="Show Mini Karim guide">SHOW MINI KARIM</button>
 </aside>
 
-<div id="player" role="group" aria-label="Background music">
-  <button id="pPlay" class="music-main" type="button" aria-label="Play background music" aria-pressed="false" disabled>
+<div id="player" class="ready" role="group" aria-label="Background music">
+  <button id="pPlay" class="music-main" type="button" aria-label="Play background music" aria-pressed="false">
     <span class="eq-bars" aria-hidden="true"><i></i><i></i><i></i></span>
     <span class="music-status" id="pState">SOUND OFF</span>
   </button>
   <button id="pFab" class="music-more" type="button" aria-label="Volume controls" aria-expanded="false">⌃</button>
   <div class="music-pop" id="musicPop">
-    <button class="pbtn sec" id="pMute" type="button" aria-label="Mute music" aria-pressed="false" disabled> MUTE </button>
-    <input id="vol" type="range" min="0" max="100" value="12" aria-label="Music volume" disabled>
+    <button class="pbtn sec" id="pMute" type="button" aria-label="Mute music" aria-pressed="false">MUTE</button>
+    <input id="vol" type="range" min="0" max="100" value="12" aria-label="Music volume">
   </div>
   <audio id="bgm" preload="metadata" loop><source src="assets/audio/karim-universe-soundtrack.mp3" type="audio/mpeg"></audio>
 </div>
@@ -1100,6 +1100,7 @@ var RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 var $=function(s,r){return (r||document).querySelector(s)};
 var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
+var currentLanguage=window.KARIM_LANG||'en';
 
 /* ================= DATA (source of truth: CV) ================= */
 var XP=[
@@ -1292,6 +1293,7 @@ $$('.ba-tab').forEach(function(btn){
   $('#baAfterNum').textContent=c.aNum;$('#baAfterLbl').textContent=c.aLbl;$('#baAfterSub').textContent=c.aSub;
   $('#baSummary').textContent=c.sum;
   baRange.value=50;baStage.style.setProperty('--pos','50%');
+  if(currentLanguage==='ar'&&typeof translateStatic==='function')translateStatic();
  });
 });
 
@@ -1306,18 +1308,25 @@ $('#missionsGrid').innerHTML=MIS.map(function(m,i){
 }).join('');
 
 var unlocked={},allNotified=false,miDots=$$('#miDots i'),miCounter=$('#miCounter'),miCountText=$('#miCountText');
+function updateMissionCounter(){
+ var count=Object.keys(unlocked).length;
+ if(count===MIS.length){
+  miCounter.classList.add('done');
+  miCountText.textContent=currentLanguage==='ar'?'6 / 6 تم استكشاف جميع المهام':'6 / 6 ALL MISSIONS UNLOCKED';
+ }else{
+  miCountText.textContent=currentLanguage==='ar'?count+' / '+MIS.length+' مهام تم استكشافها':count+' / '+MIS.length+' MISSIONS UNLOCKED';
+ }
+}
 function markUnlocked(idx,card){
  if(!unlocked[idx]){
   unlocked[idx]=true;
   card.classList.add('seen');
   var count=Object.keys(unlocked).length;
   miDots.forEach(function(d,k){if(k<count)d.classList.add('on')});
-  if(count===MIS.length){
-   miCounter.classList.add('done');
-   miCountText.textContent=currentLanguage==='ar'?'6 / 6 تم استكشاف جميع المهام':'6 / 6 ALL MISSIONS UNLOCKED';
-   if(!allNotified){allNotified=true;toast('FULL DOSSIER UNLOCKED','You inspected all 6 career missions!')}
-  }else{
-   miCountText.textContent=currentLanguage==='ar'?count+' / '+MIS.length+' مهام تم استكشافها':count+' / '+MIS.length+' MISSIONS UNLOCKED';
+  updateMissionCounter();
+  if(count===MIS.length&&!allNotified){
+   allNotified=true;
+   toast(currentLanguage==='ar'?'تم فتح الملف الكامل':'FULL DOSSIER UNLOCKED',currentLanguage==='ar'?'لقد استكشفت جميع المهام الست!':'You inspected all 6 career missions!');
   }
  }
 }
@@ -1372,7 +1381,7 @@ pages.forEach(function(p,i){var no=$('.pgno',p);if(no)no.textContent='- '+pad(i+
 var ticks=$('#hudTicks');ticks.innerHTML=pages.map(function(){return '<i></i>'}).join('');
 var tickEls=$$('i',ticks),links=$('#links'),navA=$$('#links a'),sb=$('#scrollbar');
 var par=$$('[data-par]'),lastPage=-1,mobile=function(){return innerWidth<=900};
-function frame(forceRefresh){
+function frame(){
  var vh=innerHeight,y=scrollY,H=document.documentElement.scrollHeight-vh;
  sb.style.width=(H>0?y/H*100:0)+'%';
  var cur=0;
@@ -1387,9 +1396,9 @@ function frame(forceRefresh){
  if(!RM&&!mobile()){
   for(var j=0;j<par.length;j++){var e=par[j],rr=e.getBoundingClientRect();if(rr.bottom<-200||rr.top>vh+200)continue;var f=parseFloat(e.dataset.par);e.style.setProperty('--py',(((rr.top+rr.height/2)-vh/2)*f*-1).toFixed(1)+'px')}
  }
- if(cur!==lastPage||forceRefresh){
+ if(cur!==lastPage){
   lastPage=cur;var pg=pages[cur];
-  var hudArabic={
+  var chapAr={
    'THE COVER':'الغلاف',
    'CHAPTER 01 - THE JOURNEY':'الفصل 01 - الرحلة',
    'CHAPTER 02 - THE SKILLS':'الفصل 02 - المهارات',
@@ -1399,10 +1408,11 @@ function frame(forceRefresh){
    'CHAPTER 05 - CREATIVE UNIVERSE':'الفصل 05 - العالم الإبداعي',
    'CHAPTER 05 - THROUGH MY LENS':'الفصل 05 - من خلال عدستي',
    'FINAL CHAPTER - THE NEXT CHAPTER':'الفصل الأخير - الفصل القادم',
-   'THE END (FOR NOW)':'النهاية (حتى الآن)'
+   'THE END (FOR NOW)':'النهاية (حالياً)'
   };
-  $('#hudChap').textContent=(currentLanguage==='ar'?(hudArabic[pg.dataset.chap]||pg.dataset.chap):pg.dataset.chap);
-   $('#hudPage').textContent=(currentLanguage==='ar'?'صفحة ':'PAGE ')+pad(cur+1)+' / '+pad(TOTAL);
+  var isAr=(window.KARIM_LANG==='ar');
+  $('#hudChap').textContent=isAr?(chapAr[pg.dataset.chap]||pg.dataset.chap):pg.dataset.chap;
+  $('#hudPage').textContent=(isAr?'صفحة ':'PAGE ')+pad(cur+1)+' / '+pad(TOTAL);
   tickEls.forEach(function(t,i){t.className=i<cur?'on':(i===cur?'cur':'')});
   document.body.style.setProperty('--scene',pg.dataset.scene);
   navA.forEach(function(a){var on=a.dataset.s===pg.dataset.nav;a.classList.toggle('active',on);if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')});
@@ -1432,11 +1442,11 @@ function ensureAudioContext(){
  return audioCtx;
 }
 function store(k,v){try{if(v===undefined)return JSON.parse(sessionStorage.getItem(k));sessionStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
-var M={ready:false,on:false,vol:.12,muted:false,resume:false,fade:null,voiceDucked:false};
+var M={ready:true,on:false,vol:.12,muted:false,resume:false,fade:null,voiceDucked:false};
 var saved=store('karim-music');if(saved){M.vol=typeof saved.vol==='number'?saved.vol:.12;M.muted=!!saved.muted}
 vol.value=Math.round(M.vol*100);
 function persist(){store('karim-music',{vol:M.vol,muted:M.muted})}
-function setPlayerOpen(o){player.classList.toggle('open',o);document.body.classList.toggle('player-open',!!o);pFab.setAttribute('aria-expanded',o?'true':'false')}
+function setPlayerOpen(o){player.classList.toggle('open',o);pFab.setAttribute('aria-expanded',o?'true':'false')}
 pFab.addEventListener('click',function(e){e.stopPropagation();setPlayerOpen(!player.classList.contains('open'))});
 document.addEventListener('click',function(e){if(player.classList.contains('open')&&!player.contains(e.target))setPlayerOpen(false)});
 function ui(){
@@ -1476,18 +1486,35 @@ function duckForVoice(on){
  fadeTo(on?M.vol*.2:M.vol,on?250:500);
 }
 function animateEqualizer(){
- if(!M.on){$$('.eq-bars i').forEach(function(el){el.style.height='5px'});requestAnimationFrame(animateEqualizer);return}
- if(!bgmAnalyser||!bgmFreq){player.classList.add('fallback');requestAnimationFrame(animateEqualizer);return}
+ var bars=$$('.eq-bars i');
+ if(!M.on){
+  player.classList.remove('fallback');
+  bars.forEach(function(el){el.style.height=''});
+  requestAnimationFrame(animateEqualizer);
+  return;
+ }
+ if(!bgmAnalyser||!bgmFreq){
+  player.classList.add('fallback');
+  bars.forEach(function(el){el.style.height=''});
+  requestAnimationFrame(animateEqualizer);
+  return;
+ }
  try{
   bgmAnalyser.getByteFrequencyData(bgmFreq);
-  var bins=[[0,2],[3,6],[7,13]],bars=$$('.eq-bars i'),energy=[];
-  bins.forEach(function(r){var sum=0,n=0;for(var i=r[0];i<=r[1]&&i<bgmFreq.length;i++){sum+=bgmFreq[i];n++}energy.push(n?sum/n:0)});
-  if(energy.every(function(v){return v<2})){player.classList.add('fallback')}
-  else{
+  var bins=[[0,2],[3,6],[7,13]],energy=[];
+  var boost=1/Math.max(bgm.volume||M.vol,0.12);
+  bins.forEach(function(r){var sum=0,n=0;for(var i=r[0];i<=r[1]&&i<bgmFreq.length;i++){sum+=bgmFreq[i];n++}energy.push(n?Math.min(255,(sum/n)*boost):0)});
+  if(energy.every(function(v){return v<4})){
+   player.classList.add('fallback');
+   bars.forEach(function(el){el.style.height=''});
+  }else{
    player.classList.remove('fallback');
-   bars.forEach(function(el,i){el.style.height=(5+energy[i]/255*18)+'px'});
+   bars.forEach(function(el,i){el.style.height=(5+energy[i]/255*18).toFixed(1)+'px'});
   }
- }catch(e){player.classList.add('fallback')}
+ }catch(e){
+  player.classList.add('fallback');
+  bars.forEach(function(el){el.style.height=''});
+ }
  requestAnimationFrame(animateEqualizer);
 }
 requestAnimationFrame(animateEqualizer);
@@ -1523,135 +1550,172 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
   tired:'assets/images/buddy-tired.webp'
  };
  var SEC_DATA={
-   home:[['THE COVER','Hey, I’m Karim! Grab the CV right here, or scroll down to open the story.','home'],['الغلاف','أهلاً بيك في عالمي! أنا كريم. لو مستعجل، السي في قدامك أهو، بس لو عايز تعرف الحكاية بجد... انزل معايا وخلينا نبدأ!','home']],
-   journey:[['CHAPTER 01','Five roles across Kuwait, Saudi Arabia, and the UK. Click any tab to jump between chapters.','journey'],['الفصل 01','هنا الرحلة الحقيقية! خمس محطات ما بين الكويت والسعودية وبريطانيا. قلّب بين الشركات فوق وشوف كل فصل عملنا فيه إيه.','journey']],
-   superpowers:[['CHAPTER 02','Every skill here comes straight from my CV. Hover over any badge to power it up.','skills'],['الفصل 02','نيجي بقى للترسانة! دي كل المهارات والأدوات اللي طلعت بيها النتايج دي. عدّي عليها وشوف بنفسك.','skills']],
-   missions:[['CHAPTER 03','Drag the before-and-after slider, and tap the six mission cards to see how the numbers happened.','missions'],['الفصل 03','اممم... كفاية كلام، خلينا في الأرقام! حرّك الشريط ده وشوف الفرق قبل وبعد، اقلب الكروت الستة عشان تشوف الكواليس!','missions']],
-   education:[['CHAPTER 04','Sociology degree, native Arabic, and B2 English. Solid foundation.','education'],['الفصل 04','هتقولي إيه علاقة علم الاجتماع بالشغل؟ ده اللي خلاني أفهم العميل قبل ما يتكلم! ومعاه عربي، وإنجليزي مستوى B2.','education']],
-   certifications:[['CREDENTIALS','Five verified certificates. Hit View Certificate to inspect any of them full size.','certs'],['الشهادات','وكله بالورقة والقلم! خمس شهادات معتمدة، اضغط على أي شهادة فيهم هتفتحلك كاملة قدامك فوراً.','certs']],
-   creative:[['PLOT TWIST!','Plot twist! This is my voice-over side. Hit play for a quick preview.','creative'],['مفاجأة!','استنى استنى... هنا القصة بدأت تقلب! ده الجانب الإبداعي. دوس تشغيل واسمع بنفسك!','creative']],
-   lens:[['PHOTOGRAPHY','A few street and night frames through my lens. Tap any shot to zoom in.','lens'],['التصوير','وهنا بنفصل شوية مع الكاميرا. لقطات من الشارع وتصوير ليلي، اضغط على أي صورة وعيش المود.','lens']],
-   universe:[['CREATIVE SIDE','Comics, voice-over, rap, and photography. There’s more to the character than dashboards.','universe'],['الجانب الإبداعي','كوميكس، فويس أوفر، راب، وتصوير! عشان في الآخر الشخص دايماً أكبر بكتير من مجرد Job Title.','universe']],
-   contact:[['FINAL SCENE','Final scene! WhatsApp, Email, or LinkedIn. Pick your favorite way to say hello.','contact'],['المشهد الأخير','وصلنا لأهم نقطة! لو شايف إننا نقدر نعمل شغل قوي سوا، واتساب، إيميل، ولينكد إن قدامك... يلا نتكلم!','contact']],
-   end:[['THE END?','You made it to the end! Pick Option A or B to start the next chapter.','end'],['النهاية؟','عاش، كملت القصة للآخر! بس الحكاية لسه مخلصتش... اختار الكارت الأول أو التاني وخلينا نبدأ الفصل الجاي سوا!','end']]
-  };
-  var PANICS=[
-   [['Whoa, whoa, slow down! You’re scrolling way too fast, my knees can’t take this!','panic1'],['حاسب حاسب! إيه السرعة دي كلها؟! أنا هقع من الشاشة، بالراحة شوية!','panic1']],
-   [['Hold on! Are we speedrunning this portfolio? My glasses are about to fly off!','panic2'],['ثانية ثانية! ده بورتفوليو مش سباق فورمولا وان، النضارة هتطير مني!','panic2']]
-  ];
-  window.setMiniLanguage=function(l){
-   language=l;stopBuddyVoice();
-   bVoiceTxt.textContent=language==='ar'?(voiceOn?'الصوت يعمل':'الصوت متوقف'):(voiceOn?'VOICE ON':'VOICE OFF');
-   if(buddy.classList.contains('show-bub')){var info=(SEC_DATA[getCurSectionId()]||SEC_DATA.home)[language==='ar'?1:0];bTag.textContent=info[0];bMsg.textContent=info[1]}
-   if(voiceOn){ensureAudioContext();preloadVoices(getVoiceKeyForSection(getCurSectionId()))}
-  };
-  function getVoiceKeyForSection(id){return ({home:'home',journey:'journey',superpowers:'skills',missions:'missions',education:'education',certifications:'certs',creative:'creative',lens:'lens',universe:'universe',contact:'contact',end:'end'})[id]||'home'}
-  var voiceEl=new Audio();voiceEl.preload='auto';
-  var audioToken=0,voiceOn=false,isSpeaking=false,currentAudioType='',activeVoiceSource=null;
-  var state='idle',lastSec='',panicIdx=0,lastPanicAudioAt=-Infinity,pendingTired=false;
-  var curSprite='idle',walkFrame=0,walkDist=0,dir=1,bubShownY=0;
-  var lastY=scrollY,lastT=performance.now(),fastAccum=0,navLockUntil=0,lastPanicAt=0,panicCooldownUntil=0;
-  var stopTimer=null,hideBubTimer=null,recoverTimer=null,idleTimer=null,panicFallbackTimer=null;
-  var curX=260,targetX=260,moveRaf=null;
-  var language=window.KARIM_LANG||'en';
+  home:[['THE COVER','Hey, I’m Karim! Grab the CV right here, or scroll down to open the story.','home'],['الغلاف','أهلاً بيك في عالمي! أنا كريم. لو مستعجل، السي في قدامك أهو، بس لو عايز تعرف الحكاية بجد... انزل معايا وخلينا نبدأ!','home']],
+  journey:[['CHAPTER 01','Five roles across Kuwait, Saudi Arabia, and the UK. Click any tab to jump between chapters.','journey'],['الفصل 01','هنا الرحلة الحقيقية! خمس محطات ما بين الكويت والسعودية وبريطانيا. قلّب بين الشركات فوق وشوف كل فصل عملنا فيه إيه.','journey']],
+  superpowers:[['CHAPTER 02','Every skill here comes straight from my CV. Hover over any badge to power it up.','skills'],['الفصل 02','نيجي بقى للترسانة! دي كل المهارات والأدوات اللي طلعت بيها النتايج دي. عدّي عليها وشوف بنفسك.','skills']],
+  missions:[['CHAPTER 03','Drag the before-and-after slider, and tap the six mission cards to see how the numbers happened.','missions'],['الفصل 03','اممم... كفاية كلام، خلينا في الأرقام! حرّك الشريط ده وشوف الفرق قبل وبعد، اقلب الكروت الستة عشان تشوف الكواليس!','missions']],
+  education:[['CHAPTER 04','Sociology degree, native Arabic, and B2 English. Solid foundation.','education'],['الفصل 04','هتقولي إيه علاقة علم الاجتماع بالشغل؟ ده اللي خلاني أفهم العميل قبل ما يتكلم! ومعاه عربي، وإنجليزي مستوى B2.','education']],
+  certifications:[['CREDENTIALS','Five verified certificates. Hit View Certificate to inspect any of them full size.','certs'],['الشهادات','وكله بالورقة والقلم! خمس شهادات معتمدة، اضغط على أي شهادة فيهم هتفتحلك كاملة قدامك فوراً.','certs']],
+  creative:[['PLOT TWIST!','Plot twist! This is my voice-over side. Hit play for a quick preview.','creative'],['مفاجأة!','استنى استنى... هنا القصة بدأت تقلب! ده الجانب الإبداعي. دوس تشغيل واسمع بنفسك!','creative']],
+  lens:[['PHOTOGRAPHY','A few street and night frames through my lens. Tap any shot to zoom in.','lens'],['التصوير','وهنا بنفصل شوية مع الكاميرا. لقطات من الشارع وتصوير ليلي، اضغط على أي صورة وعيش المود.','lens']],
+  universe:[['CREATIVE SIDE','Comics, voice-over, rap, and photography. There’s more to the character than dashboards.','universe'],['الجانب الإبداعي','كوميكس، فويس أوفر، راب، وتصوير! عشان في الآخر الشخص دايماً أكبر بكتير من مجرد Job Title.','universe']],
+  contact:[['FINAL SCENE','Final scene! WhatsApp, Email, or LinkedIn. Pick your favorite way to say hello.','contact'],['المشهد الأخير','وصلنا لأهم نقطة! لو شايف إننا نقدر نعمل شغل قوي سوا، واتساب، إيميل، ولينكد إن قدامك... يلا نتكلم!','contact']],
+  end:[['THE END?','You made it to the end! Pick Option A or B to start the next chapter.','end'],['النهاية؟','عاش، كملت القصة للآخر! بس الحكاية لسه مخلصتش... اختار الكارت الأول أو التاني وخلينا نبدأ الفصل الجاي سوا!','end']]
+ };
+ var PANICS=[
+  [['Whoa, whoa, slow down! You’re scrolling way too fast, my knees can’t take this!','panic1'],['حاسب حاسب! إيه السرعة دي كلها؟! أنا هقع من الشاشة، بالراحة شوية!','panic1']],
+  [['Hold on! Are we speedrunning this portfolio? My glasses are about to fly off!','panic2'],['ثانية ثانية! ده بورتفوليو مش سباق فورمولا وان، النضارة هتطير مني!','panic2']]
+ ];
 
-  /* Sprite, facing, mood and bubble helpers (required by speak/scroll flow). */
-  function setSprite(key){
-   if(!SPRITES[key]||curSprite===key)return;
-   curSprite=key;
-   bImg.src=SPRITES[key];
-  }
-  function setFlip(f){
-   bImg.style.setProperty('--flip',f<0?-1:1);
-  }
-  function pointInwardFlip(){
-   if(mobile())return language==='ar'?1:-1;
-   var isLeft=(curX+85)<(innerWidth*.5);
-   var facing=isLeft?-1:1;
-   return language==='ar'?-facing:facing;
-  }
-  function setMood(m){
-   state=m;
-   buddy.classList.remove('idle','talk','walk','panic','tired');
-   buddy.classList.add(m);
-   if(m==='idle'){setSprite('idle');setFlip(1)}
-   else if(m==='talk'){setSprite('talk');setFlip(pointInwardFlip())}
-   else if(m==='panic'){setSprite('panic');setFlip(language==='ar'?-dir:dir)}
-   else if(m==='tired'){setSprite('tired');setFlip(1)}
-   else if(m==='walk'){setSprite(walkFrame?'walk2':'walk1');setFlip(language==='ar'?-dir:dir)}
-  }
-  function hideBubble(){
-   clearTimeout(hideBubTimer);
-   buddy.classList.remove('show-bub');
-  }
-  function scheduleBubbleHide(ms){
-   clearTimeout(hideBubTimer);
-   if(!ms||ms<=0)return;
-   hideBubTimer=setTimeout(function(){
-    if(state!=='panic'&&!isSpeaking)buddy.classList.remove('show-bub');
-   },ms);
-  }
-  var VOICE_KEYS=['home','journey','skills','missions','education','certs','creative','lens','universe','contact','end','panic1','panic2','tired'];
-  function voiceFile(key){return 'buddy-'+key+(language==='ar'?'-ar':'')}
-  function preloadVoices(priority){
-   if(!voiceOn||!audioCtx||voiceFallback)return Promise.resolve();
-   var keys=VOICE_KEYS.slice();
-   if(priority){var k=keys.indexOf(priority);if(k>0){keys.splice(k,1);keys.unshift(priority)}}
-   function loadOne(key){
-    var file=voiceFile(key);if(voiceBuffers.has(file))return Promise.resolve(voiceBuffers.get(file));
-    if(voiceLoading.has(file))return voiceLoading.get(file);
-    var task=fetch('assets/audio/'+file+'.mp3').then(function(r){if(!r.ok)throw new Error('Audio fetch failed');return r.arrayBuffer()})
-     .then(function(ab){return audioCtx.decodeAudioData(ab)}).then(function(buf){voiceBuffers.set(file,buf);voiceLoading.delete(file);return buf})
-     .catch(function(){voiceFallback=true;voiceLoading.delete(file);return null});
-    voiceLoading.set(file,task);return task;
+ function getVoiceKeyForSection(id){
+  return ({home:'home',journey:'journey',superpowers:'skills',missions:'missions',education:'education',certifications:'certs',creative:'creative',lens:'lens',universe:'universe',contact:'contact',end:'end'})[id]||'home';
+ }
+
+ var voiceEl=new Audio();
+ voiceEl.preload='auto';
+ var audioToken=0,voiceOn=false,isSpeaking=false,currentAudioType='',activeVoiceSource=null;
+ var state='idle',lastSec='',panicIdx=0,lastPanicAt=-Infinity,pendingTired=false;
+ var curSprite='idle',walkFrame=0,walkDist=0,dir=1,bubShownY=0;
+ var lastY=scrollY,lastT=performance.now(),fastAccum=0,navLockUntil=0;
+ var stopTimer=null,hideBubTimer=null,recoverTimer=null,idleTimer=null,panicFallbackTimer=null;
+ var curX=360,targetX=360,moveRaf=null;
+ var language=window.KARIM_LANG||'en';
+ var VOICE_KEYS=['home','journey','skills','missions','education','certs','creative','lens','universe','contact','end','panic1','panic2','tired'];
+
+ function setSprite(key){
+  if(curSprite===key)return;
+  curSprite=key;
+  bImg.src=SPRITES[key];
+ }
+ function setFlip(f){
+  bImg.style.setProperty('--flip',f);
+ }
+ function pointInwardFlip(){
+  if(mobile())return -1;
+  return (curX + 85) < (innerWidth * 0.5) ? -1 : 1;
+ }
+ function walkFlip(){
+  return language==='ar' ? -dir : dir;
+ }
+ function setMood(m){
+  state=m;
+  buddy.classList.remove('idle','talk','walk','panic','tired');
+  buddy.classList.add(m);
+  if(m==='idle'){setSprite('idle');setFlip(1)}
+  else if(m==='talk'){setSprite('talk');setFlip(pointInwardFlip())}
+  else if(m==='panic'){setSprite('panic');setFlip(walkFlip())}
+  else if(m==='tired'){setSprite('tired');setFlip(1)}
+  else if(m==='walk'){setSprite(walkFrame?'walk2':'walk1');setFlip(walkFlip())}
+ }
+ function hideBubble(){
+  clearTimeout(hideBubTimer);
+  buddy.classList.remove('show-bub');
+ }
+ function scheduleBubbleHide(ms){
+  clearTimeout(hideBubTimer);
+  if(!ms||ms<=0)return;
+  hideBubTimer=setTimeout(function(){
+   if(state!=='panic'&&!isSpeaking){
+    buddy.classList.remove('show-bub');
    }
-   var first=keys.length?loadOne(keys[0]):Promise.resolve(null);
-   first.then(function(){keys.slice(1).forEach(function(key){if(!voiceFallback)loadOne(key)})});
-   voicePreloadPromise=first;
-   return first;
-  }
-  stopBuddyVoice=function(){
-   audioToken++;
-   try{voiceEl.pause();voiceEl.currentTime=0}catch(e){}
+  },ms);
+ }
+ function updateVoiceLabel(){
+  bVoiceTxt.textContent=language==='ar'?(voiceOn?'الصوت يعمل':'الصوت متوقف'):(voiceOn?'VOICE ON':'VOICE OFF');
+  bRestore.textContent=language==='ar'?'إظهار كريم الصغير':'SHOW MINI KARIM';
+ }
+
+ function voiceFile(key){return 'buddy-'+key+(language==='ar'?'-ar':'')}
+ function loadOneVoice(key){
+  var file=voiceFile(key);
+  if(voiceBuffers.has(file))return Promise.resolve(voiceBuffers.get(file));
+  if(voiceLoading.has(file))return voiceLoading.get(file);
+  if(!audioCtx)return Promise.resolve(null);
+  var task=fetch('assets/audio/'+file+'.mp3')
+   .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.arrayBuffer()})
+   .then(function(ab){return audioCtx.decodeAudioData(ab)})
+   .then(function(buf){voiceBuffers.set(file,buf);voiceLoading.delete(file);return buf})
+   .catch(function(){voiceLoading.delete(file);return null});
+  voiceLoading.set(file,task);
+  return task;
+ }
+ function preloadVoices(priority){
+  if(!voiceOn||!audioCtx)return Promise.resolve(null);
+  var keys=VOICE_KEYS.slice();
+  if(priority){var k=keys.indexOf(priority);if(k>0){keys.splice(k,1);keys.unshift(priority)}}
+  var first=keys.length?loadOneVoice(keys[0]):Promise.resolve(null);
+  first.then(function(){keys.slice(1).forEach(function(key){loadOneVoice(key)})});
+  return first;
+ }
+
+ /* Assign to outer stopBuddyVoice so video previews also stop Mini Karim */
+ stopBuddyVoice=function(){
+  audioToken++;
+  try{voiceEl.pause();voiceEl.currentTime=0}catch(e){}
+  voiceEl.onended=null;voiceEl.onerror=null;
+  if(activeVoiceSource){try{activeVoiceSource.onended=null;activeVoiceSource.stop()}catch(e){}activeVoiceSource=null}
+  isSpeaking=false;currentAudioType='';buddy.classList.remove('speaking');duckForVoice(false);
+ };
+ window.stopBuddyVoice=stopBuddyVoice;
+
+ function playVoice(file,type,onDone){
+  stopBuddyVoice();
+  if(!voiceOn||!file||activeV||buddy.classList.contains('min')){if(onDone)onDone(false);return false}
+  ensureAudioContext();
+  var tok=++audioToken,full=voiceFile(file),finished=false;
+  isSpeaking=true;currentAudioType=type||'section';buddy.classList.add('speaking');duckForVoice(true);
+
+  function finish(){
+   if(finished||tok!==audioToken)return;
+   finished=true;
+   if(activeVoiceSource)activeVoiceSource=null;
    voiceEl.onended=null;voiceEl.onerror=null;
-   if(activeVoiceSource){try{activeVoiceSource.onended=null;activeVoiceSource.stop()}catch(e){}activeVoiceSource=null}
-   isSpeaking=false;currentAudioType='';buddy.classList.remove('speaking');duckForVoice(false);
-  };
-  window.stopBuddyVoice=stopBuddyVoice;
-  function playVoice(file,type,onDone){
-   stopBuddyVoice();
-   if(!voiceOn||!file||activeV||buddy.classList.contains('min')){if(onDone)onDone(false);return false}
-   ensureAudioContext();
-   var tok=++audioToken,full='buddy-'+file+(language==='ar'?'-ar':''),finished=false;
-   isSpeaking=true;currentAudioType=type||'section';buddy.classList.add('speaking');duckForVoice(true);
-   function finish(){
-    if(finished||tok!==audioToken)return;finished=true;
-    if(activeVoiceSource)activeVoiceSource=null;
-    voiceEl.onended=null;voiceEl.onerror=null;isSpeaking=false;currentAudioType='';
-    buddy.classList.remove('speaking');duckForVoice(false);if(onDone)onDone(true);
-   }
-   function decoded(buf){
+   isSpeaking=false;currentAudioType='';
+   buddy.classList.remove('speaking');duckForVoice(false);
+   if(onDone)onDone(true);
+  }
+  function fallbackHtml(){
+   if(tok!==audioToken||finished)return;
+   voiceEl.src='assets/audio/'+full+'.mp3';
+   voiceEl.currentTime=0;
+   voiceEl.onended=finish;
+   voiceEl.onerror=finish;
+   var pr=voiceEl.play();
+   if(pr&&pr.catch)pr.catch(finish);
+  }
+  function startBuffer(buf){
+   if(tok!==audioToken||finished)return;
+   if(!buf||!audioCtx||!voiceGain){fallbackHtml();return}
+   var run=function(){
     if(tok!==audioToken||finished)return;
-    if(buf&&audioCtx&&voiceGain){
-     try{var src=audioCtx.createBufferSource();src.buffer=buf;src.connect(voiceGain);activeVoiceSource=src;src.onended=finish;src.start(0);return}catch(e){voiceFallback=true}
-    }
-    fallbackHtml();
-   }
-   function fallbackHtml(){
-    if(tok!==audioToken||finished)return;
-    voiceEl.src='assets/audio/'+full+'.mp3';voiceEl.currentTime=0;voiceEl.onended=finish;voiceEl.onerror=finish;
-    var pr=voiceEl.play();if(pr&&pr.catch)pr.catch(function(){finish()});
-   }
-   var cached=voiceBuffers.get(full);
-   if(cached){decoded(cached);return true}
-   if(audioCtx&&!voiceFallback){
-    preloadVoices(file).then(function(){decoded(voiceBuffers.get(full))});
-    return true;
-   }
-   fallbackHtml();return true;
+    try{
+     var src=audioCtx.createBufferSource();
+     src.buffer=buf;
+     src.connect(voiceGain);
+     activeVoiceSource=src;
+     src.onended=finish;
+     src.start(0);
+    }catch(e){fallbackHtml()}
+   };
+   if(audioCtx.state==='suspended'){
+    audioCtx.resume().then(run).catch(fallbackHtml);
+   }else{run()}
   }
 
-  function getCurSectionId(){
+  var cached=voiceBuffers.get(full);
+  if(cached){startBuffer(cached);return true}
+  if(audioCtx){
+   loadOneVoice(file).then(function(buf){
+    startBuffer(buf);
+    preloadVoices(file);
+   });
+   return true;
+  }
+  fallbackHtml();
+  return true;
+ }
+
+ function getCurSectionId(){
   var vh=innerHeight,cur='home';
   for(var i=0;i<pages.length;i++){
    var r=pages[i].getBoundingClientRect();
@@ -1696,10 +1760,7 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
  function startTiredRecovery(){
   clearTimeout(recoverTimer);clearTimeout(panicFallbackTimer);clearTimeout(hideBubTimer);clearTimeout(idleTimer);
   pendingTired=false;
-  if(buddy.classList.contains('min')){
-   panicCooldownUntil=performance.now()+8000;
-   return;
-  }
+  if(buddy.classList.contains('min'))return;
 
   bTag.textContent=language==='ar'?'أوف...':'PHEW...';
   bMsg.textContent=language==='ar'?'أوف... يا ساتر... دقيقة واحدة آخد نفسي... تمام، خلينا نشوف وصلنا لفين!':'Phew... okay, caught my breath. Let’s see where we landed.';
@@ -1714,9 +1775,7 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
    clearTimeout(recoverTimer);
    if(state!=='tired')return;
    lastSec='';
-   lastPanicAudioAt=performance.now();
-   panicCooldownUntil=performance.now()+8000;
-   fastAccum=0;
+   lastPanicAt=performance.now();
    announceSection(true,true);
   }
 
@@ -1727,7 +1786,6 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
     }
    });
    if(ok){
-    /* Long safety timeout so buddy-tired.mp3 always finishes completely */
     recoverTimer=setTimeout(finishRecovery,10500);
    }else{
     recoverTimer=setTimeout(finishRecovery,2200);
@@ -1743,23 +1801,18 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
   lastSec=id;
   var info=(SEC_DATA[id]||SEC_DATA.home)[language==='ar'?1:0];
   speak(info[0],info[1],'talk',playAudio===false?null:info[2],'section');
-  if(voiceOn)preloadVoices(info[2]);
  }
 
- /* Safe horizontal track between left HUD and right Music Player on Desktop */
+ /* Safe horizontal track between left HUD and right Music Button on Desktop */
  function computeTargetX(){
   if(mobile()||buddy.classList.contains('min'))return;
   var hudR=hud?hud.getBoundingClientRect().right:240;
-  var plL=player?player.getBoundingClientRect().left:(innerWidth-100);
-  var leftBound=Math.max(20,hudR+14);
-  var rightBound=Math.max(leftBound,plL-184);
-  var coverX=clamp(innerWidth*.56,leftBound,rightBound);
+  var plL=player?player.getBoundingClientRect().left:(innerWidth-140);
+  var minX=Math.max(hudR+18,Math.min(innerWidth*0.34,plL-220));
+  var maxX=Math.max(minX,plL-180);
   var H=Math.max(1,document.documentElement.scrollHeight-innerHeight);
   var prog=clamp(scrollY/H,0,1);
-  /* Start in the open cover area, then travel smoothly without a 40px jump. */
-  targetX=language==='ar'
-    ? rightBound-prog*(rightBound-coverX)
-    : coverX+prog*(rightBound-coverX);
+  targetX=language==='ar'?(maxX-prog*(maxX-minX)):(minX+prog*(maxX-minX));
  }
  function animateX(){
   if(mobile()||buddy.classList.contains('min')){moveRaf=null;return}
@@ -1785,7 +1838,18 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
   }
  }
 
- /* Ignore programmatic anchor jumps so nav clicks do not trigger panic */
+ window.setMiniLanguage=function(l){
+  language=l==='ar'?'ar':'en';
+  stopBuddyVoice();
+  updateVoiceLabel();
+  syncPosition(true);
+  if(buddy.classList.contains('show-bub')){
+   var info=(SEC_DATA[getCurSectionId()]||SEC_DATA.home)[language==='ar'?1:0];
+   bTag.textContent=info[0];bMsg.textContent=info[1];
+  }
+  if(voiceOn){ensureAudioContext();preloadVoices(getVoiceKeyForSection(getCurSectionId()))}
+ };
+
  $$('a[href^="#"]').forEach(function(a){
   a.addEventListener('click',function(){
    navLockUntil=performance.now()+1100;
@@ -1801,8 +1865,9 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
 
   syncPosition(false);
 
-  var speed=dy/dt; /* px per ms downward */
-  if(now>navLockUntil&&now>=panicCooldownUntil&&dy>0&&speed>3.0){
+  var speed=dy/dt;
+  var panicCooldownReady=(now-lastPanicAt)>8000;
+  if(now>navLockUntil&&dy>0&&speed>3.0&&panicCooldownReady){
    fastAccum+=dy;
    if(state==='panic'){
     pendingTired=false;
@@ -1811,12 +1876,10 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
     clearTimeout(recoverTimer);clearTimeout(idleTimer);clearTimeout(panicFallbackTimer);
     pendingTired=false;
     var p=PANICS[panicIdx++%PANICS.length][language==='ar'?1:0];
-    var canPlayPanic=(now-lastPanicAudioAt)>8000;
-    if(canPlayPanic)lastPanicAudioAt=now;
-    speak(language==='ar'?'بالراحة!':'SLOW DOWN!',p[0],'panic',canPlayPanic?p[1]:null,'panic');
+    speak(language==='ar'?'بالراحة!':'SLOW DOWN!',p[0],'panic',p[1],'panic');
    }
   }else{
-   if(now<panicCooldownUntil||dy<=0||speed<1.1)fastAccum=Math.max(0,fastAccum-90);
+   if(dy<=0||speed<1.1)fastAccum=Math.max(0,fastAccum-90);
    if(state!=='panic'&&Math.abs(dy)>1){
     clearTimeout(recoverTimer);clearTimeout(panicFallbackTimer);
     pendingTired=false;
@@ -1830,9 +1893,8 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
      setMood('walk');
     }else{
      setSprite(walkFrame?'walk2':'walk1');
-     setFlip(language==='ar'?-dir:dir);
+     setFlip(walkFlip());
     }
-    /* Hide stale text bubble while user is actively scrolling normally */
     if(buddy.classList.contains('show-bub')&&Math.abs(y-bubShownY)>110){
      hideBubble();
     }
@@ -1844,7 +1906,6 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
    fastAccum=0;
    if(state==='panic'){
     if(isSpeaking&&currentAudioType==='panic'){
-     /* Let panic voice finish naturally before catching breath */
      pendingTired=true;
      clearTimeout(panicFallbackTimer);
      panicFallbackTimer=setTimeout(function(){
@@ -1874,7 +1935,7 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
   voiceOn=!!on;
   buddy.classList.toggle('voice-on',voiceOn);
   bVoice.setAttribute('aria-pressed',voiceOn?'true':'false');
-  bVoiceTxt.textContent=language==='ar'?(voiceOn?'الصوت يعمل':'الصوت متوقف'):(voiceOn?'VOICE ON':'VOICE OFF');
+  updateVoiceLabel();
   if(voiceOn)preloadVoices(getVoiceKeyForSection(getCurSectionId()));
   if(!voiceOn){
    stopBuddyVoice();
@@ -1898,9 +1959,7 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
   ensureAudioContext();
   clearTimeout(recoverTimer);clearTimeout(panicFallbackTimer);
   pendingTired=false;
-  if(!voiceOn){
-   setVoiceState(true);
-  }
+  if(!voiceOn){setVoiceState(true)}
   announceSection(true,true);
  });
 
@@ -1919,13 +1978,17 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
   announceSection(true,voiceOn);
  });
 
- /* Initial position & brief non-intrusive greeting */
+ updateVoiceLabel();
  syncPosition(true);
  setTimeout(function(){
   syncPosition(true);
   if(!buddy.classList.contains('min')){
    lastSec=getCurSectionId();
-   speak('MINI KARIM','Hey, I’m Karim! Tap me for voice, or scroll down.','talk',null,'',{autoHide:mobile()?3600:5000});
+   speak(
+    language==='ar'?'كريم الصغير':'MINI KARIM',
+    language==='ar'?'أهلاً! اضغط عليّ لتشغيل صوتي، أو انزل تحت لفتح القصة.':'Hey, I’m Karim! Tap me for voice, or scroll down.',
+    'talk',null,'',{autoHide:mobile()?3600:5000}
+   );
   }
  },800);
 })();
@@ -1936,7 +1999,6 @@ menuBtn.addEventListener('click',function(){var o=links.classList.toggle('open')
 navA.forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');menuBtn.setAttribute('aria-expanded','false')})});
 
 /* ================= BILINGUAL UI ================= */
-var currentLanguage=window.KARIM_LANG||'en';
 var AR_UI={
  'Home':'الرئيسية','Journey':'الرحلة','Superpowers':'المهارات','Missions':'الإنجازات','Education':'التعليم','Creative Side':'الجانب الإبداعي','Contact':'تواصل',
  'OPEN TO REMOTE ROLES • CS & CX LEADERSHIP':'متاح للفرص عن بُعد • قيادة خدمة وتجربة العملاء',
@@ -2140,31 +2202,62 @@ Object.assign(AR_UI,{
  '2D Walking Comic Companion (Mini Karim)':'رفيقك الكوميدي المتحرك ثنائي الأبعاد (كريم الصغير)',
  'Hey, I’m Karim! Grab the CV right here, or scroll down to open the story.':'أهلاً بيك في عالمي! أنا كريم. لو مستعجل، السي في قدامك أهو، بس لو عايز تعرف الحكاية بجد... انزل معايا وخلينا نبدأ!'
 });
+Object.assign(AR_UI,{
+ 'KANZ CHURN':'معدل فقد عملاء KANZ',
+ 'TGC HANDLING TIME':'وقت المعالجة في TGC',
+ 'AVG HANDLING TIME':'متوسط وقت المعالجة',
+ 'SHOW MINI KARIM':'إظهار كريم الصغير',
+ 'Copied!':'تم النسخ!',
+ 'Drag the impact slider and flip the 6 mission cards to see how the numbers were achieved.':'حرّك شريط التأثير واقلب البطاقات الست لترى كيف تحققت هذه الأرقام.',
+ 'INSPECT MISSIONS →':'استكشف الإنجازات ←',
+ 'Academic background, languages, and 5 verified certificates you can inspect right here.':'الخلفية الأكاديمية واللغات و5 شهادات موثقة يمكنك استعراضها هنا.',
+ 'PLOT TWIST':'مفاجأة',
+ 'These are career achievements from my roles at KANZ and TGC, not independent client projects.':'هذه إنجازات مهنية من أدواري في KANZ وTGC وليست مشاريع مستقلة لعملاء.',
+ 'Bachelor of Arts in Sociology':'ليسانس آداب علم الاجتماع',
+ 'Mansoura University · Egypt · 2021':'جامعة المنصورة · مصر · 2021',
+ '← DRAG SLIDER →':'← حرّك الشريط →'
+});
 function translateStatic(){
  var root=document.body,walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),node;
  while((node=walker.nextNode())){
+  if(node.parentElement&&(node.parentElement.closest('#buddy')||node.parentElement.closest('#player')||node.parentElement.closest('#langToggle')||node.parentElement.closest('#hud')))continue;
   if(!node.__enText)node.__enText=node.nodeValue;
   var original=node.__enText.trim();
   if(!original)continue;
   var translated=AR_UI[original];
-  if(currentLanguage==='ar'&&translated){var lead=node.__enText.match(/^\s*/)[0],trail=node.__enText.match(/\s*$/)[0],nextText=lead+translated+trail;if(node.nodeValue!==nextText)node.nodeValue=nextText}
-  else if(currentLanguage==='en')node.nodeValue=node.__enText;
+  if(currentLanguage==='ar'&&translated){
+   var lead=node.__enText.match(/^\s*/)[0],trail=node.__enText.match(/\s*$/)[0],nextText=lead+translated+trail;
+   if(node.nodeValue!==nextText)node.nodeValue=nextText;
+  }else if(currentLanguage==='en'){
+   node.nodeValue=node.__enText;
+  }
  }
  var navMap=currentLanguage==='ar'?['الرئيسية','الرحلة','المهارات','الإنجازات','التعليم','الجانب الإبداعي','تواصل']:['Home','Journey','Superpowers','Missions','Education','Creative Side','Contact'];
  $$('#links a').forEach(function(a,i){a.textContent=navMap[i]||a.textContent});
- var toggle=$('#langToggle');if(toggle){$('.lang-en',toggle).classList.toggle('active',currentLanguage==='en');$('.lang-ar',toggle).classList.toggle('active',currentLanguage==='ar');toggle.setAttribute('aria-label',currentLanguage==='ar'?'Switch to English':'التبديل إلى العربية')}
- document.documentElement.lang=currentLanguage;document.documentElement.dir=currentLanguage==='ar'?'rtl':'ltr';
+ var toggle=$('#langToggle');
+ if(toggle){
+  $('.lang-en',toggle).classList.toggle('active',currentLanguage==='en');
+  $('.lang-ar',toggle).classList.toggle('active',currentLanguage==='ar');
+  toggle.setAttribute('aria-label',currentLanguage==='ar'?'Switch to English':'التبديل إلى العربية');
+ }
+ document.documentElement.lang=currentLanguage;
+ document.documentElement.dir=currentLanguage==='ar'?'rtl':'ltr';
  document.body.classList.toggle('rtl',currentLanguage==='ar');
- var cvLinks=$$('a[download]');cvLinks.forEach(function(a){a.setAttribute('href','Karim_Alashry_CV.pdf')});
- var hud=$('#hud');if(hud){hud.setAttribute('dir',currentLanguage==='ar'?'rtl':'ltr')}
- var buddyVoice=$('#bVoiceTxt'),buddyVoiceOn=$('#bVoice')&&$('#bVoice').getAttribute('aria-pressed')==='true';if(buddyVoice)buddyVoice.textContent=currentLanguage==='ar'?(buddyVoiceOn?'الصوت يعمل':'الصوت متوقف'):(buddyVoiceOn?'VOICE ON':'VOICE OFF');
+ $$('a[download]').forEach(function(a){a.setAttribute('href','Karim_Alashry_CV.pdf')});
+ var hudEl=$('#hud');if(hudEl){hudEl.setAttribute('dir',currentLanguage==='ar'?'rtl':'ltr')}
 }
 function setLanguage(l){
- currentLanguage=l==='ar'?'ar':'en';window.KARIM_LANG=currentLanguage;
+ currentLanguage=l==='ar'?'ar':'en';
+ window.KARIM_LANG=currentLanguage;
  try{sessionStorage.setItem('karim-language',currentLanguage)}catch(e){}
- translateStatic();if(typeof ui==='function')ui();if(window.setMiniLanguage)window.setMiniLanguage(currentLanguage);
- if(typeof frame==='function')frame(true);
- if(currentLanguage==='ar'){$('#baStage').setAttribute('dir','ltr')}else{$('#baStage').setAttribute('dir','ltr')}
+ renderJob(curJob,false);
+ updateMissionCounter();
+ translateStatic();
+ if(typeof ui==='function')ui();
+ if(window.setMiniLanguage)window.setMiniLanguage(currentLanguage);
+ lastPage=-1;
+ if(typeof frame==='function')frame();
+ $('#baStage').setAttribute('dir','ltr');
 }
 $('#langToggle').addEventListener('click',function(){setLanguage(currentLanguage==='en'?'ar':'en')});
 setLanguage(currentLanguage);
