@@ -14,6 +14,7 @@
 <meta name="twitter:image" content="https://karim-alashry.github.io/assets/images/scene-command.webp">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2317142B'/%3E%3Ctext x='32' y='45' font-size='38' font-family='Arial Black,sans-serif' font-weight='900' text-anchor='middle' fill='%23FF3D91'%3EK%3C/text%3E%3C/svg%3E">
 <link rel="preload" as="image" href="assets/images/karim-comic-portrait.webp">
+<link rel="preload" as="image" href="assets/images/buddy-idle.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Cairo:wght@600;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
@@ -136,7 +137,7 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 
 /* ---------- Cover (Clean, Zero-Overlap, Unbroken Name) ---------- */
 #home{padding:0;display:block}
-.cover{position:relative;min-height:100svh;padding:calc(var(--nav-h) + 22px) 26px 94px;overflow:hidden;background:radial-gradient(ellipse at 72% 45%,rgba(117,71,216,.55),transparent 60%),radial-gradient(ellipse at 5% 100%,rgba(255,61,145,.2),transparent 55%),linear-gradient(160deg,#17142B,#0b0a18);display:flex;align-items:center;border-bottom:3px solid var(--line)}
+.cover{position:relative;min-height:100svh;padding:calc(var(--nav-h) + 22px) 26px 118px;overflow:hidden;background:radial-gradient(ellipse at 72% 45%,rgba(117,71,216,.55),transparent 60%),radial-gradient(ellipse at 5% 100%,rgba(255,61,145,.2),transparent 55%),linear-gradient(160deg,#17142B,#0b0a18);display:flex;align-items:center;border-bottom:3px solid var(--line)}
 .cover::after{content:"";position:absolute;inset:12px;border:3px solid var(--off);pointer-events:none;z-index:6}
 .cover .spine{position:absolute;left:0;top:0;bottom:0;width:18px;z-index:7;background:linear-gradient(90deg,rgba(0,0,0,.75),transparent)}
 .rays{position:absolute;right:-20%;top:50%;width:140vmin;height:140vmin;transform:translateY(-50%) translate3d(0,var(--py,0),0);background:repeating-conic-gradient(from 0deg,rgba(255,181,71,.16) 0 6deg,transparent 6deg 14deg);-webkit-mask-image:radial-gradient(circle,#000 20%,transparent 68%);mask-image:radial-gradient(circle,#000 20%,transparent 68%);pointer-events:none;animation:spin 120s linear infinite}
@@ -170,7 +171,7 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 .stat b{display:block;font-family:var(--f-head);font-weight:800;font-size:clamp(20px,2.5vw,30px);line-height:1.08}
 .stat b s{color:var(--muted);font-size:.62em;font-weight:600}
 .stat > span{display:block;font-size:12.5px;color:var(--muted);line-height:1.25;margin-top:3px}
-.cover-stage{position:relative;justify-self:center;width:min(100%,min(390px,calc((100svh - 190px)*.64)))}
+.cover-stage{position:relative;justify-self:center;width:min(100%,min(390px,calc((100svh - 210px)*.64)))}
 .pf{position:absolute;inset:0;border:3px solid var(--black)}
 .pf.b1{background:var(--pink);transform:translate(-20px,16px) rotate(-5deg)}
 .pf.b2{background:var(--cyan);transform:translate(22px,-12px) rotate(4deg)}
@@ -419,7 +420,7 @@ a.c-item:hover{border-color:var(--pink);transform:translate(6px,-2px);background
 .nchoice p{font-size:14.5px;color:var(--muted)}
 .nchoice .nc-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:8px}
 .nchoice .btn{font-size:16px;padding:10px 16px;min-height:42px}
-footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13.5px;background:var(--black);border-top:1px solid var(--line)}
+footer{padding:22px 20px 148px;text-align:center;color:var(--muted);font-size:13.5px;background:var(--black);border-top:1px solid var(--line)}
 
 /* ---------- Player (Desktop Bar + Mobile Floating FAB) ---------- */
 #player{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:270;display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;background:rgba(9,9,17,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:2px solid var(--off);box-shadow:4px 4px 0 var(--violet);max-width:calc(100vw - 28px);transition:all .2s ease}
@@ -445,46 +446,56 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
 .pnote{position:absolute;right:0;bottom:calc(100% + 10px);background:var(--amber);color:var(--black);font-size:12.5px;font-weight:700;padding:6px 10px;border:2px solid var(--black);white-space:nowrap;display:none}
 #player.err .pnote{display:block}
 
-/* ---------- 2D Comic Scroll Companion (Mini Karim) ---------- */
-#buddy{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:calc(86px + env(safe-area-inset-bottom));z-index:265;display:flex;align-items:flex-end;gap:12px;pointer-events:none}
-#buddy .b-bub{pointer-events:auto;position:relative;max-width:255px;background:var(--off);color:var(--black);border:3px solid var(--black);border-radius:18px;padding:10px 14px;box-shadow:5px 5px 0 var(--pink);opacity:0;transform:translateX(12px) scale(.86);transform-origin:100% 75%;transition:opacity .24s ease,transform .3s cubic-bezier(.3,1.5,.5,1),background-color .2s;visibility:hidden}
-#buddy.show-bub .b-bub{opacity:1;transform:none;visibility:visible}
-#buddy .b-bub::after{content:"";position:absolute;right:-13px;bottom:20px;width:15px;height:14px;background:inherit;clip-path:polygon(0 0,100% 55%,0 100%)}
-#buddy .b-bub::before{content:"";position:absolute;right:-17px;bottom:17px;width:19px;height:20px;background:var(--black);clip-path:polygon(0 0,100% 55%,0 100%)}
-#buddy .b-tag{display:inline-block;font-family:var(--f-comic);letter-spacing:.14em;font-size:13px;color:var(--violet);margin-bottom:2px}
-#buddy .b-msg{font-size:13.5px;font-weight:700;line-height:1.34;color:var(--black)}
+/* ---------- 2D Walking Sprite Companion (Mini Karim) ---------- */
+#buddy{position:fixed;left:0;bottom:max(8px,env(safe-area-inset-bottom));z-index:265;width:118px;display:flex;flex-direction:column;align-items:center;pointer-events:none;will-change:transform}
+#buddy .b-bub{pointer-events:auto;position:absolute;bottom:calc(100% + 12px);left:50%;width:256px;max-width:calc(100vw - 28px);background:var(--off);color:var(--black);border:3px solid var(--black);border-radius:16px;padding:10px 13px;box-shadow:5px 5px 0 var(--pink);opacity:0;transform:translateX(-50%) translateY(10px) scale(.88);transform-origin:50% 100%;transition:opacity .22s ease,transform .28s cubic-bezier(.3,1.45,.5,1),background-color .2s;visibility:hidden}
+#buddy.show-bub .b-bub{opacity:1;transform:translateX(-50%) translateY(0) scale(1);visibility:visible}
+#buddy .b-bub::after{content:"";position:absolute;left:50%;bottom:-13px;transform:translateX(-50%);width:18px;height:14px;background:inherit;clip-path:polygon(0 0,100% 0,50% 100%)}
+#buddy .b-bub::before{content:"";position:absolute;left:50%;bottom:-17px;transform:translateX(-50%);width:24px;height:18px;background:var(--black);clip-path:polygon(0 0,100% 0,50% 100%)}
+#buddy .b-tag-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:2px}
+#buddy .b-tag{display:inline-block;font-family:var(--f-comic);letter-spacing:.14em;font-size:13px;color:var(--violet)}
+#buddy .b-eq{display:none;align-items:flex-end;gap:2px;height:12px}
+#buddy.speaking .b-eq{display:flex}
+#buddy .b-eq i{display:block;width:2.5px;height:4px;background:var(--pink);border-radius:2px;animation:bEq .55s ease-in-out infinite alternate;animation-delay:calc(var(--i)*-.14s)}
+@keyframes bEq{from{height:3px}to{height:12px}}
+#buddy .b-msg{font-size:13px;font-weight:700;line-height:1.35;color:var(--black)}
 #buddy.panic .b-bub{background:var(--amber);box-shadow:5px 5px 0 var(--crimson)}
 #buddy.panic .b-tag{color:var(--crimson)}
 #buddy.tired .b-bub{background:#E9E4FF;box-shadow:5px 5px 0 var(--cyan)}
 
-#buddy .b-wrap{position:relative;pointer-events:auto}
-#buddy .b-avatar{width:76px;height:76px;display:block;position:relative;filter:drop-shadow(4px 4px 0 var(--black));transition:transform .2s}
-#buddy .b-avatar:hover{transform:scale(1.07) rotate(-2deg)}
-#buddy .b-svg{width:100%;height:100%;overflow:visible;animation:bFloat 2.8s ease-in-out infinite}
-@keyframes bFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-#buddy.talk .b-svg{animation:bHop .42s ease-out}
-@keyframes bHop{0%{transform:translateY(0) scale(1)}40%{transform:translateY(-9px) scale(1.05,-0.96) scaleY(-1)}40%{transform:translateY(-9px) scale(1.05)}100%{transform:translateY(0) scale(1)}}
-#buddy.panic .b-svg{animation:bPanic .14s linear infinite}
-@keyframes bPanic{0%{transform:translate(-3px,-2px) rotate(-6deg)}25%{transform:translate(3px,1px) rotate(6deg)}50%{transform:translate(-2px,2px) rotate(-5deg)}75%{transform:translate(3px,-2px) rotate(5deg)}100%{transform:translate(-3px,-2px) rotate(-6deg)}}
-#buddy.tired .b-svg{animation:bPant .9s ease-in-out infinite}
-@keyframes bPant{0%,100%{transform:translateY(0) scaleY(1)}50%{transform:translateY(2px) scaleY(.95)}}
+#buddy .b-char-box{display:flex;flex-direction:column;align-items:center;pointer-events:auto}
+#buddy .b-avatar{position:relative;height:122px;width:110px;display:flex;align-items:flex-end;justify-content:center;padding:0;transition:transform .15s}
+#buddy .b-avatar:hover{transform:scale(1.04)}
+#buddy .b-img{height:120px;width:auto;max-width:116px;object-fit:contain;object-position:bottom center;user-select:none;-webkit-user-drag:none;filter:drop-shadow(0 4px 0 rgba(9,9,17,.9)) drop-shadow(0 0 12px rgba(117,71,216,.3));transform:scaleX(var(--flip,1));transform-origin:50% 100%;transition:filter .2s}
 
-/* SVG Face State Switching */
-#buddy .f-talk,#buddy .f-panic,#buddy .f-tired,#buddy .b-sweat,#buddy .b-lines{display:none}
-#buddy.talk .f-norm{display:none}#buddy.talk .f-talk{display:inline}
-#buddy.panic .f-norm,#buddy.panic .f-talk{display:none}#buddy.panic .f-panic,#buddy.panic .b-sweat,#buddy.panic .b-lines{display:inline}
-#buddy.tired .f-norm,#buddy.tired .f-talk{display:none}#buddy.tired .f-tired,#buddy.tired .b-sweat{display:inline}
-#buddy .b-eye-blink{transform-origin:50px 50px;animation:bBlink 4.6s infinite}
-@keyframes bBlink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
-#buddy .b-sweat{animation:bDrop .55s ease-in-out infinite alternate}
-@keyframes bDrop{from{transform:translateY(0)}to{transform:translateY(3px)}}
+/* Sprite Motion States */
+#buddy.idle .b-img{animation:bIdle 2.8s ease-in-out infinite}
+@keyframes bIdle{0%,100%{transform:scaleX(var(--flip,1)) translateY(0)}50%{transform:scaleX(var(--flip,1)) translateY(-3px)}}
+#buddy.talk .b-img{animation:bTalk .42s ease-out}
+@keyframes bTalk{0%{transform:scaleX(var(--flip,1)) translateY(0) scaleY(1)}40%{transform:scaleX(var(--flip,1)) translateY(-8px) scaleY(1.04)}100%{transform:scaleX(var(--flip,1)) translateY(0) scaleY(1)}}
+#buddy.speaking .b-img{animation:bSpeak .45s ease-in-out infinite alternate}
+@keyframes bSpeak{from{transform:scaleX(var(--flip,1)) translateY(0) scaleY(1)}to{transform:scaleX(var(--flip,1)) translateY(-4px) scaleY(1.03)}}
+#buddy.walk .b-img{animation:bWalk .28s ease-in-out infinite alternate}
+@keyframes bWalk{from{transform:scaleX(var(--flip,1)) translateY(0) rotate(-1.5deg)}to{transform:scaleX(var(--flip,1)) translateY(-6px) rotate(2deg)}}
+#buddy.panic .b-img{animation:bSprint .13s linear infinite;filter:drop-shadow(0 4px 0 rgba(216,30,79,.9)) drop-shadow(0 0 14px rgba(255,181,71,.5))}
+@keyframes bSprint{0%{transform:scaleX(var(--flip,1)) translate(-2px,0) rotate(-3deg)}50%{transform:scaleX(var(--flip,1)) translate(2px,-6px) rotate(3deg)}100%{transform:scaleX(var(--flip,1)) translate(-2px,0) rotate(-3deg)}}
+#buddy.tired .b-img{animation:bPant .9s ease-in-out infinite}
+@keyframes bPant{0%,100%{transform:scaleX(var(--flip,1)) scaleY(1)}50%{transform:scaleX(var(--flip,1)) scaleY(.95) translateY(2px)}}
 
-#buddy .b-hide{position:absolute;top:-6px;right:-4px;z-index:3;width:22px;height:22px;border-radius:50%;background:var(--black);color:var(--off);border:2px solid var(--off);font-size:13px;line-height:1;display:grid;place-items:center;transition:background .15s}
-#buddy .b-hide:hover{background:var(--pink);color:var(--black)}
-#buddy .b-restore{display:none;pointer-events:auto;padding:6px 12px;background:rgba(9,9,17,.9);border:2px solid var(--amber);color:var(--amber);font-family:var(--f-comic);letter-spacing:.14em;font-size:14px;box-shadow:3px 3px 0 var(--pink)}
+#buddy .b-ctrls{display:flex;align-items:center;gap:4px;margin-top:-2px;padding:3px 6px;background:rgba(9,9,17,.9);border:2px solid var(--off);box-shadow:3px 3px 0 var(--violet)}
+#buddy .b-voice{display:inline-flex;align-items:center;gap:5px;padding:2px 6px;font-family:var(--f-comic);letter-spacing:.12em;font-size:12.5px;color:var(--muted);transition:color .15s}
+#buddy .b-voice:hover{color:var(--off)}
+#buddy .bv-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);transition:background .15s,box-shadow .15s}
+#buddy.voice-on .b-voice{color:var(--cyan)}
+#buddy.voice-on .bv-dot{background:var(--green);box-shadow:0 0 8px var(--green)}
+#buddy .b-hide{width:20px;height:20px;display:grid;place-items:center;border-left:1px solid var(--line);padding-left:4px;color:var(--muted);font-size:15px;line-height:1}
+#buddy .b-hide:hover{color:var(--pink)}
+
+#buddy .b-restore{display:none;pointer-events:auto;padding:7px 12px;background:rgba(9,9,17,.92);border:2px solid var(--amber);color:var(--amber);font-family:var(--f-comic);letter-spacing:.14em;font-size:14px;box-shadow:3px 3px 0 var(--pink);white-space:nowrap}
 #buddy .b-restore:hover{background:var(--amber);color:var(--black)}
-#buddy.min .b-bub,#buddy.min .b-wrap{display:none}
-#buddy.min .b-restore{display:inline-flex;align-items:center;gap:6px}
+#buddy.min{transform:none!important;left:auto!important;right:max(16px,env(safe-area-inset-right));bottom:calc(80px + env(safe-area-inset-bottom));width:auto}
+#buddy.min .b-bub,#buddy.min .b-char-box{display:none}
+#buddy.min .b-restore{display:inline-flex;align-items:center}
 
 /* lightbox & toast */
 #lb{position:fixed;inset:0;z-index:500;background:rgba(9,9,17,.95);display:none;align-items:center;justify-content:center;padding:20px}
@@ -497,7 +508,7 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
 .lb-btn{position:absolute;width:48px;height:48px;border:2px solid var(--off);background:rgba(9,9,17,.78);font-size:26px;display:grid;place-items:center}
 .lb-btn:hover{background:var(--pink);color:var(--black)}
 .lb-close{top:16px;right:16px}.lb-prev{left:12px;top:50%;transform:translateY(-50%)}.lb-next{right:12px;top:50%;transform:translateY(-50%)}
-#toasts{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:450;display:grid;gap:8px;justify-items:center;pointer-events:none;width:max-content;max-width:90vw}
+#toasts{position:fixed;left:50%;bottom:calc(146px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:450;display:grid;gap:8px;justify-items:center;pointer-events:none;width:max-content;max-width:90vw}
 .toast{background:var(--amber);color:var(--black);padding:10px 16px;border:3px solid var(--black);box-shadow:4px 4px 0 var(--pink);font-weight:700;font-size:14.5px;animation:toast 3.5s forwards}
 .toast b{font-family:var(--f-comic);letter-spacing:.1em;font-weight:400;font-size:17px;margin-right:8px}
 @keyframes toast{0%{opacity:0;transform:translateY(14px)}10%,86%{opacity:1;transform:none}100%{opacity:0;transform:translateY(8px)}}
@@ -513,7 +524,7 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
 @media (max-width:900px){
   #hud{display:none}
   .pg{padding:calc(var(--nav-h) + 28px) 18px 54px}
-  .cover{align-items:flex-start;padding:calc(var(--nav-h) + 22px) 18px 72px}
+  .cover{align-items:flex-start;padding:calc(var(--nav-h) + 22px) 18px 82px}
   .cover-grid,.cr-grid,.ct-grid,.edu-grid,.next-choices{grid-template-columns:1fr;gap:22px}
   .cover-stage{order:-1;width:min(46vw,210px);margin-top:4px}
   .rays{right:-60%}
@@ -551,21 +562,25 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
   #player.open #vol{width:58px}
   #player.open .ptitle{font-size:13px}
 
-  /* Companion moves cleanly to bottom-left on mobile, bubble points left */
-  #buddy{left:max(12px,env(safe-area-inset-left));right:auto;bottom:max(12px,env(safe-area-inset-bottom));flex-direction:row-reverse;gap:10px}
-  #buddy .b-avatar{width:58px;height:58px}
-  #buddy .b-bub{max-width:min(230px,calc(100vw - 146px));padding:8px 11px;border-width:2.5px;border-radius:14px;transform:translateX(-10px) scale(.86);transform-origin:0 75%}
-  #buddy .b-bub::after{right:auto;left:-11px;bottom:16px;width:13px;height:12px;clip-path:polygon(100% 0,0 55%,100% 100%)}
-  #buddy .b-bub::before{right:auto;left:-15px;bottom:13px;width:17px;height:18px;clip-path:polygon(100% 0,0 55%,100% 100%)}
+  /* Mobile hybrid anchor: Mini Karim stays cleanly bottom-left, bubble rises neatly above */
+  #buddy{transform:none!important;left:max(10px,env(safe-area-inset-left));bottom:max(10px,env(safe-area-inset-bottom));width:auto;align-items:flex-start}
+  #buddy .b-avatar{height:88px;width:82px}
+  #buddy .b-img{height:86px;max-width:86px}
+  #buddy .b-bub{left:0;width:min(248px,calc(100vw - 28px));bottom:calc(100% + 10px);padding:8px 11px;border-width:2.5px;border-radius:14px;transform:translateY(10px) scale(.88);transform-origin:24px 100%}
+  #buddy.show-bub .b-bub{transform:translateY(0) scale(1)}
+  #buddy .b-bub::after{left:28px;transform:none}
+  #buddy .b-bub::before{left:25px;transform:none}
   #buddy .b-tag{font-size:11.5px}
   #buddy .b-msg{font-size:12px;line-height:1.3}
-  #buddy .b-hide{width:20px;height:20px;font-size:12px;left:-4px;right:auto}
-  footer{padding:20px 18px 86px}
+  #buddy .b-ctrls{padding:2px 5px}
+  #buddy .b-voice{font-size:11px;padding:2px 4px}
+  #buddy.min{left:max(12px,env(safe-area-inset-left))!important;right:auto;bottom:max(14px,env(safe-area-inset-bottom))}
+  footer{padding:20px 18px 132px}
 }
 @media (max-width:720px){
   body{font-size:15.5px}
   .pg{padding:calc(var(--nav-h) + 24px) 15px 48px}
-  .cover{padding:calc(var(--nav-h) + 18px) 15px 68px}
+  .cover{padding:calc(var(--nav-h) + 18px) 15px 76px}
   .cover::after{inset:8px;border-width:2px}
   .cover .spine{width:10px}
   .avail{font-size:11px;letter-spacing:.08em;padding:4px 10px;margin-bottom:10px}
@@ -625,7 +640,7 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
   .panel,.mi-face{border-width:3px;box-shadow:5px 5px 0 var(--black)}
   #mic{margin-top:32px;padding-top:26px}
   .end .tbc{font-size:clamp(38px,12vw,64px);-webkit-text-stroke:3px var(--black)}
-  #toasts{bottom:calc(82px + env(safe-area-inset-bottom))}
+  #toasts{bottom:calc(126px + env(safe-area-inset-bottom))}
 }
 @media (max-width:390px){
   .logo span{display:none}
@@ -639,7 +654,7 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
   .sheet{transform:none!important}
   .js .panel,.js .rv,.js .bub,.js .sfx2,.js .chip{opacity:1;transform:none}
   .js .hl .ln > span{transform:none}.js .nar{clip-path:none}
-  .rays,#buddy .b-svg{animation:none}
+  .rays,#buddy .b-img{animation:none}
 }
 </style>
 </head>
@@ -993,121 +1008,28 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
 <footer>&copy; 2026 Karim Alashry &middot; The Story Behind the Character &middot; Issue #01</footer>
 <noscript><p style="padding:24px;text-align:center;background:#090911;color:#fff">This interactive comic needs JavaScript. Contact: Karimhatemalashry@gmail.com &middot; +201050956809 &middot; linkedin.com/in/karimalashry</p></noscript>
 
-<!-- 2D Comic Scroll Companion -->
-<aside id="buddy" aria-label="Interactive comic guide">
+<!-- 2D Walking Comic Companion (Mini Karim) -->
+<aside id="buddy" class="idle" aria-label="Interactive 2D comic guide">
   <div class="b-bub" id="bBub" role="status" aria-live="polite">
-    <span class="b-tag" id="bTag">MINI KARIM</span>
-    <p class="b-msg" id="bMsg">Welcome! Grab the CV or scroll down to open the story.</p>
+    <div class="b-tag-row">
+      <span class="b-tag" id="bTag">MINI KARIM</span>
+      <span class="b-eq" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i></span>
+    </div>
+    <p class="b-msg" id="bMsg">Hey, I'm Karim! Tap me to turn on my voice, or scroll down to open the story.</p>
   </div>
-  <div class="b-wrap">
-    <button class="b-hide" id="bHide" type="button" aria-label="Minimize guide">&times;</button>
-    <button class="b-avatar" id="bAvatar" type="button" aria-label="Tap Mini Karim for a tip">
-      <svg class="b-svg" viewBox="0 0 100 100" aria-hidden="true">
-        <defs>
-          <clipPath id="bClip"><circle cx="50" cy="54" r="40"/></clipPath>
-        </defs>
-        <!-- Speed lines on panic -->
-        <g class="b-lines" stroke="#FFB547" stroke-width="3" stroke-linecap="round">
-          <path d="M4 22 14 28M2 46 11 48M96 22 86 28M98 46 89 48M20 4 26 14M80 4 74 14"/>
-        </g>
-        <!-- Comic badge base -->
-        <circle cx="50" cy="54" r="42" fill="#211A3D" stroke="#F3F0F5" stroke-width="4"/>
-        <circle cx="50" cy="54" r="40" fill="none" stroke="#090911" stroke-width="2"/>
-        <!-- Body inside badge -->
-        <g clip-path="url(#bClip)">
-          <!-- Dark jacket & red tee -->
-          <path d="M14 98 C16 76 30 72 50 72 C70 72 84 76 86 98 Z" fill="#17142B" stroke="#090911" stroke-width="3"/>
-          <path d="M36 73 L50 98 L64 73 Z" fill="#D81E4F" stroke="#090911" stroke-width="2.5"/>
-          <!-- Neck -->
-          <rect x="43" y="64" width="14" height="12" rx="4" fill="#DC9B70" stroke="#090911" stroke-width="2.5"/>
-        </g>
-        <!-- Back curly hair volume -->
-        <g fill="#120F1F" stroke="#090911" stroke-width="2.5">
-          <circle cx="29" cy="40" r="10"/>
-          <circle cx="71" cy="40" r="10"/>
-          <circle cx="27" cy="51" r="7"/>
-          <circle cx="73" cy="51" r="7"/>
-        </g>
-        <!-- Head / face -->
-        <path d="M32 42 C32 28 68 28 68 42 L67 57 C67 67 59 73 50 73 C41 73 33 67 33 57 Z" fill="#EEB68C" stroke="#090911" stroke-width="3"/>
-        <!-- Ears -->
-        <circle cx="31" cy="53" r="4.5" fill="#E3A378" stroke="#090911" stroke-width="2.5"/>
-        <circle cx="69" cy="53" r="4.5" fill="#E3A378" stroke="#090911" stroke-width="2.5"/>
-        <!-- Subtle stubble -->
-        <g fill="#090911" opacity=".32">
-          <circle cx="42" cy="67" r="1"/><circle cx="46" cy="69" r="1"/><circle cx="50" cy="70" r="1"/><circle cx="54" cy="69" r="1"/><circle cx="58" cy="67" r="1"/>
-          <circle cx="38" cy="64" r="1"/><circle cx="62" cy="64" r="1"/>
-        </g>
-        <!-- Top curly hair crown -->
-        <g fill="#141024" stroke="#090911" stroke-width="2.8">
-          <circle cx="36" cy="27" r="9.5"/>
-          <circle cx="50" cy="23" r="11"/>
-          <circle cx="64" cy="27" r="9.5"/>
-          <circle cx="43" cy="31" r="7.5"/>
-          <circle cx="58" cy="31" r="7.5"/>
-          <circle cx="31" cy="34" r="7"/>
-          <circle cx="69" cy="34" r="7"/>
-        </g>
-        <!-- Hair highlight strokes -->
-        <path d="M45 19 Q50 16 55 19 M34 25 Q37 22 40 24 M61 24 Q65 22 67 26" fill="none" stroke="#7547D8" stroke-width="2" stroke-linecap="round"/>
-
-        <!-- NORMAL FACE -->
-        <g class="f-norm">
-          <path d="M36 43 Q41 41 45 43 M55 43 Q59 41 64 43" fill="none" stroke="#090911" stroke-width="2.4" stroke-linecap="round"/>
-          <g class="b-eye-blink">
-            <circle cx="41" cy="50" r="2.7" fill="#090911"/>
-            <circle cx="59" cy="50" r="2.7" fill="#090911"/>
-            <circle cx="42" cy="49" r=".9" fill="#FFF"/>
-            <circle cx="60" cy="49" r=".9" fill="#FFF"/>
-          </g>
-          <path d="M44 61 Q50 65 56 61" fill="none" stroke="#090911" stroke-width="2.5" stroke-linecap="round"/>
-        </g>
-
-        <!-- TALKING FACE -->
-        <g class="f-talk">
-          <path d="M36 42 Q41 39 45 42 M55 42 Q59 39 64 42" fill="none" stroke="#090911" stroke-width="2.4" stroke-linecap="round"/>
-          <circle cx="41" cy="50" r="2.8" fill="#090911"/>
-          <circle cx="59" cy="50" r="2.8" fill="#090911"/>
-          <circle cx="42" cy="49" r="1" fill="#FFF"/>
-          <circle cx="60" cy="49" r="1" fill="#FFF"/>
-          <path d="M43 59 Q50 58 57 59 Q56 66 50 66 Q44 66 43 59 Z" fill="#090911"/>
-          <path d="M46 63 Q50 65 54 63" fill="none" stroke="#FF3D91" stroke-width="2" stroke-linecap="round"/>
-        </g>
-
-        <!-- PANIC FACE -->
-        <g class="f-panic">
-          <path d="M35 41 L46 38 M65 41 L54 38" fill="none" stroke="#090911" stroke-width="2.6" stroke-linecap="round"/>
-          <circle cx="41" cy="50" r="5.2" fill="#FFF" stroke="#090911" stroke-width="2"/>
-          <circle cx="59" cy="50" r="5.2" fill="#FFF" stroke="#090911" stroke-width="2"/>
-          <circle cx="41" cy="50" r="1.7" fill="#090911"/>
-          <circle cx="59" cy="50" r="1.7" fill="#090911"/>
-          <ellipse cx="50" cy="63" rx="6" ry="5" fill="#090911"/>
-          <ellipse cx="50" cy="65.5" rx="3.4" ry="2" fill="#FF3D91"/>
-        </g>
-
-        <!-- TIRED RECOVERY FACE -->
-        <g class="f-tired">
-          <path d="M36 44 L46 43 M64 44 L54 43" fill="none" stroke="#090911" stroke-width="2.3" stroke-linecap="round"/>
-          <path d="M37 50 Q41 53 45 50 M55 50 Q59 53 63 50" fill="none" stroke="#090911" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M44 63 Q47 60 50 63 Q53 66 56 63" fill="none" stroke="#090911" stroke-width="2.4" stroke-linecap="round"/>
-        </g>
-
-        <!-- Round Comic Glasses (Gold/Black rim) -->
-        <g fill="rgba(53,214,232,.14)" stroke="#FFB547" stroke-width="2.4">
-          <circle cx="41" cy="50" r="7.4"/>
-          <circle cx="59" cy="50" r="7.4"/>
-        </g>
-        <path d="M48.5 50 L51.5 50 M33.5 49 L31 48 M66.5 49 L69 48" stroke="#090911" stroke-width="2.2" stroke-linecap="round"/>
-
-        <!-- Sweat drops for panic / tired -->
-        <g class="b-sweat">
-          <path d="M77 33 C77 33 82 40 82 43 A5 5 0 0 1 72 43 C72 40 77 33 77 33 Z" fill="#35D6E8" stroke="#090911" stroke-width="2"/>
-          <path d="M22 30 C22 30 25 35 25 37 A3 3 0 0 1 19 37 C19 35 22 30 22 30 Z" fill="#35D6E8" stroke="#090911" stroke-width="1.8"/>
-        </g>
-      </svg>
+  <div class="b-char-box">
+    <button class="b-avatar" id="bAvatar" type="button" aria-label="Tap Mini Karim to hear him speak">
+      <img class="b-img" id="bImg" src="assets/images/buddy-idle.webp" alt="Mini Karim 2D comic companion" draggable="false">
     </button>
+    <div class="b-ctrls">
+      <button class="b-voice" id="bVoice" type="button" aria-pressed="false" aria-label="Toggle Mini Karim voice">
+        <span class="bv-dot" aria-hidden="true"></span>
+        <span id="bVoiceTxt">VOICE OFF</span>
+      </button>
+      <button class="b-hide" id="bHide" type="button" aria-label="Minimize guide">&times;</button>
+    </div>
   </div>
-  <button class="b-restore" id="bRestore" type="button" aria-label="Show comic guide">SHOW GUIDE</button>
+  <button class="b-restore" id="bRestore" type="button" aria-label="Show Mini Karim guide">SHOW MINI KARIM</button>
 </aside>
 
 <div id="player" role="region" aria-label="Background music player">
@@ -1316,7 +1238,10 @@ function renderJob(i,scrollToCard){
 }
 $$('.j-tab').forEach(function(b){b.addEventListener('click',function(){renderJob(+b.dataset.ji,false)})});
 renderJob(0,false);
-addEventListener('load',function(){XP.forEach(function(x){var im=new Image();im.src=imgSrc(x.img)})});
+addEventListener('load',function(){
+ XP.forEach(function(x){var im=new Image();im.src=imgSrc(x.img)});
+ ['buddy-idle','buddy-talk','buddy-walk1','buddy-walk2','buddy-panic','buddy-tired'].forEach(function(n){var im=new Image();im.src=imgSrc(n)});
+});
 
 /* ================= RENDER SKILLS ================= */
 $('#skillGrid').innerHTML=['cs','ops','tools','ai'].map(function(c,i){
@@ -1441,59 +1366,184 @@ function frame(){
 var tick=false;function req(){if(!tick){tick=true;requestAnimationFrame(function(){frame();tick=false})}}
 addEventListener('scroll',req,{passive:true});addEventListener('resize',req);frame();
 
-/* ================= 2D COMIC SCROLL COMPANION (MINI KARIM) ================= */
-(function(){
- var buddy=$('#buddy'),bTag=$('#bTag'),bMsg=$('#bMsg'),bAvatar=$('#bAvatar'),bHide=$('#bHide'),bRestore=$('#bRestore');
- var SEC_LINES={
-  home:['THE COVER','Welcome! Grab the CV right here or scroll down to start the story.'],
-  journey:['CHAPTER 01','5 roles across 3 countries. Click the company tabs to jump between scenes.'],
-  superpowers:['CHAPTER 02','The exact toolkit from my CV. Hover over any skill to power it up.'],
-  missions:['CHAPTER 03','Drag the Before/After slider, then tap the 6 mission cards to flip them!'],
-  education:['CHAPTER 04','Sociology degree plus Native Arabic and B2 English.'],
-  certifications:['CREDENTIALS','5 verified certificates. Hit VIEW CERTIFICATE to inspect them full size.'],
-  creative:['PLOT TWIST!','Voice-over storytelling reels live here. Tap play for a 14-second preview.'],
-  lens:['PHOTOGRAPHY','Street and night frames through my lens. Tap any shot to view full size.'],
-  universe:['CREATIVE SIDE','Comics, rap, voice-over, and visual storytelling behind the CX metrics.'],
-  contact:['FINAL SCENE','WhatsApp, Email, or LinkedIn. Pick your favorite way to say hello!'],
-  end:['THE END?','You made it to the end! Pick Option A or B to start the next chapter.']
- };
- var PANIC_LINES=[
-  'WHOA! Slow down! You are scrolling way too fast, my knees cannot take this!',
-  'HOLD ON! Speed limit! I am running out of breath trying to keep up!',
-  'WAIT A SEC! Are we speedrunning this portfolio?! I am getting dizzy!',
-  'TOO FAST! My glasses are about to fly off! Easy on the scroll!'
- ];
- var TAP_LINES=[
-  ['MINI KARIM','Hey! Keep scrolling at a human pace and I will guide you through!'],
-  ['PRO TIP','Try flipping all 6 mission cards in Chapter 03 to unlock a badge.'],
-  ['QUICK SHORTCUT','Need the CV fast? Grab it on the Cover or in the Final Chapter!'],
-  ['FUN FACT','Try typing my first name on your keyboard for a hidden Easter egg.']
- ];
- var state='idle',lastSec='',panicIdx=0,tapIdx=0;
- var lastY=scrollY,lastT=performance.now(),fastAccum=0,navLockUntil=0;
- var stopTimer=null,hideBubTimer=null,recoverTimer=null,talkResetTimer=null;
+/* ================= MUSIC & MOBILE FAB ================= */
+var bgm=$('#bgm'),player=$('#player'),pFab=$('#pFab'),pPlay=$('#pPlay'),pMute=$('#pMute'),vol=$('#vol'),pState=$('#pState');
+pFab.addEventListener('click',function(e){
+ e.stopPropagation();
+ var o=player.classList.toggle('open');
+ pFab.setAttribute('aria-expanded',o);
+});
+document.addEventListener('click',function(e){
+ if(player.classList.contains('open')&&!player.contains(e.target)){
+  player.classList.remove('open');pFab.setAttribute('aria-expanded','false');
+ }
+});
+function store(k,v){try{if(v===undefined)return JSON.parse(sessionStorage.getItem(k));sessionStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+var M={ready:false,on:false,vol:.25,muted:false,resume:false,fade:null,voiceDucked:false};
+var saved=store('karim-music');if(saved){M.vol=typeof saved.vol==='number'?saved.vol:.25;M.muted=!!saved.muted}
+vol.value=Math.round(M.vol*100);
+function persist(){store('karim-music',{vol:M.vol,muted:M.muted})}
+function ui(){player.classList.toggle('on',M.on);player.classList.toggle('muted',M.muted);
+ pPlay.setAttribute('aria-pressed',M.on);pPlay.setAttribute('aria-label',M.on?'Pause background music':'Play background music');
+ pMute.setAttribute('aria-pressed',M.muted);pMute.setAttribute('aria-label',M.muted?'Unmute music':'Mute music');
+ pState.textContent=M.on?(M.muted?'MUTED':'MUSIC ON'):'MUSIC OFF'}
+function ready(){M.ready=true;player.classList.add('ready');player.classList.remove('err');[pPlay,pMute,vol].forEach(function(e){e.disabled=false});bgm.muted=M.muted;ui()}
+function fail(){M.ready=false;player.classList.add('err');player.classList.remove('ready');[pPlay,pMute,vol].forEach(function(e){e.disabled=true});pState.textContent='UNAVAILABLE'}
+bgm.addEventListener('loadedmetadata',ready);bgm.addEventListener('canplay',function(){if(!M.ready)ready()});
+bgm.addEventListener('error',fail);var src=bgm.querySelector('source');if(src)src.addEventListener('error',fail);
+if(bgm.readyState>=1)ready();
+function chk(){if(!M.ready&&(bgm.error||bgm.networkState===3))fail()}
+setTimeout(chk,800);setTimeout(chk,2500);addEventListener('load',function(){setTimeout(chk,300)});
+function fadeTo(t,ms,done){cancelAnimationFrame(M.fade);var s=bgm.volume,t0=null;if(RM||ms<=0){bgm.volume=t;done&&done();return}
+ (function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/ms,1);bgm.volume=clamp(s+(t-s)*p,0,1);if(p<1)M.fade=requestAnimationFrame(step);else done&&done()})(performance.now())}
+function play(){if(!M.ready)return;bgm.muted=M.muted;bgm.volume=0;var pr=bgm.play();var go=function(){M.on=true;ui();fadeTo(M.voiceDucked?M.vol*.22:M.vol,1200)};if(pr&&pr.then)pr.then(go).catch(function(){M.on=false;ui();toast('AUDIO','Your browser blocked playback. Press play again.')});else go()}
+function pause(){fadeTo(0,700,function(){bgm.pause();M.on=false;ui()})}
+pPlay.addEventListener('click',function(){M.resume=false;M.on?pause():play()});
+pMute.addEventListener('click',function(){M.muted=!M.muted;bgm.muted=M.muted;persist();ui()});
+vol.addEventListener('input',function(){M.vol=vol.value/100;if(M.on&&!M.muted){cancelAnimationFrame(M.fade);bgm.volume=M.voiceDucked?M.vol*.22:M.vol}if(M.muted&&M.vol>0){M.muted=false;bgm.muted=false}persist();ui()});
+function duck(){if(M.on){M.resume=true;fadeTo(0,500,function(){bgm.pause();M.on=false;ui()})}}
+function restore(){if(M.resume){M.resume=false;play()}}
+function duckForVoice(on){
+ M.voiceDucked=!!on;
+ if(!M.on||M.muted)return;
+ fadeTo(on?M.vol*.22:M.vol,on?220:450);
+}
+ui();
 
+/* ================= VIDEO PREVIEWS ================= */
+var activeV=null,stopBuddyVoice=function(){};
+function stopVideo(){if(!activeV)return;var card=activeV.card,v=activeV.el;activeV=null;v.pause();v.remove();$('.play',card).style.display='';$('.vbadge',card).style.display='';var vt=$('.vt',card);if(vt)vt.style.display='';restore()}
+$$('.vc').forEach(function(card){
+ var d=VIDEOS[+card.dataset.i],media=$('.vm',card);
+ $('.play',card).addEventListener('click',function(){
+  stopVideo();stopBuddyVoice();
+  var v=document.createElement('video');v.src=d.v;v.poster=d.p;v.controls=true;v.playsInline=true;v.preload='auto';v.setAttribute('playsinline','');v.setAttribute('aria-label','Preview: '+d.t);
+  media.appendChild(v);$('.play',card).style.display='none';$('.vbadge',card).style.display='none';var vt=$('.vt',card);if(vt)vt.style.display='none';activeV={card:card,el:v};
+  v.addEventListener('play',function(){stopBuddyVoice();duck()});
+  v.addEventListener('pause',function(){if(!v.ended&&activeV&&activeV.el===v)restore()});
+  v.addEventListener('ended',function(){if(activeV&&activeV.el===v)stopVideo()});
+  v.addEventListener('error',function(){if(activeV&&activeV.el===v){stopVideo();toast('VIDEO','Preview unavailable. Use WATCH FULL VIDEO instead.')}});
+  var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});
+ });
+});
+var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting&&activeV&&activeV.card===e.target)stopVideo()})},{threshold:0});$$('.vc').forEach(function(c){vio.observe(c)});
+
+/* ================= 2D WALKING & TALKING COMPANION (MINI KARIM) ================= */
+(function(){
+ var buddy=$('#buddy'),bImg=$('#bImg'),bTag=$('#bTag'),bMsg=$('#bMsg'),bAvatar=$('#bAvatar'),bVoice=$('#bVoice'),bVoiceTxt=$('#bVoiceTxt'),bHide=$('#bHide'),bRestore=$('#bRestore'),hud=$('#hud');
+ var SPRITES={
+  idle:'assets/images/buddy-idle.webp',
+  talk:'assets/images/buddy-talk.webp',
+  walk1:'assets/images/buddy-walk1.webp',
+  walk2:'assets/images/buddy-walk2.webp',
+  panic:'assets/images/buddy-panic.webp',
+  tired:'assets/images/buddy-tired.webp'
+ };
+ var SEC_DATA={
+  home:['THE COVER','Hey, I’m Karim! Grab the CV right here, or scroll down to open the story.','buddy-home'],
+  journey:['CHAPTER 01','Five roles across Kuwait, Saudi Arabia, and the UK. Click any tab to jump between chapters.','buddy-journey'],
+  superpowers:['CHAPTER 02','Every skill here comes straight from my CV. Hover over any badge to power it up.','buddy-skills'],
+  missions:['CHAPTER 03','Drag the before-and-after slider, and tap the six mission cards to see how the numbers happened.','buddy-missions'],
+  education:['CHAPTER 04','Sociology degree, native Arabic, and B2 English. Solid foundation.','buddy-education'],
+  certifications:['CREDENTIALS','Five verified certificates. Hit View Certificate to inspect any of them full size.','buddy-certs'],
+  creative:['PLOT TWIST!','Plot twist! This is my voice-over side. Hit play for a quick preview.','buddy-creative'],
+  lens:['PHOTOGRAPHY','A few street and night frames through my lens. Tap any shot to zoom in.','buddy-lens'],
+  universe:['CREATIVE SIDE','Comics, voice-over, rap, and photography. There’s more to the character than dashboards.','buddy-universe'],
+  contact:['FINAL SCENE','Final scene! WhatsApp, Email, or LinkedIn. Pick your favorite way to say hello.','buddy-contact'],
+  end:['THE END?','You made it to the end! Pick Option A or B to start the next chapter.','buddy-end']
+ };
+ var PANICS=[
+  ['Whoa, whoa, slow down! You’re scrolling way too fast, my knees can’t take this!','buddy-panic1'],
+  ['Hold on! Are we speedrunning this portfolio? My glasses are about to fly off!','buddy-panic2']
+ ];
+
+ var voiceEl=new Audio();
+ voiceEl.preload='auto';
+ var voiceOn=false,isSpeaking=false,state='idle',lastSec='',panicIdx=0,lastPanicAudioAt=0;
+ var curSprite='idle',walkFrame=0,walkDist=0,dir=1;
+ var lastY=scrollY,lastT=performance.now(),fastAccum=0,navLockUntil=0;
+ var stopTimer=null,hideBubTimer=null,recoverTimer=null,idleTimer=null;
+ var curX=260,targetX=260,moveRaf=null;
+
+ function setSprite(key){
+  if(curSprite===key)return;
+  curSprite=key;
+  bImg.src=SPRITES[key];
+ }
+ function setFlip(f){
+  bImg.style.setProperty('--flip',f);
+ }
+ function pointInwardFlip(){
+  if(mobile())return -1; /* bottom-left on mobile -> flip talk sprite to point right */
+  return (curX + 59) < (innerWidth * 0.5) ? -1 : 1;
+ }
  function setMood(m){
   state=m;
-  buddy.classList.remove('talk','panic','tired');
-  if(m!=='idle')buddy.classList.add(m);
+  buddy.classList.remove('idle','talk','walk','panic','tired');
+  buddy.classList.add(m);
+  if(m==='idle'){setSprite('idle');setFlip(1)}
+  else if(m==='talk'){setSprite('talk');setFlip(pointInwardFlip())}
+  else if(m==='panic'){setSprite('panic');setFlip(dir)}
+  else if(m==='tired'){setSprite('tired');setFlip(1)}
+  else if(m==='walk'){setSprite(walkFrame?'walk2':'walk1');setFlip(dir)}
  }
- function speak(tag,msg,mood,autoHideMs){
+
+ stopBuddyVoice=function(){
+  try{voiceEl.pause();voiceEl.currentTime=0}catch(e){}
+  isSpeaking=false;
+  buddy.classList.remove('speaking');
+  duckForVoice(false);
+ };
+
+ function playVoice(file,onDone){
+  stopBuddyVoice();
+  if(!voiceOn||!file||activeV||buddy.classList.contains('min')){
+   if(onDone)onDone();
+   return;
+  }
+  voiceEl.src='assets/audio/'+file+'.mp3';
+  voiceEl.currentTime=0;
+  isSpeaking=true;
+  buddy.classList.add('speaking');
+  duckForVoice(true);
+  var finished=false;
+  function finish(){
+   if(finished)return;
+   finished=true;
+   isSpeaking=false;
+   buddy.classList.remove('speaking');
+   duckForVoice(false);
+   if(onDone)onDone();
+  }
+  voiceEl.onended=finish;
+  voiceEl.onerror=finish;
+  var pr=voiceEl.play();
+  if(pr&&pr.catch)pr.catch(finish);
+ }
+
+ function speak(tag,msg,mood,audioFile,autoHideMs){
   if(buddy.classList.contains('min'))return;
-  clearTimeout(hideBubTimer);clearTimeout(talkResetTimer);
+  clearTimeout(hideBubTimer);clearTimeout(idleTimer);
   bTag.textContent=tag;bMsg.textContent=msg;
   setMood(mood||'talk');
   buddy.classList.add('show-bub');
-  if(mood==='talk'){
-   talkResetTimer=setTimeout(function(){if(state==='talk')setMood('idle')},1200);
+
+  if(voiceOn&&audioFile){
+   playVoice(audioFile,function(){
+    if(state==='talk')setMood('idle');
+   });
+  }else if(mood==='talk'){
+   idleTimer=setTimeout(function(){if(state==='talk'&&!isSpeaking)setMood('idle')},2200);
   }
-  var ms=autoHideMs||(innerWidth<=900?5200:8500);
+
+  var ms=autoHideMs!==undefined?autoHideMs:(mobile()?5500:8500);
   if(ms>0){
    hideBubTimer=setTimeout(function(){
-    if(state!=='panic')buddy.classList.remove('show-bub');
+    if(state!=='panic'&&!isSpeaking)buddy.classList.remove('show-bub');
    },ms);
   }
  }
+
  function getCurSectionId(){
   var vh=innerHeight,cur='home';
   for(var i=0;i<pages.length;i++){
@@ -1502,18 +1552,54 @@ addEventListener('scroll',req,{passive:true});addEventListener('resize',req);fra
   }
   return cur;
  }
- function announceSection(force){
+
+ function announceSection(force,playAudio){
   var id=getCurSectionId();
   if(!force&&id===lastSec)return;
   lastSec=id;
-  var info=SEC_LINES[id]||SEC_LINES.home;
-  speak(info[0],info[1],'talk');
+  var info=SEC_DATA[id]||SEC_DATA.home;
+  speak(info[0],info[1],'talk',playAudio===false?null:info[2]);
+ }
+
+ /* Compute safe horizontal track between left HUD and right Music Player on Desktop */
+ function computeTargetX(){
+  if(mobile()||buddy.classList.contains('min'))return;
+  var hudR=hud?hud.getBoundingClientRect().right:240;
+  var plL=player?player.getBoundingClientRect().left:(innerWidth-380);
+  var minX=Math.max(20,hudR+14);
+  var maxX=Math.max(minX,plL-128);
+  var H=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+  var prog=clamp(scrollY/H,0,1);
+  targetX=minX+prog*(maxX-minX);
+ }
+ function animateX(){
+  if(mobile()||buddy.classList.contains('min')){moveRaf=null;return}
+  var diff=targetX-curX;
+  if(Math.abs(diff)<0.6){
+   curX=targetX;
+   buddy.style.transform='translate3d('+curX.toFixed(1)+'px,0,0)';
+   moveRaf=null;
+   return;
+  }
+  curX+=diff*0.22;
+  buddy.style.transform='translate3d('+curX.toFixed(1)+'px,0,0)';
+  moveRaf=requestAnimationFrame(animateX);
+ }
+ function syncPosition(instant){
+  computeTargetX();
+  if(mobile()||buddy.classList.contains('min'))return;
+  if(instant||RM){
+   curX=targetX;
+   buddy.style.transform='translate3d('+curX.toFixed(1)+'px,0,0)';
+  }else if(!moveRaf){
+   moveRaf=requestAnimationFrame(animateX);
+  }
  }
 
  /* Ignore programmatic anchor jumps so nav clicks do not trigger panic */
  $$('a[href^="#"]').forEach(function(a){
   a.addEventListener('click',function(){
-   navLockUntil=performance.now()+1000;
+   navLockUntil=performance.now()+1100;
    fastAccum=0;
   });
  });
@@ -1522,57 +1608,117 @@ addEventListener('scroll',req,{passive:true});addEventListener('resize',req);fra
   if(buddy.classList.contains('min'))return;
   var now=performance.now(),y=scrollY,dy=y-lastY,dt=Math.max(now-lastT,16);
   lastY=y;lastT=now;
-  var speed=dy/dt; /* px per ms downward */
+  if(Math.abs(dy)>0.5)dir=dy>0?1:-1;
 
-  if(now>navLockUntil&&dy>0&&speed>2.5){
+  syncPosition(false);
+
+  var speed=dy/dt; /* px per ms downward */
+  if(now>navLockUntil&&dy>0&&speed>2.4){
    fastAccum+=dy;
-   if(fastAccum>420&&state!=='panic'){
-    clearTimeout(recoverTimer);
-    var line=PANIC_LINES[panicIdx++%PANIC_LINES.length];
-    speak('SLOW DOWN!',line,'panic',0);
+   if(fastAccum>400&&state!=='panic'){
+    clearTimeout(recoverTimer);clearTimeout(idleTimer);
+    var p=PANICS[panicIdx++%PANICS.length];
+    var canPlayPanic=(now-lastPanicAudioAt)>3200;
+    if(canPlayPanic)lastPanicAudioAt=now;
+    speak('SLOW DOWN!',p[0],'panic',canPlayPanic?p[1]:null,0);
    }
-  }else if(dy<=0||speed<1.1){
-   fastAccum=Math.max(0,fastAccum-90);
+  }else{
+   if(dy<=0||speed<1.1)fastAccum=Math.max(0,fastAccum-90);
+   if(state!=='panic'&&Math.abs(dy)>1){
+    walkDist+=Math.abs(dy);
+    if(walkDist>=52){
+     walkDist=0;
+     walkFrame=walkFrame?0:1;
+    }
+    if(state!=='walk'){
+     clearTimeout(idleTimer);
+     setMood('walk');
+    }else{
+     setSprite(walkFrame?'walk2':'walk1');
+     setFlip(dir);
+    }
+   }
   }
 
   clearTimeout(stopTimer);
   stopTimer=setTimeout(function(){
    fastAccum=0;
    if(state==='panic'){
-    speak('PHEW...','Okay, caught my breath. Let me check where we landed...','tired',2100);
     clearTimeout(recoverTimer);
-    recoverTimer=setTimeout(function(){
+    var fired=false;
+    function finishRecovery(){
+     if(fired)return;
+     fired=true;
      lastSec='';
-     announceSection(true);
-    },2000);
+     announceSection(true,true);
+    }
+    speak('PHEW...','Phew... okay, caught my breath. Let’s see where we landed.','tired',null,2800);
+    if(voiceOn&&!activeV){
+     playVoice('buddy-tired',function(){
+      recoverTimer=setTimeout(finishRecovery,450);
+     });
+     recoverTimer=setTimeout(finishRecovery,4500);
+    }else{
+     recoverTimer=setTimeout(finishRecovery,2000);
+    }
    }else{
-    announceSection(false);
+    var curId=getCurSectionId();
+    if(curId!==lastSec){
+     announceSection(false,true);
+    }else if(state==='walk'){
+     setMood(isSpeaking?'talk':'idle');
+    }
    }
-  },240);
+  },220);
  },{passive:true});
+
+ addEventListener('resize',function(){syncPosition(true)});
+
+ function setVoiceState(on){
+  voiceOn=!!on;
+  buddy.classList.toggle('voice-on',voiceOn);
+  bVoice.setAttribute('aria-pressed',voiceOn?'true':'false');
+  bVoiceTxt.textContent=voiceOn?'VOICE ON':'VOICE OFF';
+  if(!voiceOn)stopBuddyVoice();
+ }
+
+ bVoice.addEventListener('click',function(e){
+  e.stopPropagation();
+  setVoiceState(!voiceOn);
+  if(voiceOn)announceSection(true,true);
+ });
 
  bAvatar.addEventListener('click',function(){
   clearTimeout(recoverTimer);
-  if(buddy.classList.contains('show-bub')&&state!=='panic'){
-   var t=TAP_LINES[tapIdx++%TAP_LINES.length];
-   speak(t[0],t[1],'talk');
-  }else{
-   announceSection(true);
+  if(!voiceOn){
+   setVoiceState(true);
   }
- });
- bHide.addEventListener('click',function(e){
-  e.stopPropagation();
-  buddy.classList.add('min');
-  buddy.classList.remove('show-bub');
-  clearTimeout(hideBubTimer);clearTimeout(recoverTimer);
- });
- bRestore.addEventListener('click',function(){
-  buddy.classList.remove('min');
-  announceSection(true);
+  announceSection(true,true);
  });
 
- /* Initial greeting after page settles */
- setTimeout(function(){announceSection(true)},900);
+ bHide.addEventListener('click',function(e){
+  e.stopPropagation();
+  stopBuddyVoice();
+  buddy.classList.add('min');
+  buddy.classList.remove('show-bub');
+  clearTimeout(hideBubTimer);clearTimeout(recoverTimer);clearTimeout(idleTimer);
+ });
+
+ bRestore.addEventListener('click',function(){
+  buddy.classList.remove('min');
+  syncPosition(true);
+  announceSection(true,voiceOn);
+ });
+
+ /* Initial position & greeting */
+ syncPosition(true);
+ setTimeout(function(){
+  syncPosition(true);
+  if(!buddy.classList.contains('min')){
+   lastSec=getCurSectionId();
+   speak('MINI KARIM','Hey, I’m Karim! Tap me to turn on my voice, or scroll down to open the story.','talk',null,8500);
+  }
+ },800);
 })();
 
 /* nav menu */
@@ -1601,62 +1747,6 @@ var lc=0,lt;$('#logo').addEventListener('click',function(){lc++;clearTimeout(lt)
  document.addEventListener('visibilitychange',function(){run=!document.hidden;if(run)requestAnimationFrame(draw)});
  requestAnimationFrame(draw);
 })();
-
-/* ================= MUSIC & MOBILE FAB ================= */
-var bgm=$('#bgm'),player=$('#player'),pFab=$('#pFab'),pPlay=$('#pPlay'),pMute=$('#pMute'),vol=$('#vol'),pState=$('#pState');
-pFab.addEventListener('click',function(e){
- e.stopPropagation();
- var o=player.classList.toggle('open');
- pFab.setAttribute('aria-expanded',o);
-});
-document.addEventListener('click',function(e){
- if(player.classList.contains('open')&&!player.contains(e.target)){
-  player.classList.remove('open');pFab.setAttribute('aria-expanded','false');
- }
-});
-function store(k,v){try{if(v===undefined)return JSON.parse(sessionStorage.getItem(k));sessionStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
-var M={ready:false,on:false,vol:.25,muted:false,resume:false,fade:null};
-var saved=store('karim-music');if(saved){M.vol=typeof saved.vol==='number'?saved.vol:.25;M.muted=!!saved.muted}
-vol.value=Math.round(M.vol*100);
-function persist(){store('karim-music',{vol:M.vol,muted:M.muted})}
-function ui(){player.classList.toggle('on',M.on);player.classList.toggle('muted',M.muted);
- pPlay.setAttribute('aria-pressed',M.on);pPlay.setAttribute('aria-label',M.on?'Pause background music':'Play background music');
- pMute.setAttribute('aria-pressed',M.muted);pMute.setAttribute('aria-label',M.muted?'Unmute music':'Mute music');
- pState.textContent=M.on?(M.muted?'MUTED':'MUSIC ON'):'MUSIC OFF'}
-function ready(){M.ready=true;player.classList.add('ready');player.classList.remove('err');[pPlay,pMute,vol].forEach(function(e){e.disabled=false});bgm.muted=M.muted;ui()}
-function fail(){M.ready=false;player.classList.add('err');player.classList.remove('ready');[pPlay,pMute,vol].forEach(function(e){e.disabled=true});pState.textContent='UNAVAILABLE'}
-bgm.addEventListener('loadedmetadata',ready);bgm.addEventListener('canplay',function(){if(!M.ready)ready()});
-bgm.addEventListener('error',fail);var src=bgm.querySelector('source');if(src)src.addEventListener('error',fail);
-if(bgm.readyState>=1)ready();
-function chk(){if(!M.ready&&(bgm.error||bgm.networkState===3))fail()}
-setTimeout(chk,800);setTimeout(chk,2500);addEventListener('load',function(){setTimeout(chk,300)});
-function fadeTo(t,ms,done){cancelAnimationFrame(M.fade);var s=bgm.volume,t0=null;if(RM||ms<=0){bgm.volume=t;done&&done();return}
- (function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/ms,1);bgm.volume=clamp(s+(t-s)*p,0,1);if(p<1)M.fade=requestAnimationFrame(step);else done&&done()})(performance.now())}
-function play(){if(!M.ready)return;bgm.muted=M.muted;bgm.volume=0;var pr=bgm.play();var go=function(){M.on=true;ui();fadeTo(M.vol,1400)};if(pr&&pr.then)pr.then(go).catch(function(){M.on=false;ui();toast('AUDIO','Your browser blocked playback. Press play again.')});else go()}
-function pause(){fadeTo(0,700,function(){bgm.pause();M.on=false;ui()})}
-pPlay.addEventListener('click',function(){M.resume=false;M.on?pause():play()});
-pMute.addEventListener('click',function(){M.muted=!M.muted;bgm.muted=M.muted;persist();ui()});
-vol.addEventListener('input',function(){M.vol=vol.value/100;if(M.on&&!M.muted){cancelAnimationFrame(M.fade);bgm.volume=M.vol}if(M.muted&&M.vol>0){M.muted=false;bgm.muted=false}persist();ui()});
-function duck(){if(M.on){M.resume=true;fadeTo(0,500,function(){bgm.pause();M.on=false;ui()})}}
-function restore(){if(M.resume){M.resume=false;play()}}
-ui();
-
-/* ================= VIDEO PREVIEWS ================= */
-var activeV=null;
-function stopVideo(){if(!activeV)return;var card=activeV.card,v=activeV.el;activeV=null;v.pause();v.remove();$('.play',card).style.display='';$('.vbadge',card).style.display='';var vt=$('.vt',card);if(vt)vt.style.display='';restore()}
-$$('.vc').forEach(function(card){
- var d=VIDEOS[+card.dataset.i],media=$('.vm',card);
- $('.play',card).addEventListener('click',function(){
-  stopVideo();var v=document.createElement('video');v.src=d.v;v.poster=d.p;v.controls=true;v.playsInline=true;v.preload='auto';v.setAttribute('playsinline','');v.setAttribute('aria-label','Preview: '+d.t);
-  media.appendChild(v);$('.play',card).style.display='none';$('.vbadge',card).style.display='none';var vt=$('.vt',card);if(vt)vt.style.display='none';activeV={card:card,el:v};
-  v.addEventListener('play',duck);
-  v.addEventListener('pause',function(){if(!v.ended&&activeV&&activeV.el===v)restore()});
-  v.addEventListener('ended',function(){if(activeV&&activeV.el===v)stopVideo()});
-  v.addEventListener('error',function(){if(activeV&&activeV.el===v){stopVideo();toast('VIDEO','Preview unavailable. Use WATCH FULL VIDEO instead.')}});
-  var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});
- });
-});
-var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting&&activeV&&activeV.card===e.target)stopVideo()})},{threshold:0});$$('.vc').forEach(function(c){vio.observe(c)});
 
 /* ================= LIGHTBOX ================= */
 var lb=$('#lb'),lbImg=$('#lbImg'),lbCap=$('#lbCap'),li=0,lbMode='photo',lastF=null;
