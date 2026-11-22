@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -422,30 +422,30 @@ a.c-item:hover{border-color:var(--pink);transform:translate(6px,-2px);background
 .nchoice .btn{font-size:16px;padding:10px 16px;min-height:42px}
 footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13.5px;background:var(--black);border-top:1px solid var(--line)}
 
-/* ---------- Player (Desktop Bar + Mobile Floating FAB) ---------- */
-#player{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:270;display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;background:rgba(9,9,17,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:2px solid var(--off);box-shadow:4px 4px 0 var(--violet);max-width:calc(100vw - 28px);transition:all .2s ease}
-#pFab{display:none}
-#player .pbtn{width:42px;height:42px;border:2px solid var(--off);display:grid;place-items:center;background:var(--pink);color:var(--black);flex:none;transition:.2s}
-#player .pbtn.sec{background:transparent;color:var(--off);border-color:var(--line)}
-#player .pbtn:hover:not(:disabled){transform:scale(1.06)}
-#player .pbtn svg{width:21px;height:21px;fill:currentColor}
-#player .pbtn .i-pause,#player.on .pbtn .i-play{display:none}
-#player.on .pbtn .i-pause{display:block}
-#player .pbtn.sec .i-off{display:none}
-#player.muted .pbtn.sec .i-on{display:none}#player.muted .pbtn.sec .i-off{display:block}
-.pmeta{display:flex;flex-direction:column;gap:3px;min-width:0}
-.ptitle{font-family:var(--f-comic);letter-spacing:.12em;font-size:15px;line-height:1;white-space:nowrap}
-.pstate{font-size:11.5px;letter-spacing:.14em;font-weight:700;color:var(--muted)}
-#player.on .pstate{color:var(--cyan)}
-.wave{display:flex;align-items:center;gap:3px;height:22px}
-.wave i{display:block;width:3px;height:5px;background:var(--cyan);border-radius:2px;opacity:.5}
-#player.on .wave i{opacity:1;animation:bar 1s ease-in-out infinite alternate;animation-delay:calc(var(--i)*-.17s)}
-@keyframes bar{from{height:4px}to{height:22px}}
-#vol{width:74px;accent-color:var(--pink);height:24px}
-#player:not(.ready) .pbtn,#player.err .pbtn,#player:not(.ready) #vol{opacity:.45;cursor:not-allowed}
-.pnote{position:absolute;right:0;bottom:calc(100% + 10px);background:var(--amber);color:var(--black);font-size:12.5px;font-weight:700;padding:6px 10px;border:2px solid var(--black);white-space:nowrap;display:none}
-#player.err .pnote{display:block}
-
+/* ---------- Compact beat-reactive comic music control ---------- */
+#player{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:270;display:flex;align-items:center;gap:5px}
+#player .music-main{height:48px;min-width:72px;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 12px;background:rgba(9,9,17,.88);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:2.5px solid var(--off);box-shadow:4px 4px 0 var(--pink),7px 7px 0 rgba(117,71,216,.55);transition:border-color .2s,box-shadow .2s,transform .2s}
+#player .music-main:hover{transform:translate(-2px,-2px)}
+#player.on .music-main{border-color:var(--cyan);box-shadow:0 0 15px rgba(53,214,232,.35),4px 4px 0 var(--cyan)}
+.eq-bars{height:23px;display:flex;align-items:flex-end;gap:3px}
+.eq-bars i{display:block;width:4px;height:5px;border-radius:2px;background:var(--pink);transform-origin:bottom;transition:height .08s linear}
+.eq-bars i:nth-child(2){background:var(--cyan)}.eq-bars i:nth-child(3){background:var(--amber)}
+#player.on .eq-bars i{opacity:1}
+#player.fallback.on .eq-bars i{animation:eqBeat .72s ease-in-out infinite alternate}
+#player.fallback.on .eq-bars i:nth-child(2){animation-delay:-.24s}
+#player.fallback.on .eq-bars i:nth-child(3){animation-delay:-.48s}
+@keyframes eqBeat{0%{height:5px}45%{height:19px}100%{height:8px}}
+.music-status{font:700 10px var(--f-comic);letter-spacing:.12em;color:var(--muted);white-space:nowrap}
+#player.on .music-status{color:var(--cyan)}
+.music-more{width:25px;height:25px;display:grid;place-items:center;background:rgba(9,9,17,.9);border:1.5px solid var(--line);color:var(--off);font-size:15px;transition:transform .2s}
+#player.open .music-more{transform:rotate(180deg)}
+.music-pop{position:absolute;right:0;bottom:calc(100% + 10px);display:flex;align-items:center;gap:8px;padding:8px 10px;background:rgba(9,9,17,.95);border:2px solid var(--off);box-shadow:3px 3px 0 var(--violet);opacity:0;visibility:hidden;transform:translateY(6px);transition:.18s}
+#player.open .music-pop{opacity:1;visibility:visible;transform:none}
+@media(hover:hover){#player:hover .music-pop{opacity:1;visibility:visible;transform:none}}
+#player .pbtn.sec{font:700 10px var(--f-comic);letter-spacing:.08em;padding:5px 7px;border:1px solid var(--line);color:var(--off)}
+#vol{width:76px;accent-color:var(--cyan);height:20px}
+#player:not(.ready) .music-main,#player.err .music-main{opacity:.55}
+#player.err::after{content:"AUDIO UNAVAILABLE";position:absolute;right:0;bottom:calc(100% + 8px);font-size:10px;color:var(--amber);white-space:nowrap}
 /* ---------- 2D Walking Sprite Companion (Mini Karim - Enlarged & Polished) ---------- */
 #buddy{position:fixed;left:0;bottom:max(8px,env(safe-area-inset-bottom));z-index:265;width:170px;display:flex;flex-direction:column;align-items:center;pointer-events:none;will-change:transform;transition:bottom .22s ease}
 #buddy .b-bub{pointer-events:auto;cursor:pointer;position:absolute;bottom:calc(100% + 12px);left:50%;width:270px;max-width:calc(100vw - 28px);background:var(--off);color:var(--black);border:3px solid var(--black);border-radius:16px;padding:10px 13px;box-shadow:5px 5px 0 var(--pink);opacity:0;transform:translateX(-50%) translateY(10px) scale(.88);transform-origin:50% 100%;transition:opacity .22s ease,transform .28s cubic-bezier(.3,1.45,.5,1),background-color .2s;visibility:hidden}
@@ -550,20 +550,13 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
   .certs{grid-template-columns:1fr}
   .sheet{transform:none;will-change:auto}
 
-  /* Compact floating music FAB on mobile/tablet */
-  #player{left:auto;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));padding:0;border-radius:50%;width:50px;height:50px;justify-content:center;gap:0;box-shadow:0 6px 18px rgba(0,0,0,.6),3px 3px 0 var(--pink)}
-  #player.on{border-color:var(--cyan);box-shadow:0 0 16px rgba(53,214,232,.55),3px 3px 0 var(--pink)}
-  #pFab{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;color:var(--off);flex:none}
-  #pFab svg{width:22px;height:22px}
-  #pFab .i-close{display:none}
-  #player:not(.open) .pbtn,#player:not(.open) .pmeta,#player:not(.open) .wave,#player:not(.open) #vol,#player:not(.open) .pnote{display:none}
-  #player.open{width:auto;height:auto;border-radius:8px;padding:8px 10px;gap:8px;max-width:calc(100vw - 24px)}
-  #player.open #pFab{width:34px;height:34px;border:1px solid var(--line);border-radius:4px;order:9}
-  #player.open #pFab .i-note{display:none}
-  #player.open #pFab .i-close{display:block;width:16px;height:16px}
-  #player.open .wave{display:none}
-  #player.open #vol{width:58px}
-  #player.open .ptitle{font-size:13px}
+  /* Compact floating music control on mobile/tablet */
+  #player{right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom))}
+  #player .music-main{height:44px;min-width:58px;padding:0 9px}
+  .music-status{font-size:9px}
+  .music-pop{gap:6px;padding:7px 8px}
+  #vol{width:64px}
+  #player .music-more{width:23px;height:23px}
 
   /* Mobile hybrid anchor: Mini Karim enlarged slightly & lifts above open music player */
   #buddy{transform:none!important;left:max(10px,env(safe-area-inset-left));bottom:max(10px,env(safe-area-inset-bottom));width:auto;align-items:flex-start}
@@ -660,6 +653,42 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
   .js .hl .ln > span{transform:none}.js .nar{clip-path:none}
   .rays,#buddy .b-img{animation:none}
 }
+
+/* Language switch + Arabic typography / RTL mirroring */
+.nav-tools{display:flex;align-items:center;gap:10px;flex:none}
+.lang-toggle{display:flex;align-items:center;gap:7px;padding:7px 10px;border:2px solid var(--off);background:var(--black);box-shadow:3px 3px 0 var(--pink);font:700 12px var(--f-comic);letter-spacing:.08em;white-space:nowrap}
+.lang-toggle i{font-style:normal;color:var(--muted)}
+.lang-toggle span{color:var(--muted)}
+.lang-toggle span.active{color:var(--cyan)}
+.rtl,.rtl *{letter-spacing:0!important;font-family:var(--f-ar)!important}
+.rtl h1,.rtl h2,.rtl h3,.rtl h4,.rtl button,.rtl .scene,.rtl .nar,.rtl .cl-tag,.rtl .cl-txt,.rtl .cl-go,.rtl .lab-s,.rtl #hud,.rtl .bub,.rtl .b-tag,.rtl .b-msg,.rtl .issue,.rtl .mast-t,.rtl .ribbon,.rtl .btn,.rtl .j-tab,.rtl .j-arrow,.rtl .mi,.rtl .mi-counter,.rtl .ba-title,.rtl .ba-tab,.rtl .ba-badge,.rtl .ba-lbl,.rtl .ba-hint,.rtl .cert-btn,.rtl .vc .top,.rtl .vlink,.rtl .vbadge,.rtl .shot .cap,.rtl .u .lab,.rtl .handle,.rtl .tbc,.rtl .nc-k{font-family:var(--f-ar)!important;letter-spacing:0!important}
+.rtl .links a,.rtl .sub,.rtl .prof,.rtl .resp,.rtl .ach,.rtl .mi p,.rtl .mi-back .car div,.rtl .degree p,.rtl .cert p,.rtl .note-sm,.rtl .c-item,.rtl .nchoice p{letter-spacing:0!important}
+.rtl .job-grid ul.ach li{padding-left:0;padding-right:20px}
+.rtl .job-grid ul.ach li::before{left:auto;right:0}
+.rtl .u-word span{padding-left:0;padding-right:16px;border-left:0;border-right:6px solid var(--pink)}
+.rtl .u-word span:nth-child(2){border-right-color:var(--cyan)}.rtl .u-word span:nth-child(3){border-right-color:var(--amber)}
+.rtl .cliff:hover{transform:translateX(-4px)}
+.rtl .bub::after,.rtl .bub::before{left:auto;right:var(--tail,26px)}
+.rtl .bub.r::after,.rtl .bub.r::before{left:auto;right:var(--tail,calc(100% - 58px))}
+.rtl .scene{left:auto;right:0;border-right:0;border-left:3px solid var(--black)}
+.rtl .pgno{right:auto;left:6px}
+.rtl .ba-stage{direction:ltr!important}
+.rtl .ba-stage *{direction:ltr!important}
+.rtl .stat,.rtl .job-grid .info,.rtl .degree,.rtl .langs,.rtl .cert,.rtl .mi-back,.rtl .nchoice{text-align:right}
+.rtl .cert h4{padding-right:0;padding-left:52px}
+.rtl .cert .seal{right:auto;left:18px}
+.rtl .mi-front .stamp{right:auto;left:12px}
+.rtl .shot .cap{left:auto;right:0;border-right:0;border-left:3px solid var(--black)}
+.rtl .stage-tag{left:auto;right:-14px}
+.rtl .cover .spine{left:auto;right:0}
+.rtl .cover h1 .ln{padding-right:0;padding-left:14px}
+.rtl .links a::after{transform-origin:right}
+.rtl .c-item:hover{transform:translate(-6px,-2px)}
+.rtl .end .next-choices{text-align:right}
+.rtl .stat b,.rtl .ba-num,.rtl .mi-front .num,.rtl .handle,.rtl .c-item span,.rtl .qbtn,.rtl .meta b{direction:ltr;unicode-bidi:isolate;text-align:inherit}
+@media(max-width:900px){.nav-tools{gap:6px}.lang-toggle{padding:6px 7px;font-size:11px}}
+@media(max-width:420px){.logo{font-size:12px;gap:6px}.logo i{width:26px;height:26px}.nav-tools{gap:4px}.lang-toggle{font-size:10px;padding:5px 6px}.menu-btn{width:38px;height:40px}}
+
 </style>
 </head>
 <body>
@@ -678,7 +707,8 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
     <li><a href="#creative" data-s="creative">Creative Side</a></li>
     <li><a href="#contact" data-s="contact">Contact</a></li>
   </ul>
-  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="links" aria-label="Open menu"><span></span><span></span><span></span></button>
+  <div class="nav-tools"><button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language"><span class="lang-en active">EN</span><i>|</i><span class="lang-ar">عربي</span></button>
+  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="links" aria-label="Open menu"><span></span><span></span><span></span></button></div>
   <div id="scrollbar"></div>
 </nav>
 
@@ -806,7 +836,7 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
           <button class="ba-tab" type="button" data-ba="1" aria-pressed="false">TGC HANDLING TIME</button>
         </div>
       </div>
-      <div class="ba-stage" id="baStage">
+      <div class="ba-stage" id="baStage" dir="ltr">
         <div class="ba-layer ba-after">
           <div class="ba-card">
             <span class="ba-badge">AFTER</span>
@@ -1039,23 +1069,16 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
   <button class="b-restore" id="bRestore" type="button" aria-label="Show Mini Karim guide">SHOW MINI KARIM</button>
 </aside>
 
-<div id="player" role="region" aria-label="Background music player">
-  <span class="pnote" role="status">Soundtrack file not available</span>
-  <button id="pFab" type="button" aria-label="Toggle music controls" aria-expanded="false">
-    <svg class="i-note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-    <svg class="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+<div id="player" role="group" aria-label="Background music">
+  <button id="pPlay" class="music-main" type="button" aria-label="Play background music" aria-pressed="false" disabled>
+    <span class="eq-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="music-status" id="pState">SOUND OFF</span>
   </button>
-  <button class="pbtn" id="pPlay" type="button" aria-label="Play background music" aria-pressed="false" disabled>
-    <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
-    <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
-  </button>
-  <div class="pmeta"><span class="ptitle">THE KARIM UNIVERSE</span><span class="pstate" id="pState">MUSIC OFF</span></div>
-  <div class="wave" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i></div>
-  <button class="pbtn sec" id="pMute" type="button" aria-label="Mute music" aria-pressed="false" disabled>
-    <svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9zM16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="currentColor" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-    <svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9z" fill="currentColor"/><path d="m16 9 6 6m0-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-  </button>
-  <input id="vol" type="range" min="0" max="100" value="25" aria-label="Music volume" disabled>
+  <button id="pFab" class="music-more" type="button" aria-label="Volume controls" aria-expanded="false">⌃</button>
+  <div class="music-pop" id="musicPop">
+    <button class="pbtn sec" id="pMute" type="button" aria-label="Mute music" aria-pressed="false" disabled> MUTE </button>
+    <input id="vol" type="range" min="0" max="100" value="12" aria-label="Music volume" disabled>
+  </div>
   <audio id="bgm" preload="metadata" loop><source src="assets/audio/karim-universe-soundtrack.mp3" type="audio/mpeg"></audio>
 </div>
 
@@ -1069,6 +1092,8 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
 
 <script>
 document.documentElement.classList.add('js');
+var storedLang='en';try{storedLang=sessionStorage.getItem('karim-language')||'en'}catch(e){}
+window.KARIM_LANG=storedLang==='ar'?'ar':'en';
 (function(){
 'use strict';
 var RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1230,14 +1255,14 @@ function renderJob(i,scrollToCard){
   '<div class="bub in'+(w[2].indexOf('right')===0?' r':'')+'" style="'+w[2]+'">'+w[1]+'</div><span class="sfx2 in" style="'+(w[2].indexOf('right')===0?'left':'right')+':12px;top:42px;--r:'+(curJob%2?'7':'-8')+'deg;font-size:clamp(30px,4.5vw,54px)">'+w[0]+'</span></div>'+
   '<div class="panel info in"><div class="nar in">EXPERIENCE 0'+(curJob+1)+' &bull; '+x.loc+'</div><div class="co">'+x.co+'</div><h3>'+x.role+'</h3><div class="meta"><b>'+x.per+'</b><span>'+x.loc+'</span></div><p class="resp">'+x.sum+'</p>'+
   '<ul class="ach" id="achList">'+x.ach.map(function(a,idx){return '<li class="'+(hasMore&&idx>=3?'extra':'')+'">'+a+'</li>'}).join('')+'</ul>'+
-  (hasMore?'<button class="exp-toggle" id="expToggle" type="button" aria-expanded="false">+ SHOW ALL '+x.ach.length+' ACHIEVEMENTS</button>':'')+
-  '<div class="job-nav"><button class="j-arrow" id="prevJob" type="button">&larr; PREV</button><span class="j-count">ROLE 0'+(curJob+1)+' / 0'+XP.length+'</span><button class="j-arrow" id="nextJob" type="button">NEXT &rarr;</button></div></div>'+
+  (hasMore?'<button class="exp-toggle" id="expToggle" type="button" aria-expanded="false">'+(currentLanguage==='ar'?'+ عرض جميع الإنجازات ('+x.ach.length+')':'+ SHOW ALL '+x.ach.length+' ACHIEVEMENTS')+'</button>':'')+
+  '<div class="job-nav"><button class="j-arrow" id="prevJob" type="button">'+(currentLanguage==='ar'?'→ السابق':'← PREV')+'</button><span class="j-count">'+(currentLanguage==='ar'?'الدور ':'ROLE ')+'0'+(curJob+1)+' / 0'+XP.length+'</span><button class="j-arrow" id="nextJob" type="button">'+(currentLanguage==='ar'?'التالي ←':'NEXT →')+'</button></div></div>'+
   '<div class="panel met in"><div><div class="met-l">ACHIEVEMENT PANEL</div><div class="burst">'+x.met.map(function(m,k){return '<span class="chip-m" style="--r:'+(k%2?1.2:-1.2)+'deg">'+m+'</span>'}).join('')+'</div></div><div class="tags">'+x.tags.map(function(t){return '<span class="tag">'+t+'</span>'}).join('')+'</div></div>'+
   '</div></div>';
  $('#prevJob').addEventListener('click',function(){renderJob(curJob-1,true)});
  $('#nextJob').addEventListener('click',function(){renderJob(curJob+1,true)});
  var tg=$('#expToggle');
- if(tg){tg.addEventListener('click',function(){var ul=$('#achList'),open=ul.classList.toggle('expanded');tg.setAttribute('aria-expanded',open);tg.textContent=open?'- SHOW LESS':'+ SHOW ALL '+x.ach.length+' ACHIEVEMENTS'})}
+ if(tg){tg.addEventListener('click',function(){var ul=$('#achList'),open=ul.classList.toggle('expanded');tg.setAttribute('aria-expanded',open);tg.textContent=currentLanguage==='ar'?(open?'- عرض أقل':'+ عرض جميع الإنجازات ('+x.ach.length+')'):(open?'- SHOW LESS':'+ SHOW ALL '+x.ach.length+' ACHIEVEMENTS')})}
  if(scrollToCard){
   var rect=$('#jobTabs').getBoundingClientRect();
   if(rect.top<76){window.scrollTo({top:window.scrollY+rect.top-76,behavior:RM?'auto':'smooth'})}
@@ -1289,10 +1314,10 @@ function markUnlocked(idx,card){
   miDots.forEach(function(d,k){if(k<count)d.classList.add('on')});
   if(count===MIS.length){
    miCounter.classList.add('done');
-   miCountText.textContent='6 / 6 ALL MISSIONS UNLOCKED';
+   miCountText.textContent=currentLanguage==='ar'?'6 / 6 تم استكشاف جميع المهام':'6 / 6 ALL MISSIONS UNLOCKED';
    if(!allNotified){allNotified=true;toast('FULL DOSSIER UNLOCKED','You inspected all 6 career missions!')}
   }else{
-   miCountText.textContent=count+' / '+MIS.length+' MISSIONS UNLOCKED';
+   miCountText.textContent=currentLanguage==='ar'?count+' / '+MIS.length+' مهام تم استكشافها':count+' / '+MIS.length+' MISSIONS UNLOCKED';
   }
  }
 }
@@ -1347,7 +1372,7 @@ pages.forEach(function(p,i){var no=$('.pgno',p);if(no)no.textContent='- '+pad(i+
 var ticks=$('#hudTicks');ticks.innerHTML=pages.map(function(){return '<i></i>'}).join('');
 var tickEls=$$('i',ticks),links=$('#links'),navA=$$('#links a'),sb=$('#scrollbar');
 var par=$$('[data-par]'),lastPage=-1,mobile=function(){return innerWidth<=900};
-function frame(){
+function frame(forceRefresh){
  var vh=innerHeight,y=scrollY,H=document.documentElement.scrollHeight-vh;
  sb.style.width=(H>0?y/H*100:0)+'%';
  var cur=0;
@@ -1362,9 +1387,22 @@ function frame(){
  if(!RM&&!mobile()){
   for(var j=0;j<par.length;j++){var e=par[j],rr=e.getBoundingClientRect();if(rr.bottom<-200||rr.top>vh+200)continue;var f=parseFloat(e.dataset.par);e.style.setProperty('--py',(((rr.top+rr.height/2)-vh/2)*f*-1).toFixed(1)+'px')}
  }
- if(cur!==lastPage){
+ if(cur!==lastPage||forceRefresh){
   lastPage=cur;var pg=pages[cur];
-  $('#hudChap').textContent=pg.dataset.chap;$('#hudPage').textContent='PAGE '+pad(cur+1)+' / '+pad(TOTAL);
+  var hudArabic={
+   'THE COVER':'الغلاف',
+   'CHAPTER 01 - THE JOURNEY':'الفصل 01 - الرحلة',
+   'CHAPTER 02 - THE SKILLS':'الفصل 02 - المهارات',
+   'CHAPTER 03 - THE MISSIONS':'الفصل 03 - الإنجازات',
+   'CHAPTER 04 - EDUCATION':'الفصل 04 - التعليم',
+   'CHAPTER 04 - CERTIFICATIONS':'الفصل 04 - الشهادات',
+   'CHAPTER 05 - CREATIVE UNIVERSE':'الفصل 05 - العالم الإبداعي',
+   'CHAPTER 05 - THROUGH MY LENS':'الفصل 05 - من خلال عدستي',
+   'FINAL CHAPTER - THE NEXT CHAPTER':'الفصل الأخير - الفصل القادم',
+   'THE END (FOR NOW)':'النهاية (حتى الآن)'
+  };
+  $('#hudChap').textContent=(currentLanguage==='ar'?(hudArabic[pg.dataset.chap]||pg.dataset.chap):pg.dataset.chap);
+   $('#hudPage').textContent=(currentLanguage==='ar'?'صفحة ':'PAGE ')+pad(cur+1)+' / '+pad(TOTAL);
   tickEls.forEach(function(t,i){t.className=i<cur?'on':(i===cur?'cur':'')});
   document.body.style.setProperty('--scene',pg.dataset.scene);
   navA.forEach(function(a){var on=a.dataset.s===pg.dataset.nav;a.classList.toggle('active',on);if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')});
@@ -1373,52 +1411,86 @@ function frame(){
 var tick=false;function req(){if(!tick){tick=true;requestAnimationFrame(function(){frame();tick=false})}}
 addEventListener('scroll',req,{passive:true});addEventListener('resize',req);frame();
 
-/* ================= MUSIC & MOBILE FAB ================= */
+/* ================= SHARED WEB AUDIO + COMPACT MUSIC CONTROL ================= */
 var bgm=$('#bgm'),player=$('#player'),pFab=$('#pFab'),pPlay=$('#pPlay'),pMute=$('#pMute'),vol=$('#vol'),pState=$('#pState');
-function setPlayerOpen(o){
- player.classList.toggle('open',o);
- document.body.classList.toggle('player-open',o);
- pFab.setAttribute('aria-expanded',o?'true':'false');
-}
-pFab.addEventListener('click',function(e){
- e.stopPropagation();
- setPlayerOpen(!player.classList.contains('open'));
-});
-document.addEventListener('click',function(e){
- if(player.classList.contains('open')&&!player.contains(e.target)){
-  setPlayerOpen(false);
+var audioCtx=null,bgmNode=null,bgmAnalyser=null,bgmFreq=null,voiceGain=null,voiceBuffers=new Map(),voiceLoading=new Map(),voicePreloadPromise=null,voiceFallback=false;
+function ensureAudioContext(){
+ if(!audioCtx){
+  var AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC)return null;
+  try{
+   audioCtx=new AC();
+   voiceGain=audioCtx.createGain();voiceGain.gain.value=1.2;voiceGain.connect(audioCtx.destination);
+   try{
+    bgmNode=audioCtx.createMediaElementSource(bgm);
+    bgmAnalyser=audioCtx.createAnalyser();bgmAnalyser.fftSize=64;bgmFreq=new Uint8Array(bgmAnalyser.frequencyBinCount);
+    bgmNode.connect(bgmAnalyser);bgmAnalyser.connect(audioCtx.destination);
+   }catch(e){bgmAnalyser=null;player.classList.add('fallback')}
+  }catch(e){audioCtx=null;voiceGain=null;player.classList.add('fallback')}
  }
-});
+ if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume().catch(function(){});
+ return audioCtx;
+}
 function store(k,v){try{if(v===undefined)return JSON.parse(sessionStorage.getItem(k));sessionStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
-var M={ready:false,on:false,vol:.25,muted:false,resume:false,fade:null,voiceDucked:false};
-var saved=store('karim-music');if(saved){M.vol=typeof saved.vol==='number'?saved.vol:.25;M.muted=!!saved.muted}
+var M={ready:false,on:false,vol:.12,muted:false,resume:false,fade:null,voiceDucked:false};
+var saved=store('karim-music');if(saved){M.vol=typeof saved.vol==='number'?saved.vol:.12;M.muted=!!saved.muted}
 vol.value=Math.round(M.vol*100);
 function persist(){store('karim-music',{vol:M.vol,muted:M.muted})}
-function ui(){player.classList.toggle('on',M.on);player.classList.toggle('muted',M.muted);
- pPlay.setAttribute('aria-pressed',M.on);pPlay.setAttribute('aria-label',M.on?'Pause background music':'Play background music');
- pMute.setAttribute('aria-pressed',M.muted);pMute.setAttribute('aria-label',M.muted?'Unmute music':'Mute music');
- pState.textContent=M.on?(M.muted?'MUTED':'MUSIC ON'):'MUSIC OFF'}
+function setPlayerOpen(o){player.classList.toggle('open',o);document.body.classList.toggle('player-open',!!o);pFab.setAttribute('aria-expanded',o?'true':'false')}
+pFab.addEventListener('click',function(e){e.stopPropagation();setPlayerOpen(!player.classList.contains('open'))});
+document.addEventListener('click',function(e){if(player.classList.contains('open')&&!player.contains(e.target))setPlayerOpen(false)});
+function ui(){
+ player.classList.toggle('on',M.on);player.classList.toggle('muted',M.muted);
+ var ar=window.KARIM_LANG==='ar';
+ pPlay.setAttribute('aria-pressed',M.on?'true':'false');pPlay.setAttribute('aria-label',ar?(M.on?'إيقاف الموسيقى':'تشغيل الموسيقى'):(M.on?'Pause background music':'Play background music'));
+ pMute.setAttribute('aria-pressed',M.muted?'true':'false');pMute.textContent=ar?(M.muted?'إلغاء الكتم':'كتم'):(M.muted?'UNMUTE':'MUTE');
+ pMute.setAttribute('aria-label',ar?(M.muted?'إلغاء كتم الموسيقى':'كتم الموسيقى'):(M.muted?'Unmute music':'Mute music'));
+ pState.textContent=ar?(M.on?(M.muted?'صامت':'الصوت يعمل'):'الصوت متوقف'):(M.on?(M.muted?'MUTED':'SOUND ON'):'SOUND OFF');
+}
 function ready(){M.ready=true;player.classList.add('ready');player.classList.remove('err');[pPlay,pMute,vol].forEach(function(e){e.disabled=false});bgm.muted=M.muted;ui()}
-function fail(){M.ready=false;player.classList.add('err');player.classList.remove('ready');[pPlay,pMute,vol].forEach(function(e){e.disabled=true});pState.textContent='UNAVAILABLE'}
-bgm.addEventListener('loadedmetadata',ready);bgm.addEventListener('canplay',function(){if(!M.ready)ready()});
-bgm.addEventListener('error',fail);var src=bgm.querySelector('source');if(src)src.addEventListener('error',fail);
+function fail(){M.ready=false;player.classList.add('err');player.classList.remove('ready');pState.textContent='AUDIO ERROR'}
+bgm.addEventListener('loadedmetadata',ready);bgm.addEventListener('canplay',ready);bgm.addEventListener('error',fail);
 if(bgm.readyState>=1)ready();
-function chk(){if(!M.ready&&(bgm.error||bgm.networkState===3))fail()}
-setTimeout(chk,800);setTimeout(chk,2500);addEventListener('load',function(){setTimeout(chk,300)});
-function fadeTo(t,ms,done){cancelAnimationFrame(M.fade);var s=bgm.volume,t0=null;if(RM||ms<=0){bgm.volume=t;done&&done();return}
- (function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/ms,1);bgm.volume=clamp(s+(t-s)*p,0,1);if(p<1)M.fade=requestAnimationFrame(step);else done&&done()})(performance.now())}
-function play(){if(!M.ready)return;bgm.muted=M.muted;bgm.volume=0;var pr=bgm.play();var go=function(){M.on=true;ui();fadeTo(M.voiceDucked?M.vol*.22:M.vol,1200)};if(pr&&pr.then)pr.then(go).catch(function(){M.on=false;ui();toast('AUDIO','Your browser blocked playback. Press play again.')});else go()}
-function pause(){fadeTo(0,700,function(){bgm.pause();M.on=false;ui()})}
-pPlay.addEventListener('click',function(){M.resume=false;M.on?pause():play()});
+function fadeTo(t,ms,done){
+ cancelAnimationFrame(M.fade);var s=bgm.volume,t0=null;
+ if(RM||ms<=0){bgm.volume=t;if(done)done();return}
+ (function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/ms,1);bgm.volume=clamp(s+(t-s)*p,0,1);if(p<1)M.fade=requestAnimationFrame(step);else if(done)done()})(performance.now());
+}
+function play(){
+ ensureAudioContext();
+ if(!M.ready){bgm.load();if(bgm.error)return;ready()}
+ bgm.muted=M.muted;bgm.volume=0;
+ var pr=bgm.play();
+ var go=function(){M.on=true;ui();fadeTo(M.voiceDucked?M.vol*.2:M.vol,1000)};
+ if(pr&&pr.then)pr.then(go).catch(function(){M.on=false;ui();toast('AUDIO','Press the sound button again to allow playback.')});else go();
+}
+function pause(){fadeTo(0,450,function(){bgm.pause();M.on=false;ui()})}
+pPlay.addEventListener('click',function(){ensureAudioContext();M.resume=false;M.on?pause():play()});
 pMute.addEventListener('click',function(){M.muted=!M.muted;bgm.muted=M.muted;persist();ui()});
-vol.addEventListener('input',function(){M.vol=vol.value/100;if(M.on&&!M.muted){cancelAnimationFrame(M.fade);bgm.volume=M.voiceDucked?M.vol*.22:M.vol}if(M.muted&&M.vol>0){M.muted=false;bgm.muted=false}persist();ui()});
-function duck(){if(M.on){M.resume=true;fadeTo(0,500,function(){bgm.pause();M.on=false;ui()})}}
+vol.addEventListener('input',function(){M.vol=vol.value/100;if(M.on&&!M.muted){cancelAnimationFrame(M.fade);bgm.volume=M.voiceDucked?M.vol*.2:M.vol}if(M.muted&&M.vol>0){M.muted=false;bgm.muted=false}persist();ui()});
+function duck(){if(M.on){M.resume=true;fadeTo(0,450,function(){bgm.pause();M.on=false;ui()})}}
 function restore(){if(M.resume){M.resume=false;play()}}
 function duckForVoice(on){
  M.voiceDucked=!!on;
  if(!M.on||M.muted)return;
- fadeTo(on?M.vol*.22:M.vol,on?220:450);
+ fadeTo(on?M.vol*.2:M.vol,on?250:500);
 }
+function animateEqualizer(){
+ if(!M.on){$$('.eq-bars i').forEach(function(el){el.style.height='5px'});requestAnimationFrame(animateEqualizer);return}
+ if(!bgmAnalyser||!bgmFreq){player.classList.add('fallback');requestAnimationFrame(animateEqualizer);return}
+ try{
+  bgmAnalyser.getByteFrequencyData(bgmFreq);
+  var bins=[[0,2],[3,6],[7,13]],bars=$$('.eq-bars i'),energy=[];
+  bins.forEach(function(r){var sum=0,n=0;for(var i=r[0];i<=r[1]&&i<bgmFreq.length;i++){sum+=bgmFreq[i];n++}energy.push(n?sum/n:0)});
+  if(energy.every(function(v){return v<2})){player.classList.add('fallback')}
+  else{
+   player.classList.remove('fallback');
+   bars.forEach(function(el,i){el.style.height=(5+energy[i]/255*18)+'px'});
+  }
+ }catch(e){player.classList.add('fallback')}
+ requestAnimationFrame(animateEqualizer);
+}
+requestAnimationFrame(animateEqualizer);
 ui();
 
 /* ================= VIDEO PREVIEWS ================= */
@@ -1451,112 +1523,135 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
   tired:'assets/images/buddy-tired.webp'
  };
  var SEC_DATA={
-  home:['THE COVER','Hey, I’m Karim! Grab the CV right here, or scroll down to open the story.','buddy-home'],
-  journey:['CHAPTER 01','Five roles across Kuwait, Saudi Arabia, and the UK. Click any tab to jump between chapters.','buddy-journey'],
-  superpowers:['CHAPTER 02','Every skill here comes straight from my CV. Hover over any badge to power it up.','buddy-skills'],
-  missions:['CHAPTER 03','Drag the before-and-after slider, and tap the six mission cards to see how the numbers happened.','buddy-missions'],
-  education:['CHAPTER 04','Sociology degree, native Arabic, and B2 English. Solid foundation.','buddy-education'],
-  certifications:['CREDENTIALS','Five verified certificates. Hit View Certificate to inspect any of them full size.','buddy-certs'],
-  creative:['PLOT TWIST!','Plot twist! This is my voice-over side. Hit play for a quick preview.','buddy-creative'],
-  lens:['PHOTOGRAPHY','A few street and night frames through my lens. Tap any shot to zoom in.','buddy-lens'],
-  universe:['CREATIVE SIDE','Comics, voice-over, rap, and photography. There’s more to the character than dashboards.','buddy-universe'],
-  contact:['FINAL SCENE','Final scene! WhatsApp, Email, or LinkedIn. Pick your favorite way to say hello.','buddy-contact'],
-  end:['THE END?','You made it to the end! Pick Option A or B to start the next chapter.','buddy-end']
- };
- var PANICS=[
-  ['Whoa, whoa, slow down! You’re scrolling way too fast, my knees can’t take this!','buddy-panic1'],
-  ['Hold on! Are we speedrunning this portfolio? My glasses are about to fly off!','buddy-panic2']
- ];
+   home:[['THE COVER','Hey, I’m Karim! Grab the CV right here, or scroll down to open the story.','home'],['الغلاف','أهلاً بيك في عالمي! أنا كريم. لو مستعجل، السي في قدامك أهو، بس لو عايز تعرف الحكاية بجد... انزل معايا وخلينا نبدأ!','home']],
+   journey:[['CHAPTER 01','Five roles across Kuwait, Saudi Arabia, and the UK. Click any tab to jump between chapters.','journey'],['الفصل 01','هنا الرحلة الحقيقية! خمس محطات ما بين الكويت والسعودية وبريطانيا. قلّب بين الشركات فوق وشوف كل فصل عملنا فيه إيه.','journey']],
+   superpowers:[['CHAPTER 02','Every skill here comes straight from my CV. Hover over any badge to power it up.','skills'],['الفصل 02','نيجي بقى للترسانة! دي كل المهارات والأدوات اللي طلعت بيها النتايج دي. عدّي عليها وشوف بنفسك.','skills']],
+   missions:[['CHAPTER 03','Drag the before-and-after slider, and tap the six mission cards to see how the numbers happened.','missions'],['الفصل 03','اممم... كفاية كلام، خلينا في الأرقام! حرّك الشريط ده وشوف الفرق قبل وبعد، اقلب الكروت الستة عشان تشوف الكواليس!','missions']],
+   education:[['CHAPTER 04','Sociology degree, native Arabic, and B2 English. Solid foundation.','education'],['الفصل 04','هتقولي إيه علاقة علم الاجتماع بالشغل؟ ده اللي خلاني أفهم العميل قبل ما يتكلم! ومعاه عربي، وإنجليزي مستوى B2.','education']],
+   certifications:[['CREDENTIALS','Five verified certificates. Hit View Certificate to inspect any of them full size.','certs'],['الشهادات','وكله بالورقة والقلم! خمس شهادات معتمدة، اضغط على أي شهادة فيهم هتفتحلك كاملة قدامك فوراً.','certs']],
+   creative:[['PLOT TWIST!','Plot twist! This is my voice-over side. Hit play for a quick preview.','creative'],['مفاجأة!','استنى استنى... هنا القصة بدأت تقلب! ده الجانب الإبداعي. دوس تشغيل واسمع بنفسك!','creative']],
+   lens:[['PHOTOGRAPHY','A few street and night frames through my lens. Tap any shot to zoom in.','lens'],['التصوير','وهنا بنفصل شوية مع الكاميرا. لقطات من الشارع وتصوير ليلي، اضغط على أي صورة وعيش المود.','lens']],
+   universe:[['CREATIVE SIDE','Comics, voice-over, rap, and photography. There’s more to the character than dashboards.','universe'],['الجانب الإبداعي','كوميكس، فويس أوفر، راب، وتصوير! عشان في الآخر الشخص دايماً أكبر بكتير من مجرد Job Title.','universe']],
+   contact:[['FINAL SCENE','Final scene! WhatsApp, Email, or LinkedIn. Pick your favorite way to say hello.','contact'],['المشهد الأخير','وصلنا لأهم نقطة! لو شايف إننا نقدر نعمل شغل قوي سوا، واتساب، إيميل، ولينكد إن قدامك... يلا نتكلم!','contact']],
+   end:[['THE END?','You made it to the end! Pick Option A or B to start the next chapter.','end'],['النهاية؟','عاش، كملت القصة للآخر! بس الحكاية لسه مخلصتش... اختار الكارت الأول أو التاني وخلينا نبدأ الفصل الجاي سوا!','end']]
+  };
+  var PANICS=[
+   [['Whoa, whoa, slow down! You’re scrolling way too fast, my knees can’t take this!','panic1'],['حاسب حاسب! إيه السرعة دي كلها؟! أنا هقع من الشاشة، بالراحة شوية!','panic1']],
+   [['Hold on! Are we speedrunning this portfolio? My glasses are about to fly off!','panic2'],['ثانية ثانية! ده بورتفوليو مش سباق فورمولا وان، النضارة هتطير مني!','panic2']]
+  ];
+  window.setMiniLanguage=function(l){
+   language=l;stopBuddyVoice();
+   bVoiceTxt.textContent=language==='ar'?(voiceOn?'الصوت يعمل':'الصوت متوقف'):(voiceOn?'VOICE ON':'VOICE OFF');
+   if(buddy.classList.contains('show-bub')){var info=(SEC_DATA[getCurSectionId()]||SEC_DATA.home)[language==='ar'?1:0];bTag.textContent=info[0];bMsg.textContent=info[1]}
+   if(voiceOn){ensureAudioContext();preloadVoices(getVoiceKeyForSection(getCurSectionId()))}
+  };
+  function getVoiceKeyForSection(id){return ({home:'home',journey:'journey',superpowers:'skills',missions:'missions',education:'education',certifications:'certs',creative:'creative',lens:'lens',universe:'universe',contact:'contact',end:'end'})[id]||'home'}
+  var voiceEl=new Audio();voiceEl.preload='auto';
+  var audioToken=0,voiceOn=false,isSpeaking=false,currentAudioType='',activeVoiceSource=null;
+  var state='idle',lastSec='',panicIdx=0,lastPanicAudioAt=-Infinity,pendingTired=false;
+  var curSprite='idle',walkFrame=0,walkDist=0,dir=1,bubShownY=0;
+  var lastY=scrollY,lastT=performance.now(),fastAccum=0,navLockUntil=0,lastPanicAt=0,panicCooldownUntil=0;
+  var stopTimer=null,hideBubTimer=null,recoverTimer=null,idleTimer=null,panicFallbackTimer=null;
+  var curX=260,targetX=260,moveRaf=null;
+  var language=window.KARIM_LANG||'en';
 
- var voiceEl=new Audio();
- voiceEl.preload='auto';
- var audioToken=0,voiceOn=false,isSpeaking=false,currentAudioType='';
- var state='idle',lastSec='',panicIdx=0,lastPanicAudioAt=0,pendingTired=false;
- var curSprite='idle',walkFrame=0,walkDist=0,dir=1,bubShownY=0;
- var lastY=scrollY,lastT=performance.now(),fastAccum=0,navLockUntil=0;
- var stopTimer=null,hideBubTimer=null,recoverTimer=null,idleTimer=null,panicFallbackTimer=null;
- var curX=260,targetX=260,moveRaf=null;
-
- function setSprite(key){
-  if(curSprite===key)return;
-  curSprite=key;
-  bImg.src=SPRITES[key];
- }
- function setFlip(f){
-  bImg.style.setProperty('--flip',f);
- }
- function pointInwardFlip(){
-  if(mobile())return -1;
-  return (curX + 85) < (innerWidth * 0.5) ? -1 : 1;
- }
- function setMood(m){
-  state=m;
-  buddy.classList.remove('idle','talk','walk','panic','tired');
-  buddy.classList.add(m);
-  if(m==='idle'){setSprite('idle');setFlip(1)}
-  else if(m==='talk'){setSprite('talk');setFlip(pointInwardFlip())}
-  else if(m==='panic'){setSprite('panic');setFlip(dir)}
-  else if(m==='tired'){setSprite('tired');setFlip(1)}
-  else if(m==='walk'){setSprite(walkFrame?'walk2':'walk1');setFlip(dir)}
- }
- function hideBubble(){
-  clearTimeout(hideBubTimer);
-  buddy.classList.remove('show-bub');
- }
- function scheduleBubbleHide(ms){
-  clearTimeout(hideBubTimer);
-  if(!ms||ms<=0)return;
-  hideBubTimer=setTimeout(function(){
-   if(state!=='panic'&&!isSpeaking){
-    buddy.classList.remove('show-bub');
+  /* Sprite, facing, mood and bubble helpers (required by speak/scroll flow). */
+  function setSprite(key){
+   if(!SPRITES[key]||curSprite===key)return;
+   curSprite=key;
+   bImg.src=SPRITES[key];
+  }
+  function setFlip(f){
+   bImg.style.setProperty('--flip',f<0?-1:1);
+  }
+  function pointInwardFlip(){
+   if(mobile())return language==='ar'?1:-1;
+   var isLeft=(curX+85)<(innerWidth*.5);
+   var facing=isLeft?-1:1;
+   return language==='ar'?-facing:facing;
+  }
+  function setMood(m){
+   state=m;
+   buddy.classList.remove('idle','talk','walk','panic','tired');
+   buddy.classList.add(m);
+   if(m==='idle'){setSprite('idle');setFlip(1)}
+   else if(m==='talk'){setSprite('talk');setFlip(pointInwardFlip())}
+   else if(m==='panic'){setSprite('panic');setFlip(language==='ar'?-dir:dir)}
+   else if(m==='tired'){setSprite('tired');setFlip(1)}
+   else if(m==='walk'){setSprite(walkFrame?'walk2':'walk1');setFlip(language==='ar'?-dir:dir)}
+  }
+  function hideBubble(){
+   clearTimeout(hideBubTimer);
+   buddy.classList.remove('show-bub');
+  }
+  function scheduleBubbleHide(ms){
+   clearTimeout(hideBubTimer);
+   if(!ms||ms<=0)return;
+   hideBubTimer=setTimeout(function(){
+    if(state!=='panic'&&!isSpeaking)buddy.classList.remove('show-bub');
+   },ms);
+  }
+  var VOICE_KEYS=['home','journey','skills','missions','education','certs','creative','lens','universe','contact','end','panic1','panic2','tired'];
+  function voiceFile(key){return 'buddy-'+key+(language==='ar'?'-ar':'')}
+  function preloadVoices(priority){
+   if(!voiceOn||!audioCtx||voiceFallback)return Promise.resolve();
+   var keys=VOICE_KEYS.slice();
+   if(priority){var k=keys.indexOf(priority);if(k>0){keys.splice(k,1);keys.unshift(priority)}}
+   function loadOne(key){
+    var file=voiceFile(key);if(voiceBuffers.has(file))return Promise.resolve(voiceBuffers.get(file));
+    if(voiceLoading.has(file))return voiceLoading.get(file);
+    var task=fetch('assets/audio/'+file+'.mp3').then(function(r){if(!r.ok)throw new Error('Audio fetch failed');return r.arrayBuffer()})
+     .then(function(ab){return audioCtx.decodeAudioData(ab)}).then(function(buf){voiceBuffers.set(file,buf);voiceLoading.delete(file);return buf})
+     .catch(function(){voiceFallback=true;voiceLoading.delete(file);return null});
+    voiceLoading.set(file,task);return task;
    }
-  },ms);
- }
-
- stopBuddyVoice=function(){
-  audioToken++;
-  try{voiceEl.pause();voiceEl.currentTime=0}catch(e){}
-  voiceEl.onended=null;
-  voiceEl.onerror=null;
-  isSpeaking=false;
-  currentAudioType='';
-  buddy.classList.remove('speaking');
-  duckForVoice(false);
- };
-
- function playVoice(file,type,onDone){
-  stopBuddyVoice();
-  if(!voiceOn||!file||activeV||buddy.classList.contains('min')){
-   if(onDone)onDone(false);
-   return false;
+   var first=keys.length?loadOne(keys[0]):Promise.resolve(null);
+   first.then(function(){keys.slice(1).forEach(function(key){if(!voiceFallback)loadOne(key)})});
+   voicePreloadPromise=first;
+   return first;
   }
-  var tok=++audioToken;
-  voiceEl.src='assets/audio/'+file+'.mp3';
-  voiceEl.currentTime=0;
-  isSpeaking=true;
-  currentAudioType=type||'section';
-  buddy.classList.add('speaking');
-  duckForVoice(true);
-  var finished=false;
-  function finish(){
-   if(finished||tok!==audioToken)return;
-   finished=true;
-   voiceEl.onended=null;
-   voiceEl.onerror=null;
-   isSpeaking=false;
-   currentAudioType='';
-   buddy.classList.remove('speaking');
-   duckForVoice(false);
-   if(onDone)onDone(true);
+  stopBuddyVoice=function(){
+   audioToken++;
+   try{voiceEl.pause();voiceEl.currentTime=0}catch(e){}
+   voiceEl.onended=null;voiceEl.onerror=null;
+   if(activeVoiceSource){try{activeVoiceSource.onended=null;activeVoiceSource.stop()}catch(e){}activeVoiceSource=null}
+   isSpeaking=false;currentAudioType='';buddy.classList.remove('speaking');duckForVoice(false);
+  };
+  window.stopBuddyVoice=stopBuddyVoice;
+  function playVoice(file,type,onDone){
+   stopBuddyVoice();
+   if(!voiceOn||!file||activeV||buddy.classList.contains('min')){if(onDone)onDone(false);return false}
+   ensureAudioContext();
+   var tok=++audioToken,full='buddy-'+file+(language==='ar'?'-ar':''),finished=false;
+   isSpeaking=true;currentAudioType=type||'section';buddy.classList.add('speaking');duckForVoice(true);
+   function finish(){
+    if(finished||tok!==audioToken)return;finished=true;
+    if(activeVoiceSource)activeVoiceSource=null;
+    voiceEl.onended=null;voiceEl.onerror=null;isSpeaking=false;currentAudioType='';
+    buddy.classList.remove('speaking');duckForVoice(false);if(onDone)onDone(true);
+   }
+   function decoded(buf){
+    if(tok!==audioToken||finished)return;
+    if(buf&&audioCtx&&voiceGain){
+     try{var src=audioCtx.createBufferSource();src.buffer=buf;src.connect(voiceGain);activeVoiceSource=src;src.onended=finish;src.start(0);return}catch(e){voiceFallback=true}
+    }
+    fallbackHtml();
+   }
+   function fallbackHtml(){
+    if(tok!==audioToken||finished)return;
+    voiceEl.src='assets/audio/'+full+'.mp3';voiceEl.currentTime=0;voiceEl.onended=finish;voiceEl.onerror=finish;
+    var pr=voiceEl.play();if(pr&&pr.catch)pr.catch(function(){finish()});
+   }
+   var cached=voiceBuffers.get(full);
+   if(cached){decoded(cached);return true}
+   if(audioCtx&&!voiceFallback){
+    preloadVoices(file).then(function(){decoded(voiceBuffers.get(full))});
+    return true;
+   }
+   fallbackHtml();return true;
   }
-  voiceEl.onended=finish;
-  voiceEl.onerror=finish;
-  var pr=voiceEl.play();
-  if(pr&&pr.catch)pr.catch(finish);
-  return true;
- }
 
- function getCurSectionId(){
+  function getCurSectionId(){
   var vh=innerHeight,cur='home';
   for(var i=0;i<pages.length;i++){
    var r=pages[i].getBoundingClientRect();
@@ -1601,10 +1696,13 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
  function startTiredRecovery(){
   clearTimeout(recoverTimer);clearTimeout(panicFallbackTimer);clearTimeout(hideBubTimer);clearTimeout(idleTimer);
   pendingTired=false;
-  if(buddy.classList.contains('min'))return;
+  if(buddy.classList.contains('min')){
+   panicCooldownUntil=performance.now()+8000;
+   return;
+  }
 
-  bTag.textContent='PHEW...';
-  bMsg.textContent='Phew... okay, caught my breath. Let’s see where we landed.';
+  bTag.textContent=language==='ar'?'أوف...':'PHEW...';
+  bMsg.textContent=language==='ar'?'أوف... يا ساتر... دقيقة واحدة آخد نفسي... تمام، خلينا نشوف وصلنا لفين!':'Phew... okay, caught my breath. Let’s see where we landed.';
   setMood('tired');
   buddy.classList.add('show-bub');
   bubShownY=scrollY;
@@ -1616,11 +1714,14 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
    clearTimeout(recoverTimer);
    if(state!=='tired')return;
    lastSec='';
+   lastPanicAudioAt=performance.now();
+   panicCooldownUntil=performance.now()+8000;
+   fastAccum=0;
    announceSection(true,true);
   }
 
   if(voiceOn&&!activeV){
-   var ok=playVoice('buddy-tired','tired',function(){
+   var ok=playVoice('tired','tired',function(){
     if(state==='tired'){
      recoverTimer=setTimeout(finishRecovery,450);
     }
@@ -1640,20 +1741,25 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
   var id=getCurSectionId();
   if(!force&&id===lastSec)return;
   lastSec=id;
-  var info=SEC_DATA[id]||SEC_DATA.home;
+  var info=(SEC_DATA[id]||SEC_DATA.home)[language==='ar'?1:0];
   speak(info[0],info[1],'talk',playAudio===false?null:info[2],'section');
+  if(voiceOn)preloadVoices(info[2]);
  }
 
  /* Safe horizontal track between left HUD and right Music Player on Desktop */
  function computeTargetX(){
   if(mobile()||buddy.classList.contains('min'))return;
   var hudR=hud?hud.getBoundingClientRect().right:240;
-  var plL=player?player.getBoundingClientRect().left:(innerWidth-380);
-  var minX=Math.max(20,hudR+14);
-  var maxX=Math.max(minX,plL-178);
+  var plL=player?player.getBoundingClientRect().left:(innerWidth-100);
+  var leftBound=Math.max(20,hudR+14);
+  var rightBound=Math.max(leftBound,plL-184);
+  var coverX=clamp(innerWidth*.56,leftBound,rightBound);
   var H=Math.max(1,document.documentElement.scrollHeight-innerHeight);
   var prog=clamp(scrollY/H,0,1);
-  targetX=minX+prog*(maxX-minX);
+  /* Start in the open cover area, then travel smoothly without a 40px jump. */
+  targetX=language==='ar'
+    ? rightBound-prog*(rightBound-coverX)
+    : coverX+prog*(rightBound-coverX);
  }
  function animateX(){
   if(mobile()||buddy.classList.contains('min')){moveRaf=null;return}
@@ -1696,21 +1802,21 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
   syncPosition(false);
 
   var speed=dy/dt; /* px per ms downward */
-  if(now>navLockUntil&&dy>0&&speed>2.4){
+  if(now>navLockUntil&&now>=panicCooldownUntil&&dy>0&&speed>3.0){
    fastAccum+=dy;
    if(state==='panic'){
     pendingTired=false;
     clearTimeout(panicFallbackTimer);
-   }else if(fastAccum>400){
+   }else if(fastAccum>520){
     clearTimeout(recoverTimer);clearTimeout(idleTimer);clearTimeout(panicFallbackTimer);
     pendingTired=false;
-    var p=PANICS[panicIdx++%PANICS.length];
-    var canPlayPanic=(now-lastPanicAudioAt)>3000;
+    var p=PANICS[panicIdx++%PANICS.length][language==='ar'?1:0];
+    var canPlayPanic=(now-lastPanicAudioAt)>8000;
     if(canPlayPanic)lastPanicAudioAt=now;
-    speak('SLOW DOWN!',p[0],'panic',canPlayPanic?p[1]:null,'panic');
+    speak(language==='ar'?'بالراحة!':'SLOW DOWN!',p[0],'panic',canPlayPanic?p[1]:null,'panic');
    }
   }else{
-   if(dy<=0||speed<1.1)fastAccum=Math.max(0,fastAccum-90);
+   if(now<panicCooldownUntil||dy<=0||speed<1.1)fastAccum=Math.max(0,fastAccum-90);
    if(state!=='panic'&&Math.abs(dy)>1){
     clearTimeout(recoverTimer);clearTimeout(panicFallbackTimer);
     pendingTired=false;
@@ -1724,7 +1830,7 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
      setMood('walk');
     }else{
      setSprite(walkFrame?'walk2':'walk1');
-     setFlip(dir);
+     setFlip(language==='ar'?-dir:dir);
     }
     /* Hide stale text bubble while user is actively scrolling normally */
     if(buddy.classList.contains('show-bub')&&Math.abs(y-bubShownY)>110){
@@ -1746,7 +1852,7 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
        pendingTired=false;
        startTiredRecovery();
       }
-     },7500);
+     },10500);
     }else{
      startTiredRecovery();
     }
@@ -1764,10 +1870,12 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
  addEventListener('resize',function(){syncPosition(true)});
 
  function setVoiceState(on){
+  if(on)ensureAudioContext();
   voiceOn=!!on;
   buddy.classList.toggle('voice-on',voiceOn);
   bVoice.setAttribute('aria-pressed',voiceOn?'true':'false');
-  bVoiceTxt.textContent=voiceOn?'VOICE ON':'VOICE OFF';
+  bVoiceTxt.textContent=language==='ar'?(voiceOn?'الصوت يعمل':'الصوت متوقف'):(voiceOn?'VOICE ON':'VOICE OFF');
+  if(voiceOn)preloadVoices(getVoiceKeyForSection(getCurSectionId()));
   if(!voiceOn){
    stopBuddyVoice();
    if(state==='talk')setMood('idle');
@@ -1787,6 +1895,7 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
  });
 
  bAvatar.addEventListener('click',function(){
+  ensureAudioContext();
   clearTimeout(recoverTimer);clearTimeout(panicFallbackTimer);
   pendingTired=false;
   if(!voiceOn){
@@ -1826,6 +1935,248 @@ var menuBtn=$('#menuBtn');
 menuBtn.addEventListener('click',function(){var o=links.classList.toggle('open');menuBtn.setAttribute('aria-expanded',o);menuBtn.setAttribute('aria-label',o?'Close menu':'Open menu')});
 navA.forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');menuBtn.setAttribute('aria-expanded','false')})});
 
+/* ================= BILINGUAL UI ================= */
+var currentLanguage=window.KARIM_LANG||'en';
+var AR_UI={
+ 'Home':'الرئيسية','Journey':'الرحلة','Superpowers':'المهارات','Missions':'الإنجازات','Education':'التعليم','Creative Side':'الجانب الإبداعي','Contact':'تواصل',
+ 'OPEN TO REMOTE ROLES • CS & CX LEADERSHIP':'متاح للفرص عن بُعد • قيادة خدمة وتجربة العملاء',
+ 'A PROFESSIONAL JOURNEY • A CREATIVE UNIVERSE':'رحلة مهنية • عالم إبداعي',
+ 'THE STORY BEHIND THE CHARACTER':'الحكاية وراء الشخصية',
+ 'Customer Experience & Customer Success Professional':'متخصص تجربة العملاء ونجاح العملاء',
+ 'EXPLORE MY STORY':'اكتشف رحلتي','DOWNLOAD MY CV':'حمّل السيرة الذاتية','Copy Email':'نسخ البريد الإلكتروني',
+ 'YRS | Professional Experience':'سنوات من الخبرة المهنية','Churn Cut at KANZ':'خفض معدل فقد العملاء في KANZ','Agents Mentored':'موظفاً تم تدريبهم',
+ 'THE MAIN CHARACTER':'الشخصية الرئيسية','SCROLL TO OPEN THE STORY ↓':'انزل لبدء الحكاية ↓',
+ 'EVERY CHAPTER':'كل فصل','MADE ME':'جعلني','BETTER.':'أفضل.',
+ 'Five roles across Kuwait, Saudi Arabia, and the UK. Select any chapter below to inspect the mission and results.':'خمس محطات مهنية بين الكويت والسعودية والمملكة المتحدة. اختر أي فصل لاستكشاف المسؤوليات والنتائج.',
+ 'NEXT UP':'الفصل التالي','The exact toolkit, channels, and AI workflows behind these results.':'الأدوات والقنوات وسير العمل المدعوم بالذكاء الاصطناعي وراء هذه النتائج.','SEE SUPERPOWERS →':'استكشف المهارات ←',
+ 'THE SKILLS BEHIND':'المهارات وراء','THE':'هذه','RESULTS.':'النتائج.',
+ 'Every ability comes straight from my CV. Hover a skill to power it up.':'كل مهارة هنا مستمدة من خبرتي العملية. مرّر على أي مهارة لاستكشافها.',
+ 'The exact toolkit, channels, and AI workflows behind these results.':'الأدوات والقنوات وسير العمل المدعوم بالذكاء الاصطناعي وراء هذه النتائج.',
+ 'THE WORK SPEAKS':'النتائج تتحدث','FOR':'عن','ITSELF.':'نفسها.',
+ 'Slide to compare before vs. after, then tap any mission card below to reveal the Challenge, Action, and Result.':'حرّك الشريط للمقارنة بين الوضع قبل وبعد، ثم اقلب أي بطاقة لاستكشاف التحدي والإجراء والنتيجة.',
+ 'MISSIONS UNLOCKED':'إنجازات تم استكشافها','IMPACT SIMULATOR: BEFORE VS. AFTER':'محاكاة التأثير: قبل وبعد','CHURN RATE':'معدل فقد العملاء','AFTER':'بعد','BEFORE':'قبل',
+ 'DRAG SLIDER':'حرّك شريط المقارنة','VIEW CREDENTIALS →':'استعرض الشهادات ←','EDUCATION':'التعليم','LANGUAGES':'اللغات',
+ 'CERTIFICATIONS':'الشهادات','THE KNOWLEDGE':'المعرفة','BASE.':'والتطوير.',
+ 'Wait... there is more to the character than dashboards and retention metrics.':'لحظة... الشخصية أكبر من لوحات البيانات ومؤشرات الاحتفاظ بالعملاء.',
+ 'ENTER CREATIVE SIDE →':'اكتشف الجانب الإبداعي ←','BEYOND':'أبعد من','THE RESUME.':'السيرة الذاتية.',
+ 'Because there is more to a person than a job title. Welcome to the part of the story where the rules loosen up.':'لأن الإنسان أكبر من مسماه الوظيفي. أهلاً بك في الجانب الذي تنطلق فيه مساحة الإبداع.',
+ 'BEHIND THE MIC':'خلف الميكروفون','Every story creates a different version of you.':'كل حكاية بتخلق نسخة مختلفة منك.',
+ 'A. VOICE OVER & STORYTELLING':'أ. التعليق الصوتي والحكي','BEHIND THE':'خلف','MIC.':'الميكروفون.',
+ 'my creative series. Tap play for a 14-second preview, then watch the full video on Instagram.':'سلسلتي الإبداعية. اضغط تشغيل لمشاهدة معاينة مدتها 14 ثانية، ثم شاهد الفيديو كاملاً على Instagram.',
+ 'Previews load only when you press play. Background music pauses while a preview plays.':'تُحمّل المعاينات عند الضغط على تشغيل فقط. وتتوقف موسيقى الخلفية أثناء تشغيل المعاينة.',
+ 'B. PHOTOGRAPHY':'ب. التصوير','THROUGH MY':'من خلال','LENS.':'عدستي.',
+ 'Places, architecture, lighting, streets and everyday scenes. Tap any frame to view it full size.':'أماكن وعمارة وإضاءة وشوارع وتفاصيل من الحياة اليومية. اضغط على أي صورة لعرضها بالحجم الكامل.',
+ 'C. CREATIVE UNIVERSE':'ج. العالم الإبداعي','MY CREATIVE':'عالمي','UNIVERSE.':'الإبداعي.',
+ 'Comic storytelling, voice-over, rap, creative direction, visual storytelling, content creation and photography.':'الكوميكس والتعليق الصوتي والراب والإخراج الإبداعي والسرد البصري وصناعة المحتوى والتصوير.',
+ 'COMIC STORYTELLING':'سرد القصص المصورة','VOICE-OVER':'تعليق صوتي','RAP & MUSIC':'راب وموسيقى','PHOTOGRAPHY':'تصوير',
+ 'Creative direction | Visual storytelling | Content creation':'إخراج إبداعي | سرد بصري | صناعة محتوى',
+ 'FOLLOW THE STORY ON INSTAGRAM':'تابع الحكاية على Instagram','OPEN INSTAGRAM':'افتح Instagram',
+ 'Ready to bring this blend of CX leadership and creativity to your team?':'هل أنت مستعد لإضافة هذا المزيج من قيادة تجربة العملاء والإبداع إلى فريقك؟',
+ 'LET’S CONNECT →':'لنتواصل ←',"LET'S CONNECT →":'لنتواصل ←',
+ 'FINAL CHAPTER':'الفصل الأخير','What’s next?':'ماذا بعد؟','THE NEXT CHAPTER':'الفصل القادم','STARTS':'يبدأ','HERE.':'من هنا.',
+ 'Let’s create what’s next.':'لنصنع معاً ما هو قادم.','DOWNLOAD CV':'تحميل السيرة الذاتية','SAY HELLO':'تواصل معي',
+ 'TO BE':'يتبع','CONTINUED...':'...','Choose how the next chapter starts.':'اختر كيف نبدأ الفصل القادم.',
+ 'OPTION A - DIRECT LINE':'الخيار أ - تواصل مباشر','START A CONVERSATION':'ابدأ محادثة',
+ 'Hiring for a remote Customer Success, CX, or Support Leadership role? Reach out directly.':'هل تبحث عن قائد لنجاح العملاء أو تجربة العملاء أو عمليات الدعم عن بُعد؟ يسعدني التواصل.',
+ 'WHATSAPP ME':'راسلني على WhatsApp','SEND EMAIL':'أرسل بريداً إلكترونياً',
+ 'OPTION B - FULL DOSSIER':'الخيار ب - الملف الكامل','TAKE THE STORY WITH YOU':'احتفظ بنسخة من الحكاية',
+ 'Download my latest ATS-ready CV or connect on LinkedIn to keep in touch for upcoming roles.':'حمّل سيرتي الذاتية المتوافقة مع أنظمة ATS أو تواصل معي على LinkedIn للفرص القادمة.',
+ 'LINKEDIN':'LinkedIn','↑ BACK TO THE COVER':'↑ العودة إلى الغلاف',
+ 'VIEW CERTIFICATE':'عرض الشهادة','WATCH FULL VIDEO →':'شاهد الفيديو كاملاً ←','MUSIC OFF':'الصوت متوقف',
+ 'CHAPTER 01':'الفصل 01','CHAPTER 02':'الفصل 02','CHAPTER 03':'الفصل 03','CHAPTER 04':'الفصل 04','CHAPTER 05 - MY CREATIVE UNIVERSE':'الفصل 05 - عالمي الإبداعي',
+ 'ISSUE #01':'العدد #01','ISSUE #02':'العدد #02','ISSUE #03':'العدد #03','SCENE 01':'المشهد 01','SCENE 02':'المشهد 02','SCENE 03':'المشهد 03','SCENE 04':'المشهد 04','SCENE 05':'المشهد 05',
+ 'PREV':'السابق','NEXT':'التالي','ACHIEVEMENT PANEL':'لوحة الإنجازات','ROLE 01 / 05':'الدور 01 / 05','EXPERIENCE 01':'الخبرة 01','SHOW LESS':'عرض أقل',
+ 'CUSTOMER SUCCESS & CX':'نجاح العملاء وتجربة العملاء','SUPPORT OPERATIONS':'عمليات الدعم','TOOLS & CHANNELS':'الأدوات والقنوات','AI & DIGITAL SKILLS':'الذكاء الاصطناعي والمهارات الرقمية',
+ 'COMPLETE':'مكتمل','TAP TO SEE HOW →':'اضغط لاكتشاف التفاصيل ←','TAP TO FLIP BACK':'اضغط للعودة للوجه الأمامي','BRIEFING':'تفاصيل المهمة',
+ 'CHALLENGE':'التحدي','ACTION':'الإجراء','RESULT':'النتيجة','MISSION 01':'المهمة 01','MISSION 02':'المهمة 02','MISSION 03':'المهمة 03','MISSION 04':'المهمة 04','MISSION 05':'المهمة 05','MISSION 06':'المهمة 06',
+ 'VIEW CERTIFICATE':'عرض الشهادة','WATCH FULL VIDEO →':'شاهد الفيديو كاملاً ←','14s PREVIEW':'معاينة 14 ثانية','MUSIC ON':'الموسيقى تعمل','SOUND ON':'الصوت يعمل','SOUND OFF':'الصوت متوقف',
+ 'Customer Success Manager':'مدير نجاح العملاء','Customer Experience Manager':'مدير تجربة العملاء','Subject Matter Expert':'خبير متخصص','Customer Service Agent':'أخصائي خدمة عملاء',
+ 'February 2026 - September 2026':'فبراير 2026 - سبتمبر 2026','September 2024 - December 2025':'سبتمبر 2024 - ديسمبر 2025','March 2024 - September 2024':'مارس 2024 - سبتمبر 2024','September 2023 - March 2024':'سبتمبر 2023 - مارس 2024','February 2021 - May 2023':'فبراير 2021 - مايو 2023',
+ 'UK | Remote':'المملكة المتحدة | عن بُعد','Saudi Arabia | Remote':'السعودية | عن بُعد','Kuwait':'الكويت',
+ 'CUSTOMER RETENTION':'الاحتفاظ بالعملاء','CHURN REDUCTION':'خفض فقد العملاء','ONBOARDING':'تهيئة العملاء','ESCALATION MANAGEMENT':'إدارة التصعيدات',
+ 'VIEW CERTIFICATE':'عرض الشهادة','MUTE':'كتم','UNMUTE':'إلغاء الكتم','VOICE ON':'الصوت يعمل','VOICE OFF':'الصوت متوقف'
+
+};
+Object.assign(AR_UI,{
+ 'Owned customer success for a subscriber base of traders and investors: engagement, onboarding, and retention.':'توليت مسؤولية نجاح العملاء لقاعدة من المتداولين والمستثمرين، مع التركيز على التفاعل والتهيئة والاحتفاظ بالعملاء.',
+ 'Led customer experience across multiple product lines, balancing satisfaction, retention, and service quality.':'قدت تجربة العملاء عبر عدة خطوط منتجات، مع الموازنة بين رضا العملاء والاحتفاظ بهم وجودة الخدمة.',
+ 'Top-ranked agent and product expert delivering bilingual Arabic/English support at high volume.':'أحد أعلى الموظفين أداءً وخبير بالمنتجات، مع تقديم دعم ثنائي اللغة بالعربية والإنجليزية وبأحجام تواصل مرتفعة.',
+ 'Frontline omnichannel support for three e-commerce brands across nine communication channels.':'تقديم دعم مباشر متعدد القنوات لثلاث علامات تجارية في التجارة الإلكترونية عبر تسع قنوات تواصل.',
+ 'Customer service across multiple restaurant brands, including Taco Bell, Burger King, and Applebee’s.':'تقديم خدمة العملاء لعدة علامات تجارية في قطاع المطاعم، منها Taco Bell وBurger King وApplebee’s.',
+ 'THE RETENTION CHALLENGE':'تحدي الاحتفاظ بالعملاء','THE TEAM BUILDER':'بناء الفريق','THE TOP PERFORMER':'الأداء الأعلى','HIGH-VOLUME OPS':'عمليات الدعم المكثف','DOCS UPGRADE':'تطوير التوثيق','RESOLUTION UPGRADE':'تسريع الحلول',
+ 'Reduced customer churn from 56% to 27% within 6 months at KANZ.':'خفض معدل فقد العملاء من 56% إلى 27% خلال 6 أشهر في KANZ.',
+ 'Mentored and supported 15+ remote customer service agents at TGC.':'تدريب ودعم أكثر من 15 موظف خدمة عملاء عن بُعد في TGC.',
+ 'Resolved 30,836+ inquiries in 12 months, ranking #1 among agents.':'معالجة أكثر من 30,836 استفساراً خلال 12 شهراً، وتحقيق المركز الأول بين الموظفين.',
+ 'Processed 120+ daily Zendesk tickets with 98% SLA compliance.':'معالجة أكثر من 120 تذكرة يومياً عبر Zendesk مع الالتزام بنسبة 98% بـ SLA.',
+ 'Improved product documentation clarity by 40% at TGC.':'تحسين وضوح توثيق المنتجات بنسبة 40% في TGC.',
+ 'Contributed to a 35% faster average team resolution time.':'المساهمة في تسريع متوسط وقت حل الفريق بنسبة 35%.',
+ 'High subscriber churn (56%) across a 500-1,000 trader and investor base.':'ارتفاع معدل فقد المشتركين إلى 56% ضمن قاعدة تضم 500 إلى 1,000 متداول ومستثمر.',
+ 'Built structured daily follow-up workflows to spot disengaged users and handle cancellation risks early.':'إنشاء آليات متابعة يومية منظمة لاكتشاف العملاء غير المتفاعلين ومعالجة مخاطر الإلغاء مبكراً.',
+ 'Cut churn from 56% to 27% in six months while onboarding 20-50 new users monthly.':'خفض معدل الفقد من 56% إلى 27% خلال ستة أشهر، مع تهيئة 20 إلى 50 مستخدماً جديداً شهرياً.',
+ 'Maintaining consistent quality and speed across a remote multi-product support team.':'الحفاظ على جودة وسرعة متسقتين ضمن فريق دعم عن بُعد يخدم عدة منتجات.',
+ 'Led hands-on coaching, knowledge sharing, and ongoing performance guidance for 15+ agents.':'قيادة التدريب العملي ومشاركة المعرفة والتوجيه المستمر للأداء لأكثر من 15 موظفاً.',
+ 'Helped drive a 35% improvement in average team resolution time.':'المساهمة في تحسين متوسط وقت الحل للفريق بنسبة 35%.',
+ 'High bilingual Arabic/English inquiry volume spanning 3 product lines and 250+ SKUs.':'حجم مرتفع من الاستفسارات بالعربية والإنجليزية عبر 3 خطوط منتجات وأكثر من 250 وحدة SKU.',
+ 'Streamlined ticket handling while maintaining 88.6% FCR and 99.2% CRM accuracy.':'تحسين معالجة التذاكر مع الحفاظ على 88.6% في FCR ودقة بيانات CRM بنسبة 99.2%.',
+ 'Ranked #1 among agents and achieved 77.1% CSAT (+12.1% above team average).':'تحقيق المركز الأول بين الموظفين وبلوغ CSAT بنسبة 77.1%، أعلى من متوسط الفريق بـ12.1%.',
+ 'Sustaining response speed and accuracy under heavy daily omnichannel ticket loads.':'الحفاظ على سرعة الاستجابة ودقتها مع أحجام كبيرة من التذاكر اليومية متعددة القنوات.',
+ 'Standardized Zendesk triage, escalation tracking, and resolution workflows.':'توحيد آليات فرز التذاكر ومتابعة التصعيدات وسير عمل الحل عبر Zendesk.',
+ 'Maintained 98% SLA compliance and reduced handling time from 8h to 4.9h (38.8% faster).':'الحفاظ على التزام SLA بنسبة 98% وخفض وقت المعالجة من 8 ساعات إلى 4.9 ساعات (تحسن 38.8%).',
+ 'Documentation gaps slowed down troubleshooting and created repeat customer contacts.':'تسببت فجوات التوثيق في إبطاء استكشاف المشكلات وزيادة تواصل العملاء المتكرر.',
+ 'Collaborated cross-functionally to reorganize and clarify product knowledge resources.':'التعاون مع فرق متعددة لإعادة تنظيم وتوضيح مصادر المعرفة الخاصة بالمنتجات.',
+ 'Improved clarity by 40%, reducing information gaps and speeding up issue resolution.':'تحسين الوضوح بنسبة 40%، وتقليل فجوات المعلومات وتسريع حل المشكلات.',
+ 'Longer resolution cycles were impacting customer satisfaction and retention.':'كانت دورات الحل الطويلة تؤثر على رضا العملاء والاحتفاظ بهم.',
+ 'Combined workflow optimization, targeted coaching, and proactive retention processes.':'الجمع بين تحسين سير العمل والتدريب الموجه وعمليات الاحتفاظ الاستباقية.',
+ 'Improved average resolution time by 35% and reduced customer churn by 22 percentage points.':'تحسين متوسط وقت الحل بنسبة 35% وخفض فقد العملاء بمقدار 22 نقطة مئوية.',
+ 'Customer Engagement Fundamentals':'أساسيات تفاعل العملاء','Inbound Certified':'شهادة Inbound المعتمدة','Customer Success Advanced Concepts':'مفاهيم متقدمة في نجاح العملاء','Customer Experience (CX) for Business Success':'تجربة العملاء لنجاح الأعمال','Apply AI at Work - Pathway Completion Certificate':'شهادة إتمام مسار تطبيق الذكاء الاصطناعي في العمل',
+ 'IBM SkillsBuild':'IBM SkillsBuild','HubSpot Academy':'HubSpot Academy','CustomerSuccessU':'CustomerSuccessU','HP LIFE':'HP LIFE','OpenAI Academy':'OpenAI Academy',
+ 'Arabic':'العربية','Native':'اللغة الأم','English - B2':'الإنجليزية - B2','Upper-Intermediate':'فوق المتوسط',
+ 'MISSION 01 BRIEFING':'تفاصيل المهمة 01','MISSION 02 BRIEFING':'تفاصيل المهمة 02','MISSION 03 BRIEFING':'تفاصيل المهمة 03','MISSION 04 BRIEFING':'تفاصيل المهمة 04','MISSION 05 BRIEFING':'تفاصيل المهمة 05','MISSION 06 BRIEFING':'تفاصيل المهمة 06',
+ 'Customer Success Management':'إدارة نجاح العملاء','Customer Experience (CX)':'تجربة العملاء (CX)','Customer Lifecycle Management':'إدارة دورة حياة العميل','Customer Retention':'الاحتفاظ بالعملاء','Churn Reduction':'خفض فقد العملاء','Customer Engagement':'تفاعل العملاء','Customer Journey Management':'إدارة رحلة العميل',
+ 'Omnichannel Customer Support':'دعم العملاء متعدد القنوات','Customer Service Operations':'عمليات خدمة العملاء','Complaint & Escalation Management':'إدارة الشكاوى والتصعيدات','Technical Troubleshooting':'استكشاف المشكلات التقنية','Ticket Management':'إدارة التذاكر','SLA Management':'إدارة SLA','Support Team Leadership':'قيادة فريق الدعم','Agent Coaching & Training':'تدريب وتوجيه الموظفين','Workflow Design & Optimization':'تصميم وتحسين سير العمل','Performance Monitoring & KPI Reporting':'متابعة الأداء وتقارير KPI',
+ 'WhatsApp Business':'WhatsApp Business','Live Chat':'المحادثة المباشرة','Email Support':'الدعم عبر البريد الإلكتروني','Instagram Support':'دعم Instagram','Facebook Support':'دعم Facebook','TikTok Support':'دعم TikTok','Snapchat Support':'دعم Snapchat',
+ 'Generative AI':'الذكاء الاصطناعي التوليدي','Prompt Engineering':'هندسة الأوامر','AI-Assisted Workflow':'سير عمل مدعوم بالذكاء الاصطناعي',
+ 'CS Manager':'مدير نجاح العملاء','CX Manager':'مدير تجربة العملاء','SME':'خبير متخصص','CS Agent':'أخصائي خدمة عملاء',
+ 'VIEW CERTIFICATE':'عرض الشهادة','SHOW ALL 5 ACHIEVEMENTS':'عرض جميع الإنجازات الخمسة','SHOW ALL 4 ACHIEVEMENTS':'عرض جميع الإنجازات الأربعة','SHOW ALL 8 ACHIEVEMENTS':'عرض جميع الإنجازات الثمانية',
+ 'ALL MISSIONS UNLOCKED':'تم استكشاف جميع المهام','MISSIONS UNLOCKED':'مهام تم استكشافها','FULL DOSSIER UNLOCKED':'تم فتح الملف الكامل'
+});
+Object.assign(AR_UI,{
+ 'Reduced customer churn rate from 56% to 27% within six months by designing and implementing structured daily follow-up workflows, improving subscriber engagement and reducing cancellation requests.':'خفض معدل فقد العملاء من 56% إلى 27% خلال ستة أشهر عبر تصميم وتنفيذ آليات متابعة يومية منظمة، مما عزز تفاعل المشتركين وقلل طلبات الإلغاء.',
+ 'Supported customer success operations across a company-wide subscriber base of 500-1,000 traders and investors, contributing to onboarding, platform adoption, engagement, and retention.':'دعم عمليات نجاح العملاء لقاعدة تضم 500 إلى 1,000 متداول ومستثمر، والمساهمة في تهيئة العملاء واعتماد المنصة وزيادة التفاعل والاحتفاظ.',
+ 'Onboarded 20-50 new customers monthly, guiding traders and investors through platform features, market analysis, daily insights, and educational resources.':'تهيئة 20 إلى 50 عميلاً جديداً شهرياً، وإرشاد المتداولين والمستثمرين إلى خصائص المنصة وتحليلات السوق والرؤى اليومية والموارد التعليمية.',
+ 'Handled 50-100 customer escalations monthly, coordinating with internal teams to resolve issues and maintain service quality.':'التعامل مع 50 إلى 100 حالة تصعيد شهرياً، والتنسيق مع الفرق الداخلية لحل المشكلات والحفاظ على جودة الخدمة.',
+ 'Established structured daily communication and follow-up processes to identify disengaged subscribers, address cancellation risks, and strengthen customer relationships.':'إنشاء عمليات تواصل ومتابعة يومية منظمة لتحديد المشتركين منخفضي التفاعل ومعالجة مخاطر الإلغاء وتعزيز علاقات العملاء.',
+ 'Led customer experience operations across multiple product lines, focusing on customer satisfaction, retention, and service quality.':'قيادة عمليات تجربة العملاء عبر عدة خطوط منتجات، مع التركيز على رضا العملاء والاحتفاظ بهم وجودة الخدمة.',
+ 'Reduced customer churn by 22 percentage points through targeted retention initiatives and structured customer engagement processes.':'خفض معدل فقد العملاء بمقدار 22 نقطة مئوية عبر مبادرات موجهة للاحتفاظ بالعملاء وعمليات منظمة لتعزيز التفاعل.',
+ 'Improved product documentation clarity by 40% through cross-functional collaboration, reducing information gaps and supporting faster customer issue resolution.':'تحسين وضوح توثيق المنتجات بنسبة 40% من خلال التعاون بين الفرق، وتقليل فجوات المعلومات ودعم حل مشكلات العملاء بسرعة أكبر.',
+ 'Mentored and supported 15+ customer service agents, contributing to a 35% improvement in the team’s average resolution time through coaching, knowledge sharing, and performance guidance.':'تدريب ودعم أكثر من 15 موظفاً في خدمة العملاء، والمساهمة في تحسين متوسط وقت الحل للفريق بنسبة 35% من خلال التوجيه ومشاركة المعرفة ومتابعة الأداء.',
+ 'Ranked #1 among agents after resolving 30,836+ customer inquiries within 12 months across Agent and SME roles.':'تحقيق المركز الأول بين الموظفين بعد معالجة أكثر من 30,836 استفساراً خلال 12 شهراً في دوري الموظف والخبير المتخصص.',
+ 'Achieved 77.1% CSAT, exceeding the team average by 12.1%.':'تحقيق CSAT بنسبة 77.1%، متجاوزاً متوسط الفريق بمقدار 12.1%.',
+ 'Improved resolution workflow, reducing handling time from 8 hours to 4.9 hours, a 38.8% improvement.':'تحسين سير عمل معالجة الطلبات وخفض وقت المعالجة من 8 ساعات إلى 4.9 ساعات، بتحسن قدره 38.8%.',
+ 'Maintained 88.6% First Contact Resolution (FCR).':'الحفاظ على معدل حل من أول تواصل (FCR) بنسبة 88.6%.',
+ 'Processed 120+ daily Zendesk tickets while maintaining 98% SLA compliance.':'معالجة أكثر من 120 تذكرة يومياً عبر Zendesk مع الحفاظ على التزام SLA بنسبة 98%.',
+ 'Maintained 99.2% CRM data accuracy across customer records.':'الحفاظ على دقة بيانات CRM بنسبة 99.2% في سجلات العملاء.',
+ 'Drove 25% sales growth through strategic product recommendations and customer follow-ups.':'تحقيق نمو في المبيعات بنسبة 25% عبر ترشيحات المنتجات الاستراتيجية ومتابعة العملاء.',
+ 'Provided bilingual Arabic/English support across 3 product lines and developed strong product expertise across 250+ SKUs.':'تقديم دعم ثنائي اللغة بالعربية والإنجليزية عبر 3 خطوط منتجات، مع بناء معرفة متعمقة بأكثر من 250 وحدة SKU.',
+ 'Handled approximately 250 customer inquiries daily across 3 e-commerce brands through 9 communication channels, including WhatsApp, Instagram, Facebook, TikTok, Snapchat, Live Chat, and Email.':'التعامل مع نحو 250 استفساراً يومياً عبر 3 علامات تجارية للتجارة الإلكترونية ومن خلال 9 قنوات تواصل، منها WhatsApp وInstagram وFacebook وTikTok وSnapchat والمحادثة المباشرة والبريد الإلكتروني.',
+ 'Achieved an 88% First Contact Resolution (FCR) rate, resolving customer inquiries efficiently while minimizing repeat contacts and unnecessary escalations.':'تحقيق معدل حل من أول تواصل (FCR) بنسبة 88%، مع معالجة استفسارات العملاء بكفاءة وتقليل التواصل المتكرر والتصعيدات غير الضرورية.',
+ 'Maintained an average CSAT score of 4/5, delivering consistent support across high-volume customer interactions.':'الحفاظ على متوسط CSAT قدره 4/5، وتقديم دعم متسق خلال أحجام كبيرة من تفاعلات العملاء.',
+ 'Managed customer complaints, order inquiries, and product-related issues through Zendesk, maintaining accurate ticket records, follow-ups, and escalations.':'إدارة شكاوى العملاء واستفسارات الطلبات والمشكلات المتعلقة بالمنتجات عبر Zendesk، مع الحفاظ على دقة سجلات التذاكر والمتابعات والتصعيدات.',
+ 'Resolved customer inquiries and complaints efficiently across multiple restaurant brands, improving satisfaction ratings by 25% through implementation of a streamlined communication protocol and advanced CRM tools.':'حل استفسارات العملاء وشكاواهم بكفاءة عبر عدة علامات تجارية للمطاعم، وتحسين تقييمات الرضا بنسبة 25% من خلال تطبيق بروتوكول تواصل مبسط وأدوات CRM متقدمة.',
+ 'Facilitated a comprehensive training program for new hires in customer engagement and complaint resolution, leading to a 30% improvement in first-call resolution rates across franchises (Taco Bell and Burger King).':'تنفيذ برنامج تدريبي شامل للموظفين الجدد حول تفاعل العملاء وحل الشكاوى، مما أدى إلى تحسين معدلات الحل من أول مكالمة بنسبة 30% في فروع Taco Bell وBurger King.',
+ 'Coordinated inter-departmental communications to address service disruptions promptly, reducing response times by 40% and enhancing customer retention for outlets (Applebee’s and Taco Bell).':'تنسيق التواصل بين الأقسام لمعالجة تعطل الخدمة بسرعة، وخفض أوقات الاستجابة بنسبة 40% وتعزيز الاحتفاظ بالعملاء في فروع Applebee’s وTaco Bell.',
+ 'High cancellations across 500-1,000 users':'معدلات إلغاء مرتفعة بين 500 و1,000 مستخدم',
+ 'Daily follow-up workflows in 6 months':'متابعة يومية منظمة خلال 6 أشهر',
+ 'Heavy multi-brand ticket backlog':'تراكم كبير للتذاكر عبر علامات تجارية متعددة',
+ '38.8% faster via streamlined Zendesk triage':'أسرع بنسبة 38.8% عبر تحسين فرز التذاكر في Zendesk',
+ 'Cut customer churn from 56% to 27% within six months at KANZ through structured daily retention workflows.':'خفض معدل فقد العملاء من 56% إلى 27% خلال ستة أشهر في KANZ عبر عمليات يومية منظمة للاحتفاظ بالعملاء.',
+ 'Five roles across Kuwait, Saudi Arabia, and the UK.':'خمس محطات مهنية بين الكويت والسعودية والمملكة المتحدة.',
+ 'Customer Retention':'الاحتفاظ بالعملاء','Churn Reduction':'خفض فقد العملاء','Onboarding':'تهيئة العملاء','Escalation Management':'إدارة التصعيدات',
+ 'Zendesk':'Zendesk','Avaya':'Avaya','DelightChat':'DelightChat','WATI':'WATI','Circle.so':'Circle.so','CRM':'CRM','SLA':'SLA','CSAT':'CSAT','FCR':'FCR','KPI':'KPI','B2':'B2'
+});
+Object.assign(AR_UI,{
+ 'Completed IBM SkillsBuild training on customer engagement strategies, CRM fundamentals, and delivering consistent customer experience across touchpoints.':'إتمام تدريب IBM SkillsBuild حول استراتيجيات تفاعل العملاء وأساسيات CRM وتقديم تجربة متسقة عبر مختلف نقاط التواصل.',
+ 'Mastered inbound methodology, customer journey mapping, and customer-centric strategies to drive long-term engagement and retention.':'إتقان منهجية Inbound ورسم رحلة العميل والاستراتيجيات التي تضع العميل في المقدمة لتعزيز التفاعل والاحتفاظ على المدى الطويل.',
+ 'Developed advanced customer success competencies including enterprise account management, proactive retention, and customer lifecycle optimization.':'تطوير مهارات متقدمة في نجاح العملاء، تشمل إدارة حسابات المؤسسات والاحتفاظ الاستباقي وتحسين دورة حياة العميل.',
+ 'Applied customer experience management frameworks focused on improving customer satisfaction, service quality, and business retention outcomes.':'تطبيق أطر إدارة تجربة العملاء بهدف تحسين رضا العملاء وجودة الخدمة ونتائج الاحتفاظ بالأعمال.',
+ 'Completed the Apply AI at Work learning pathway, developing practical skills in applying AI tools to workplace tasks, improving productivity, and supporting effective AI-assisted workflows.':'إتمام مسار Apply AI at Work وتطوير مهارات عملية لاستخدام أدوات الذكاء الاصطناعي في مهام العمل وتحسين الإنتاجية ودعم سير العمل المدعوم بالذكاء الاصطناعي.',
+ 'Five verified certificates. Hit View Certificate to inspect any of them full size.':'خمس شهادات موثقة. اضغط على عرض الشهادة لمشاهدة أي منها بالحجم الكامل.',
+ 'Every story creates a different version of you.':'كل حكاية بتخلق نسخة مختلفة منك.',
+ 'VOICE ON':'الصوت يعمل','VOICE OFF':'الصوت متوقف','MINI KARIM':'كريم الصغير','SLOW DOWN!':'بالراحة!','PHEW...':'أوف...',
+ 'MISSION 01':'المهمة 01','MISSION 02':'المهمة 02','MISSION 03':'المهمة 03','MISSION 04':'المهمة 04','MISSION 05':'المهمة 05','MISSION 06':'المهمة 06',
+ 'THE RETENTION CHALLENGE':'تحدي الاحتفاظ بالعملاء','THE TEAM BUILDER':'بناء الفريق','THE TOP PERFORMER':'الأداء الأعلى','HIGH-VOLUME OPS':'عمليات الدعم المكثف','DOCS UPGRADE':'تطوير التوثيق','RESOLUTION UPGRADE':'تسريع الحلول',
+ 'Tap to see how':'اضغط لاكتشاف التفاصيل','Tap to flip back':'اضغط للعودة','OPTION A - DIRECT LINE':'الخيار أ - تواصل مباشر','OPTION B - FULL DOSSIER':'الخيار ب - الملف الكامل',
+ 'Email':'البريد الإلكتروني','Location':'الموقع','Chat Directly':'محادثة مباشرة','Giza, Egypt (Open to Remote)':'الجيزة، مصر (متاح للعمل عن بُعد)'
+});
+Object.assign(AR_UI,{
+ 'Reduced customer churn from 56% to 27% within 6 months at KANZ.':'خفض معدل فقد العملاء من 56% إلى 27% خلال 6 أشهر في KANZ.',
+ 'Mentored and supported 15+ remote customer service agents at TGC.':'تدريب ودعم أكثر من 15 موظف خدمة عملاء عن بُعد في TGC.',
+ 'Resolved 30,836+ inquiries in 12 months, ranking #1 among agents.':'معالجة أكثر من 30,836 استفساراً خلال 12 شهراً وتحقيق المركز الأول بين الموظفين.',
+ 'Processed 120+ daily Zendesk tickets with 98% SLA compliance.':'معالجة أكثر من 120 تذكرة يومياً عبر Zendesk مع التزام SLA بنسبة 98%.',
+ 'Improved product documentation clarity by 40% at TGC.':'تحسين وضوح توثيق المنتجات بنسبة 40% في TGC.',
+ 'Contributed to a 35% faster average team resolution time.':'المساهمة في تسريع متوسط وقت الحل للفريق بنسبة 35%.',
+ 'Reduced customer churn from 56% to 27% within 6 months at KANZ.':'خفض معدل فقد العملاء من 56% إلى 27% خلال 6 أشهر في KANZ.',
+ 'High subscriber churn (56%) across a 500-1,000 trader and investor base.':'ارتفاع معدل فقد المشتركين إلى 56% ضمن قاعدة تضم 500 إلى 1,000 متداول ومستثمر.',
+ 'Built structured daily follow-up workflows to spot disengaged users and handle cancellation risks early.':'إنشاء آليات متابعة يومية منظمة لاكتشاف المستخدمين غير المتفاعلين ومعالجة مخاطر الإلغاء مبكراً.',
+ 'Cut churn from 56% to 27% in six months while onboarding 20-50 new users monthly.':'خفض معدل الفقد من 56% إلى 27% خلال ستة أشهر، مع تهيئة 20 إلى 50 مستخدماً جديداً شهرياً.',
+ 'Maintaining consistent quality and speed across a remote multi-product support team.':'الحفاظ على جودة وسرعة متسقتين ضمن فريق دعم عن بُعد يخدم عدة منتجات.',
+ 'Led hands-on coaching, knowledge sharing, and ongoing performance guidance for 15+ agents.':'قيادة التدريب العملي ومشاركة المعرفة والتوجيه المستمر للأداء لأكثر من 15 موظفاً.',
+ 'Helped drive a 35% improvement in average team resolution time.':'المساهمة في تحسين متوسط وقت الحل للفريق بنسبة 35%.',
+ 'High bilingual Arabic/English inquiry volume spanning 3 product lines and 250+ SKUs.':'حجم مرتفع من الاستفسارات بالعربية والإنجليزية عبر 3 خطوط منتجات وأكثر من 250 وحدة SKU.',
+ 'Streamlined ticket handling while maintaining 88.6% FCR and 99.2% CRM accuracy.':'تحسين معالجة التذاكر مع الحفاظ على 88.6% في FCR ودقة بيانات CRM بنسبة 99.2%.',
+ 'Ranked #1 among agents and achieved 77.1% CSAT (+12.1% above team average).':'تحقيق المركز الأول بين الموظفين وبلوغ CSAT بنسبة 77.1%، أعلى من متوسط الفريق بـ12.1%.',
+ 'Sustaining response speed and accuracy under heavy daily omnichannel ticket loads.':'الحفاظ على سرعة الاستجابة ودقتها مع أحجام كبيرة من التذاكر اليومية متعددة القنوات.',
+ 'Standardized Zendesk triage, escalation tracking, and resolution workflows.':'توحيد آليات فرز التذاكر ومتابعة التصعيدات وسير عمل الحل عبر Zendesk.',
+ 'Maintained 98% SLA compliance and reduced handling time from 8h to 4.9h (38.8% faster).':'الحفاظ على التزام SLA بنسبة 98% وخفض وقت المعالجة من 8 ساعات إلى 4.9 ساعات (تحسن 38.8%).',
+ 'Documentation gaps slowed down troubleshooting and created repeat customer contacts.':'تسببت فجوات التوثيق في إبطاء استكشاف المشكلات وزيادة تواصل العملاء المتكرر.',
+ 'Collaborated cross-functionally to reorganize and clarify product knowledge resources.':'التعاون مع فرق متعددة لإعادة تنظيم وتوضيح مصادر المعرفة الخاصة بالمنتجات.',
+ 'Improved clarity by 40%, reducing information gaps and speeding up issue resolution.':'تحسين الوضوح بنسبة 40%، وتقليل فجوات المعلومات وتسريع حل المشكلات.',
+ 'Longer resolution cycles were impacting customer satisfaction and retention.':'كانت دورات الحل الطويلة تؤثر على رضا العملاء والاحتفاظ بهم.',
+ 'Combined workflow optimization, targeted coaching, and proactive retention processes.':'الجمع بين تحسين سير العمل والتدريب الموجه وعمليات الاحتفاظ الاستباقية.',
+ 'Improved average resolution time by 35% and reduced customer churn by 22 percentage points.':'تحسين متوسط وقت الحل بنسبة 35% وخفض فقد العملاء بمقدار 22 نقطة مئوية.'
+});
+Object.assign(AR_UI,{
+ 'Reduced handling time from 8 hours to 4.9 hours at TGC while maintaining 98% SLA and 88.6% FCR.':'خفض وقت المعالجة من 8 ساعات إلى 4.9 ساعات في TGC مع الحفاظ على التزام SLA بنسبة 98% وFCR بنسبة 88.6%.',
+ 'SHOT 01':'لقطة 01','SHOT 02':'لقطة 02','SHOT 03':'لقطة 03','SHOT 04':'لقطة 04','SHOT 05':'لقطة 05',
+ 'KOUT FOOD GROUP':'مجموعة KOUT FOOD','KOUT FOOD':'KOUT FOOD',
+ '50-1,000 subscribers':'500-1,000 مشترك','20-50 onboarded / month':'20-50 عميلاً جديداً شهرياً','50-100 escalations / month':'50-100 تصعيد شهرياً',
+ '56% → 27% churn':'خفض فقد العملاء من 56% إلى 27%','500-1,000 subscribers':'500-1,000 مشترك','20-50 onboarded / month':'20-50 عميلاً جديداً شهرياً',
+ 'Tap any chapter below to inspect the mission and results.':'اختر أي فصل لاستكشاف المهمة والنتائج.',
+ 'OPEN TO REMOTE ROLES':'متاح للعمل عن بُعد','Customer Success':'نجاح العملاء','Customer Experience':'تجربة العملاء','Professional Experience':'الخبرة المهنية',
+ 'VIEW CERTIFICATE':'عرض الشهادة','SOUND OFF':'الصوت متوقف','SOUND ON':'الصوت يعمل'
+});
+Object.assign(AR_UI,{
+ 'Skip to content':'تخطَّ إلى المحتوى','THE COVER':'الغلاف','PAGE 01 / 11':'صفحة 01 / 11','PAGE 01: COVER':'صفحة 01: الغلاف',
+ 'Professional Experience':'الخبرة المهنية','Churn Cut at KANZ':'خفض فقد العملاء في KANZ','Agents Mentored':'موظفون تم تدريبهم',
+ 'KUWAIT':'الكويت','SAUDI ARABIA':'السعودية','UK':'المملكة المتحدة','EDUCATION':'التعليم','LANGUAGES.':'اللغات.',
+ 'Voice-over':'تعليق صوتي','Narration':'سرد','Storytelling':'حكي القصص','Creative audio production':'إنتاج صوتي إبداعي','Content creation':'صناعة المحتوى',
+ 'ON AIR!':'على الهواء!','A. VOICE OVER & STORYTELLING':'أ. التعليق الصوتي والحكي','Ehsaas Mesh Ehsaas - my creative series. Tap play for a 14-second preview, then watch the full video on Instagram.':'إحساس مش إحساس - سلسلتي الإبداعية. اضغط تشغيل لمعاينة مدتها 14 ثانية، ثم شاهد الفيديو كاملاً على Instagram.',
+ 'B. PHOTOGRAPHY':'ب. التصوير','Places, architecture, lighting, streets and everyday scenes. Tap any frame to view it full size.':'أماكن وعمارة وإضاءة وشوارع ومشاهد يومية. اضغط على أي صورة لعرضها بالحجم الكامل.',
+ 'C. CREATIVE UNIVERSE':'ج. العالم الإبداعي','Creative direction':'إخراج إبداعي','Visual storytelling':'سرد بصري','FOLLOW THE STORY ON INSTAGRAM':'تابع الحكاية على Instagram',
+ 'FINAL CHAPTER':'الفصل الأخير','What’s next?':'ماذا بعد؟','THE NEXT CHAPTER':'الفصل القادم','STARTS':'يبدأ','HERE.':'من هنا.',
+ 'Karimhatemalashry@gmail.com':'Karimhatemalashry@gmail.com','linkedin.com/in/karimalashry':'linkedin.com/in/karimalashry',
+ 'Giza, Egypt (Open to Remote)':'الجيزة، مصر (متاح للعمل عن بُعد)','+20 105 095 6809 (Chat Directly)':'+20 105 095 6809 (محادثة مباشرة)',
+ 'This interactive comic needs JavaScript. Contact: Karimhatemalashry@gmail.com · +201050956809 · linkedin.com/in/karimalashry':'تحتاج هذه القصة المصورة التفاعلية إلى JavaScript. للتواصل: Karimhatemalashry@gmail.com · +201050956809 · linkedin.com/in/karimalashry',
+ '2D Walking Comic Companion (Mini Karim)':'رفيقك الكوميدي المتحرك ثنائي الأبعاد (كريم الصغير)',
+ 'Hey, I’m Karim! Grab the CV right here, or scroll down to open the story.':'أهلاً بيك في عالمي! أنا كريم. لو مستعجل، السي في قدامك أهو، بس لو عايز تعرف الحكاية بجد... انزل معايا وخلينا نبدأ!'
+});
+function translateStatic(){
+ var root=document.body,walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),node;
+ while((node=walker.nextNode())){
+  if(!node.__enText)node.__enText=node.nodeValue;
+  var original=node.__enText.trim();
+  if(!original)continue;
+  var translated=AR_UI[original];
+  if(currentLanguage==='ar'&&translated){var lead=node.__enText.match(/^\s*/)[0],trail=node.__enText.match(/\s*$/)[0],nextText=lead+translated+trail;if(node.nodeValue!==nextText)node.nodeValue=nextText}
+  else if(currentLanguage==='en')node.nodeValue=node.__enText;
+ }
+ var navMap=currentLanguage==='ar'?['الرئيسية','الرحلة','المهارات','الإنجازات','التعليم','الجانب الإبداعي','تواصل']:['Home','Journey','Superpowers','Missions','Education','Creative Side','Contact'];
+ $$('#links a').forEach(function(a,i){a.textContent=navMap[i]||a.textContent});
+ var toggle=$('#langToggle');if(toggle){$('.lang-en',toggle).classList.toggle('active',currentLanguage==='en');$('.lang-ar',toggle).classList.toggle('active',currentLanguage==='ar');toggle.setAttribute('aria-label',currentLanguage==='ar'?'Switch to English':'التبديل إلى العربية')}
+ document.documentElement.lang=currentLanguage;document.documentElement.dir=currentLanguage==='ar'?'rtl':'ltr';
+ document.body.classList.toggle('rtl',currentLanguage==='ar');
+ var cvLinks=$$('a[download]');cvLinks.forEach(function(a){a.setAttribute('href','Karim_Alashry_CV.pdf')});
+ var hud=$('#hud');if(hud){hud.setAttribute('dir',currentLanguage==='ar'?'rtl':'ltr')}
+ var buddyVoice=$('#bVoiceTxt'),buddyVoiceOn=$('#bVoice')&&$('#bVoice').getAttribute('aria-pressed')==='true';if(buddyVoice)buddyVoice.textContent=currentLanguage==='ar'?(buddyVoiceOn?'الصوت يعمل':'الصوت متوقف'):(buddyVoiceOn?'VOICE ON':'VOICE OFF');
+}
+function setLanguage(l){
+ currentLanguage=l==='ar'?'ar':'en';window.KARIM_LANG=currentLanguage;
+ try{sessionStorage.setItem('karim-language',currentLanguage)}catch(e){}
+ translateStatic();if(typeof ui==='function')ui();if(window.setMiniLanguage)window.setMiniLanguage(currentLanguage);
+ if(typeof frame==='function')frame(true);
+ if(currentLanguage==='ar'){$('#baStage').setAttribute('dir','ltr')}else{$('#baStage').setAttribute('dir','ltr')}
+}
+$('#langToggle').addEventListener('click',function(){setLanguage(currentLanguage==='en'?'ar':'en')});
+setLanguage(currentLanguage);
+var translationObserver=new MutationObserver(function(){if(currentLanguage==='ar')translateStatic()});
+translationObserver.observe($('#jobStage'),{childList:true,subtree:true,characterData:true});
+translationObserver.observe($('#skillGrid'),{childList:true,subtree:true,characterData:true});
+translationObserver.observe($('#missionsGrid'),{childList:true,subtree:true,characterData:true});
+translationObserver.observe($('#certs'),{childList:true,subtree:true,characterData:true});
+translationObserver.observe($('#vids'),{childList:true,subtree:true,characterData:true});
+translationObserver.observe($('#baStage'),{childList:true,subtree:true,characterData:true});
+translationObserver.observe($('#gallery'),{childList:true,subtree:true,characterData:true});
+
 /* hero portrait easter egg */
 var portrait=$('#portrait'),stage=$('#stage'),sfx=$('#sfx'),sw=['POW!','BAM!','ZAP!','WOW!'],si=0,pc=0;
 function pow(){sfx.textContent=sw[si++%4];sfx.style.left=(5+Math.random()*50)+'%';sfx.style.top=(5+Math.random()*50)+'%';sfx.classList.remove('pop');void sfx.offsetWidth;sfx.classList.add('pop');if(++pc===5)toast('EASTER EGG','Thumbs up received. You found the Main Character.')}
@@ -1857,11 +2208,11 @@ function show(i){
  if(lbMode==='cert'){
   lbImg.src=CERTS[li][4];
   lbImg.alt=CERTS[li][0]+' - '+CERTS[li][1];
-  lbCap.textContent=CERTS[li][0]+' ('+CERTS[li][1]+')';
+  lbCap.textContent=(currentLanguage==='ar'?(AR_UI[CERTS[li][0]]||CERTS[li][0]):CERTS[li][0])+' ('+CERTS[li][1]+')';
  }else{
   lbImg.src='assets/images/photo-0'+(li+1)+'.webp';
   lbImg.alt=PHOTO_ALT[li];
-  lbCap.textContent=PHOTOS[li];
+  lbCap.textContent=currentLanguage==='ar'?(AR_UI[PHOTOS[li]]||PHOTOS[li]):PHOTOS[li];
  }
 }
 function openLb(i,mode){lbMode=mode||'photo';lastF=document.activeElement;show(i);lb.classList.add('open');document.body.classList.add('locked');$('#lbClose').focus()}
