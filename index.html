@@ -148,7 +148,8 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 .masthead{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
 .issue{font-family:var(--f-comic);letter-spacing:.14em;background:var(--pink);color:var(--black);border:3px solid var(--black);padding:4px 14px;font-size:19px;transform:rotate(-3deg);box-shadow:3px 3px 0 var(--off)}
 .mast-t{font-family:var(--f-comic);letter-spacing:.18em;color:var(--cyan);font-size:16px}
-.cover h1{font-size:clamp(38px,6.2vw,94px);font-weight:800;text-transform:uppercase;line-height:.88;letter-spacing:-.025em;text-shadow:6px 6px 0 var(--violet),10px 10px 0 rgba(0,0,0,.45)}
+.cover h1{font-size:clamp(36px,5.3vw,82px);font-weight:800;text-transform:uppercase;line-height:.88;letter-spacing:-.025em;text-shadow:6px 6px 0 var(--violet),10px 10px 0 rgba(0,0,0,.45)}
+.cover h1 .ln{padding-right:14px}
 .cover h1 .ln > span{white-space:nowrap}
 .ribbon{display:inline-block;margin:16px 0 0;background:var(--amber);color:var(--black);font-family:var(--f-comic);font-size:clamp(15px,2vw,24px);letter-spacing:.12em;padding:5px 18px;border:3px solid var(--black);transform:rotate(-2deg);box-shadow:5px 5px 0 var(--black)}
 .cover .prof{margin-top:14px;font-family:var(--f-head);font-weight:700;font-size:clamp(17px,1.9vw,23px);line-height:1.24;max-width:34ch}
@@ -444,6 +445,47 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
 .pnote{position:absolute;right:0;bottom:calc(100% + 10px);background:var(--amber);color:var(--black);font-size:12.5px;font-weight:700;padding:6px 10px;border:2px solid var(--black);white-space:nowrap;display:none}
 #player.err .pnote{display:block}
 
+/* ---------- 2D Comic Scroll Companion (Mini Karim) ---------- */
+#buddy{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:calc(86px + env(safe-area-inset-bottom));z-index:265;display:flex;align-items:flex-end;gap:12px;pointer-events:none}
+#buddy .b-bub{pointer-events:auto;position:relative;max-width:255px;background:var(--off);color:var(--black);border:3px solid var(--black);border-radius:18px;padding:10px 14px;box-shadow:5px 5px 0 var(--pink);opacity:0;transform:translateX(12px) scale(.86);transform-origin:100% 75%;transition:opacity .24s ease,transform .3s cubic-bezier(.3,1.5,.5,1),background-color .2s;visibility:hidden}
+#buddy.show-bub .b-bub{opacity:1;transform:none;visibility:visible}
+#buddy .b-bub::after{content:"";position:absolute;right:-13px;bottom:20px;width:15px;height:14px;background:inherit;clip-path:polygon(0 0,100% 55%,0 100%)}
+#buddy .b-bub::before{content:"";position:absolute;right:-17px;bottom:17px;width:19px;height:20px;background:var(--black);clip-path:polygon(0 0,100% 55%,0 100%)}
+#buddy .b-tag{display:inline-block;font-family:var(--f-comic);letter-spacing:.14em;font-size:13px;color:var(--violet);margin-bottom:2px}
+#buddy .b-msg{font-size:13.5px;font-weight:700;line-height:1.34;color:var(--black)}
+#buddy.panic .b-bub{background:var(--amber);box-shadow:5px 5px 0 var(--crimson)}
+#buddy.panic .b-tag{color:var(--crimson)}
+#buddy.tired .b-bub{background:#E9E4FF;box-shadow:5px 5px 0 var(--cyan)}
+
+#buddy .b-wrap{position:relative;pointer-events:auto}
+#buddy .b-avatar{width:76px;height:76px;display:block;position:relative;filter:drop-shadow(4px 4px 0 var(--black));transition:transform .2s}
+#buddy .b-avatar:hover{transform:scale(1.07) rotate(-2deg)}
+#buddy .b-svg{width:100%;height:100%;overflow:visible;animation:bFloat 2.8s ease-in-out infinite}
+@keyframes bFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+#buddy.talk .b-svg{animation:bHop .42s ease-out}
+@keyframes bHop{0%{transform:translateY(0) scale(1)}40%{transform:translateY(-9px) scale(1.05,-0.96) scaleY(-1)}40%{transform:translateY(-9px) scale(1.05)}100%{transform:translateY(0) scale(1)}}
+#buddy.panic .b-svg{animation:bPanic .14s linear infinite}
+@keyframes bPanic{0%{transform:translate(-3px,-2px) rotate(-6deg)}25%{transform:translate(3px,1px) rotate(6deg)}50%{transform:translate(-2px,2px) rotate(-5deg)}75%{transform:translate(3px,-2px) rotate(5deg)}100%{transform:translate(-3px,-2px) rotate(-6deg)}}
+#buddy.tired .b-svg{animation:bPant .9s ease-in-out infinite}
+@keyframes bPant{0%,100%{transform:translateY(0) scaleY(1)}50%{transform:translateY(2px) scaleY(.95)}}
+
+/* SVG Face State Switching */
+#buddy .f-talk,#buddy .f-panic,#buddy .f-tired,#buddy .b-sweat,#buddy .b-lines{display:none}
+#buddy.talk .f-norm{display:none}#buddy.talk .f-talk{display:inline}
+#buddy.panic .f-norm,#buddy.panic .f-talk{display:none}#buddy.panic .f-panic,#buddy.panic .b-sweat,#buddy.panic .b-lines{display:inline}
+#buddy.tired .f-norm,#buddy.tired .f-talk{display:none}#buddy.tired .f-tired,#buddy.tired .b-sweat{display:inline}
+#buddy .b-eye-blink{transform-origin:50px 50px;animation:bBlink 4.6s infinite}
+@keyframes bBlink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+#buddy .b-sweat{animation:bDrop .55s ease-in-out infinite alternate}
+@keyframes bDrop{from{transform:translateY(0)}to{transform:translateY(3px)}}
+
+#buddy .b-hide{position:absolute;top:-6px;right:-4px;z-index:3;width:22px;height:22px;border-radius:50%;background:var(--black);color:var(--off);border:2px solid var(--off);font-size:13px;line-height:1;display:grid;place-items:center;transition:background .15s}
+#buddy .b-hide:hover{background:var(--pink);color:var(--black)}
+#buddy .b-restore{display:none;pointer-events:auto;padding:6px 12px;background:rgba(9,9,17,.9);border:2px solid var(--amber);color:var(--amber);font-family:var(--f-comic);letter-spacing:.14em;font-size:14px;box-shadow:3px 3px 0 var(--pink)}
+#buddy .b-restore:hover{background:var(--amber);color:var(--black)}
+#buddy.min .b-bub,#buddy.min .b-wrap{display:none}
+#buddy.min .b-restore{display:inline-flex;align-items:center;gap:6px}
+
 /* lightbox & toast */
 #lb{position:fixed;inset:0;z-index:500;background:rgba(9,9,17,.95);display:none;align-items:center;justify-content:center;padding:20px}
 #lb.open{display:flex;animation:fade .25s}
@@ -477,7 +519,7 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
   .rays{right:-60%}
 
   .j-tabs{display:flex;overflow-x:auto;gap:8px;padding:2px 2px 10px;margin-bottom:14px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--pink) transparent}
-  .j-tab{flex:0 0 auto;min-width:138px;max-width:170px;scroll-snap-align:start;padding:10px 12px}
+  .j-tab{flex:0 0 auto;min-width:146px;scroll-snap-align:start;padding:10px 14px}
   .j-tab[aria-selected=true]{box-shadow:4px 4px 0 var(--pink)}
 
   .job-grid{grid-template-columns:1fr;grid-template-areas:"art" "info" "met"}
@@ -489,7 +531,7 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
   .vids{grid-template-columns:1fr;max-width:360px;margin-left:auto;margin-right:auto}
   .uni{grid-template-columns:repeat(2,1fr)}
   .u.t1,.u.t2,.u.t3,.u.t4{grid-column:span 1;min-height:190px}
-  .u.t1,.u.t3,.u.t4,.u-word{grid-column:1/-1}
+  .u.t1,.u.t2,.u.t3,.u.t4,.u-word{grid-column:1/-1}
   .u.t3{aspect-ratio:562/312;min-height:0}
   .certs{grid-template-columns:1fr}
   .sheet{transform:none;will-change:auto}
@@ -508,7 +550,17 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
   #player.open .wave{display:none}
   #player.open #vol{width:58px}
   #player.open .ptitle{font-size:13px}
-  footer{padding:20px 18px 80px}
+
+  /* Companion moves cleanly to bottom-left on mobile, bubble points left */
+  #buddy{left:max(12px,env(safe-area-inset-left));right:auto;bottom:max(12px,env(safe-area-inset-bottom));flex-direction:row-reverse;gap:10px}
+  #buddy .b-avatar{width:58px;height:58px}
+  #buddy .b-bub{max-width:min(230px,calc(100vw - 146px));padding:8px 11px;border-width:2.5px;border-radius:14px;transform:translateX(-10px) scale(.86);transform-origin:0 75%}
+  #buddy .b-bub::after{right:auto;left:-11px;bottom:16px;width:13px;height:12px;clip-path:polygon(100% 0,0 55%,100% 100%)}
+  #buddy .b-bub::before{right:auto;left:-15px;bottom:13px;width:17px;height:18px;clip-path:polygon(100% 0,0 55%,100% 100%)}
+  #buddy .b-tag{font-size:11.5px}
+  #buddy .b-msg{font-size:12px;line-height:1.3}
+  #buddy .b-hide{width:20px;height:20px;font-size:12px;left:-4px;right:auto}
+  footer{padding:20px 18px 86px}
 }
 @media (max-width:720px){
   body{font-size:15.5px}
@@ -538,11 +590,9 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
   .cover .sfx2{right:-4%;top:-4%;font-size:34px}
   .open-cue{bottom:18px;font-size:13px;padding:5px 12px;letter-spacing:.12em}
 
-  /* Safe heading scale on narrow phones so KNOWLEDGE & HERE never clip */
   .big-title,.big-title.sm{font-size:clamp(24px,7.2vw,38px);line-height:1}
   .sub{font-size:15px}
 
-  /* Before/After mobile tuning */
   .ba-wrap{padding:14px}
   .ba-stage{height:165px}
   .ba-layer{padding:12px}
@@ -575,7 +625,7 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
   .panel,.mi-face{border-width:3px;box-shadow:5px 5px 0 var(--black)}
   #mic{margin-top:32px;padding-top:26px}
   .end .tbc{font-size:clamp(38px,12vw,64px);-webkit-text-stroke:3px var(--black)}
-  #toasts{bottom:calc(74px + env(safe-area-inset-bottom))}
+  #toasts{bottom:calc(82px + env(safe-area-inset-bottom))}
 }
 @media (max-width:390px){
   .logo span{display:none}
@@ -589,7 +639,7 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
   .sheet{transform:none!important}
   .js .panel,.js .rv,.js .bub,.js .sfx2,.js .chip{opacity:1;transform:none}
   .js .hl .ln > span{transform:none}.js .nar{clip-path:none}
-  .rays{animation:none}
+  .rays,#buddy .b-svg{animation:none}
 }
 </style>
 </head>
@@ -909,7 +959,7 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
 </section>
 
 <!-- PAGE 11: TO BE CONTINUED - CHOOSE THE NEXT CHAPTER -->
-<section class="pg end" data-nav="contact" data-scene="#090911" data-chap="THE END (FOR NOW)" aria-label="To be continued">
+<section class="pg end" id="end" data-nav="contact" data-scene="#090911" data-chap="THE END (FOR NOW)" aria-label="To be continued">
   <div class="sheet" style="text-align:center">
     <div class="mini rv"><img src="assets/images/karim-comic-portrait.webp" alt="Comic portrait of Karim Alashry giving a thumbs up" loading="lazy" width="600" height="941"></div>
     <p class="tbc hl">TO BE<br>CONTINUED...</p>
@@ -942,6 +992,123 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
 
 <footer>&copy; 2026 Karim Alashry &middot; The Story Behind the Character &middot; Issue #01</footer>
 <noscript><p style="padding:24px;text-align:center;background:#090911;color:#fff">This interactive comic needs JavaScript. Contact: Karimhatemalashry@gmail.com &middot; +201050956809 &middot; linkedin.com/in/karimalashry</p></noscript>
+
+<!-- 2D Comic Scroll Companion -->
+<aside id="buddy" aria-label="Interactive comic guide">
+  <div class="b-bub" id="bBub" role="status" aria-live="polite">
+    <span class="b-tag" id="bTag">MINI KARIM</span>
+    <p class="b-msg" id="bMsg">Welcome! Grab the CV or scroll down to open the story.</p>
+  </div>
+  <div class="b-wrap">
+    <button class="b-hide" id="bHide" type="button" aria-label="Minimize guide">&times;</button>
+    <button class="b-avatar" id="bAvatar" type="button" aria-label="Tap Mini Karim for a tip">
+      <svg class="b-svg" viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <clipPath id="bClip"><circle cx="50" cy="54" r="40"/></clipPath>
+        </defs>
+        <!-- Speed lines on panic -->
+        <g class="b-lines" stroke="#FFB547" stroke-width="3" stroke-linecap="round">
+          <path d="M4 22 14 28M2 46 11 48M96 22 86 28M98 46 89 48M20 4 26 14M80 4 74 14"/>
+        </g>
+        <!-- Comic badge base -->
+        <circle cx="50" cy="54" r="42" fill="#211A3D" stroke="#F3F0F5" stroke-width="4"/>
+        <circle cx="50" cy="54" r="40" fill="none" stroke="#090911" stroke-width="2"/>
+        <!-- Body inside badge -->
+        <g clip-path="url(#bClip)">
+          <!-- Dark jacket & red tee -->
+          <path d="M14 98 C16 76 30 72 50 72 C70 72 84 76 86 98 Z" fill="#17142B" stroke="#090911" stroke-width="3"/>
+          <path d="M36 73 L50 98 L64 73 Z" fill="#D81E4F" stroke="#090911" stroke-width="2.5"/>
+          <!-- Neck -->
+          <rect x="43" y="64" width="14" height="12" rx="4" fill="#DC9B70" stroke="#090911" stroke-width="2.5"/>
+        </g>
+        <!-- Back curly hair volume -->
+        <g fill="#120F1F" stroke="#090911" stroke-width="2.5">
+          <circle cx="29" cy="40" r="10"/>
+          <circle cx="71" cy="40" r="10"/>
+          <circle cx="27" cy="51" r="7"/>
+          <circle cx="73" cy="51" r="7"/>
+        </g>
+        <!-- Head / face -->
+        <path d="M32 42 C32 28 68 28 68 42 L67 57 C67 67 59 73 50 73 C41 73 33 67 33 57 Z" fill="#EEB68C" stroke="#090911" stroke-width="3"/>
+        <!-- Ears -->
+        <circle cx="31" cy="53" r="4.5" fill="#E3A378" stroke="#090911" stroke-width="2.5"/>
+        <circle cx="69" cy="53" r="4.5" fill="#E3A378" stroke="#090911" stroke-width="2.5"/>
+        <!-- Subtle stubble -->
+        <g fill="#090911" opacity=".32">
+          <circle cx="42" cy="67" r="1"/><circle cx="46" cy="69" r="1"/><circle cx="50" cy="70" r="1"/><circle cx="54" cy="69" r="1"/><circle cx="58" cy="67" r="1"/>
+          <circle cx="38" cy="64" r="1"/><circle cx="62" cy="64" r="1"/>
+        </g>
+        <!-- Top curly hair crown -->
+        <g fill="#141024" stroke="#090911" stroke-width="2.8">
+          <circle cx="36" cy="27" r="9.5"/>
+          <circle cx="50" cy="23" r="11"/>
+          <circle cx="64" cy="27" r="9.5"/>
+          <circle cx="43" cy="31" r="7.5"/>
+          <circle cx="58" cy="31" r="7.5"/>
+          <circle cx="31" cy="34" r="7"/>
+          <circle cx="69" cy="34" r="7"/>
+        </g>
+        <!-- Hair highlight strokes -->
+        <path d="M45 19 Q50 16 55 19 M34 25 Q37 22 40 24 M61 24 Q65 22 67 26" fill="none" stroke="#7547D8" stroke-width="2" stroke-linecap="round"/>
+
+        <!-- NORMAL FACE -->
+        <g class="f-norm">
+          <path d="M36 43 Q41 41 45 43 M55 43 Q59 41 64 43" fill="none" stroke="#090911" stroke-width="2.4" stroke-linecap="round"/>
+          <g class="b-eye-blink">
+            <circle cx="41" cy="50" r="2.7" fill="#090911"/>
+            <circle cx="59" cy="50" r="2.7" fill="#090911"/>
+            <circle cx="42" cy="49" r=".9" fill="#FFF"/>
+            <circle cx="60" cy="49" r=".9" fill="#FFF"/>
+          </g>
+          <path d="M44 61 Q50 65 56 61" fill="none" stroke="#090911" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+
+        <!-- TALKING FACE -->
+        <g class="f-talk">
+          <path d="M36 42 Q41 39 45 42 M55 42 Q59 39 64 42" fill="none" stroke="#090911" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="41" cy="50" r="2.8" fill="#090911"/>
+          <circle cx="59" cy="50" r="2.8" fill="#090911"/>
+          <circle cx="42" cy="49" r="1" fill="#FFF"/>
+          <circle cx="60" cy="49" r="1" fill="#FFF"/>
+          <path d="M43 59 Q50 58 57 59 Q56 66 50 66 Q44 66 43 59 Z" fill="#090911"/>
+          <path d="M46 63 Q50 65 54 63" fill="none" stroke="#FF3D91" stroke-width="2" stroke-linecap="round"/>
+        </g>
+
+        <!-- PANIC FACE -->
+        <g class="f-panic">
+          <path d="M35 41 L46 38 M65 41 L54 38" fill="none" stroke="#090911" stroke-width="2.6" stroke-linecap="round"/>
+          <circle cx="41" cy="50" r="5.2" fill="#FFF" stroke="#090911" stroke-width="2"/>
+          <circle cx="59" cy="50" r="5.2" fill="#FFF" stroke="#090911" stroke-width="2"/>
+          <circle cx="41" cy="50" r="1.7" fill="#090911"/>
+          <circle cx="59" cy="50" r="1.7" fill="#090911"/>
+          <ellipse cx="50" cy="63" rx="6" ry="5" fill="#090911"/>
+          <ellipse cx="50" cy="65.5" rx="3.4" ry="2" fill="#FF3D91"/>
+        </g>
+
+        <!-- TIRED RECOVERY FACE -->
+        <g class="f-tired">
+          <path d="M36 44 L46 43 M64 44 L54 43" fill="none" stroke="#090911" stroke-width="2.3" stroke-linecap="round"/>
+          <path d="M37 50 Q41 53 45 50 M55 50 Q59 53 63 50" fill="none" stroke="#090911" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M44 63 Q47 60 50 63 Q53 66 56 63" fill="none" stroke="#090911" stroke-width="2.4" stroke-linecap="round"/>
+        </g>
+
+        <!-- Round Comic Glasses (Gold/Black rim) -->
+        <g fill="rgba(53,214,232,.14)" stroke="#FFB547" stroke-width="2.4">
+          <circle cx="41" cy="50" r="7.4"/>
+          <circle cx="59" cy="50" r="7.4"/>
+        </g>
+        <path d="M48.5 50 L51.5 50 M33.5 49 L31 48 M66.5 49 L69 48" stroke="#090911" stroke-width="2.2" stroke-linecap="round"/>
+
+        <!-- Sweat drops for panic / tired -->
+        <g class="b-sweat">
+          <path d="M77 33 C77 33 82 40 82 43 A5 5 0 0 1 72 43 C72 40 77 33 77 33 Z" fill="#35D6E8" stroke="#090911" stroke-width="2"/>
+          <path d="M22 30 C22 30 25 35 25 37 A3 3 0 0 1 19 37 C19 35 22 30 22 30 Z" fill="#35D6E8" stroke="#090911" stroke-width="1.8"/>
+        </g>
+      </svg>
+    </button>
+  </div>
+  <button class="b-restore" id="bRestore" type="button" aria-label="Show comic guide">SHOW GUIDE</button>
+</aside>
 
 <div id="player" role="region" aria-label="Background music player">
   <span class="pnote" role="status">Soundtrack file not available</span>
@@ -1149,6 +1316,7 @@ function renderJob(i,scrollToCard){
 }
 $$('.j-tab').forEach(function(b){b.addEventListener('click',function(){renderJob(+b.dataset.ji,false)})});
 renderJob(0,false);
+addEventListener('load',function(){XP.forEach(function(x){var im=new Image();im.src=imgSrc(x.img)})});
 
 /* ================= RENDER SKILLS ================= */
 $('#skillGrid').innerHTML=['cs','ops','tools','ai'].map(function(c,i){
@@ -1272,6 +1440,140 @@ function frame(){
 }
 var tick=false;function req(){if(!tick){tick=true;requestAnimationFrame(function(){frame();tick=false})}}
 addEventListener('scroll',req,{passive:true});addEventListener('resize',req);frame();
+
+/* ================= 2D COMIC SCROLL COMPANION (MINI KARIM) ================= */
+(function(){
+ var buddy=$('#buddy'),bTag=$('#bTag'),bMsg=$('#bMsg'),bAvatar=$('#bAvatar'),bHide=$('#bHide'),bRestore=$('#bRestore');
+ var SEC_LINES={
+  home:['THE COVER','Welcome! Grab the CV right here or scroll down to start the story.'],
+  journey:['CHAPTER 01','5 roles across 3 countries. Click the company tabs to jump between scenes.'],
+  superpowers:['CHAPTER 02','The exact toolkit from my CV. Hover over any skill to power it up.'],
+  missions:['CHAPTER 03','Drag the Before/After slider, then tap the 6 mission cards to flip them!'],
+  education:['CHAPTER 04','Sociology degree plus Native Arabic and B2 English.'],
+  certifications:['CREDENTIALS','5 verified certificates. Hit VIEW CERTIFICATE to inspect them full size.'],
+  creative:['PLOT TWIST!','Voice-over storytelling reels live here. Tap play for a 14-second preview.'],
+  lens:['PHOTOGRAPHY','Street and night frames through my lens. Tap any shot to view full size.'],
+  universe:['CREATIVE SIDE','Comics, rap, voice-over, and visual storytelling behind the CX metrics.'],
+  contact:['FINAL SCENE','WhatsApp, Email, or LinkedIn. Pick your favorite way to say hello!'],
+  end:['THE END?','You made it to the end! Pick Option A or B to start the next chapter.']
+ };
+ var PANIC_LINES=[
+  'WHOA! Slow down! You are scrolling way too fast, my knees cannot take this!',
+  'HOLD ON! Speed limit! I am running out of breath trying to keep up!',
+  'WAIT A SEC! Are we speedrunning this portfolio?! I am getting dizzy!',
+  'TOO FAST! My glasses are about to fly off! Easy on the scroll!'
+ ];
+ var TAP_LINES=[
+  ['MINI KARIM','Hey! Keep scrolling at a human pace and I will guide you through!'],
+  ['PRO TIP','Try flipping all 6 mission cards in Chapter 03 to unlock a badge.'],
+  ['QUICK SHORTCUT','Need the CV fast? Grab it on the Cover or in the Final Chapter!'],
+  ['FUN FACT','Try typing my first name on your keyboard for a hidden Easter egg.']
+ ];
+ var state='idle',lastSec='',panicIdx=0,tapIdx=0;
+ var lastY=scrollY,lastT=performance.now(),fastAccum=0,navLockUntil=0;
+ var stopTimer=null,hideBubTimer=null,recoverTimer=null,talkResetTimer=null;
+
+ function setMood(m){
+  state=m;
+  buddy.classList.remove('talk','panic','tired');
+  if(m!=='idle')buddy.classList.add(m);
+ }
+ function speak(tag,msg,mood,autoHideMs){
+  if(buddy.classList.contains('min'))return;
+  clearTimeout(hideBubTimer);clearTimeout(talkResetTimer);
+  bTag.textContent=tag;bMsg.textContent=msg;
+  setMood(mood||'talk');
+  buddy.classList.add('show-bub');
+  if(mood==='talk'){
+   talkResetTimer=setTimeout(function(){if(state==='talk')setMood('idle')},1200);
+  }
+  var ms=autoHideMs||(innerWidth<=900?5200:8500);
+  if(ms>0){
+   hideBubTimer=setTimeout(function(){
+    if(state!=='panic')buddy.classList.remove('show-bub');
+   },ms);
+  }
+ }
+ function getCurSectionId(){
+  var vh=innerHeight,cur='home';
+  for(var i=0;i<pages.length;i++){
+   var r=pages[i].getBoundingClientRect();
+   if(r.top<=vh*.48)cur=pages[i].id||'home';
+  }
+  return cur;
+ }
+ function announceSection(force){
+  var id=getCurSectionId();
+  if(!force&&id===lastSec)return;
+  lastSec=id;
+  var info=SEC_LINES[id]||SEC_LINES.home;
+  speak(info[0],info[1],'talk');
+ }
+
+ /* Ignore programmatic anchor jumps so nav clicks do not trigger panic */
+ $$('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(){
+   navLockUntil=performance.now()+1000;
+   fastAccum=0;
+  });
+ });
+
+ addEventListener('scroll',function(){
+  if(buddy.classList.contains('min'))return;
+  var now=performance.now(),y=scrollY,dy=y-lastY,dt=Math.max(now-lastT,16);
+  lastY=y;lastT=now;
+  var speed=dy/dt; /* px per ms downward */
+
+  if(now>navLockUntil&&dy>0&&speed>2.5){
+   fastAccum+=dy;
+   if(fastAccum>420&&state!=='panic'){
+    clearTimeout(recoverTimer);
+    var line=PANIC_LINES[panicIdx++%PANIC_LINES.length];
+    speak('SLOW DOWN!',line,'panic',0);
+   }
+  }else if(dy<=0||speed<1.1){
+   fastAccum=Math.max(0,fastAccum-90);
+  }
+
+  clearTimeout(stopTimer);
+  stopTimer=setTimeout(function(){
+   fastAccum=0;
+   if(state==='panic'){
+    speak('PHEW...','Okay, caught my breath. Let me check where we landed...','tired',2100);
+    clearTimeout(recoverTimer);
+    recoverTimer=setTimeout(function(){
+     lastSec='';
+     announceSection(true);
+    },2000);
+   }else{
+    announceSection(false);
+   }
+  },240);
+ },{passive:true});
+
+ bAvatar.addEventListener('click',function(){
+  clearTimeout(recoverTimer);
+  if(buddy.classList.contains('show-bub')&&state!=='panic'){
+   var t=TAP_LINES[tapIdx++%TAP_LINES.length];
+   speak(t[0],t[1],'talk');
+  }else{
+   announceSection(true);
+  }
+ });
+ bHide.addEventListener('click',function(e){
+  e.stopPropagation();
+  buddy.classList.add('min');
+  buddy.classList.remove('show-bub');
+  clearTimeout(hideBubTimer);clearTimeout(recoverTimer);
+ });
+ bRestore.addEventListener('click',function(){
+  buddy.classList.remove('min');
+  announceSection(true);
+ });
+
+ /* Initial greeting after page settles */
+ setTimeout(function(){announceSection(true)},900);
+})();
 
 /* nav menu */
 var menuBtn=$('#menuBtn');
