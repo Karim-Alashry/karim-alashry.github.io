@@ -9,8 +9,9 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Karim Alashry | The Story Behind the Character">
 <meta property="og:description" content="An interactive graphic novel about a Customer Experience & Customer Success professional and creative storyteller.">
-<meta property="og:image" content="https://karim-alashry.github.io/assets/images/karim-comic-portrait.png">
+<meta property="og:image" content="https://karim-alashry.github.io/assets/images/scene-command.webp">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://karim-alashry.github.io/assets/images/scene-command.webp">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2317142B'/%3E%3Ctext x='32' y='45' font-size='38' font-family='Arial Black,sans-serif' font-weight='900' text-anchor='middle' fill='%23FF3D91'%3EK%3C/text%3E%3C/svg%3E">
 <link rel="preload" as="image" href="assets/images/karim-comic-portrait.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,7 +43,7 @@ main{overflow-x:clip}
 .grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 /* Grid overflow safety */
-.cover-grid > *,.job-grid > *,.edu-grid > *,.ct-grid > *,.cr-grid > *,.mi-grid > *,.certs > *,.stats > *{min-width:0}
+.cover-grid > *,.job-grid > *,.edu-grid > *,.ct-grid > *,.cr-grid > *,.mi-grid > *,.certs > *,.stats > *,.next-choices > *{min-width:0}
 
 /* ---------- Nav ---------- */
 nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 max(20px,calc((100vw - var(--maxw))/2));background:rgba(12,10,26,.82);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);border-bottom:1px solid var(--line)}
@@ -75,7 +76,8 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 .pg::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(243,240,245,.06) 1.2px,transparent 1.6px);background-size:10px 10px;-webkit-mask-image:linear-gradient(180deg,#000,transparent 35%,transparent 75%,#000);mask-image:linear-gradient(180deg,#000,transparent 35%,transparent 75%,#000)}
 .sheet{width:100%;max-width:var(--maxw);margin:0 auto;position:relative;transform-origin:50% 0;transform:translateY(calc((1 - var(--p,1))*22px));will-change:transform}
 .pgno{position:absolute;right:6px;bottom:-42px;z-index:3;font-family:var(--f-comic);letter-spacing:.16em;color:rgba(243,240,245,.48);font-size:15px}
-.big-title{font-size:clamp(32px,5.6vw,74px);font-weight:800;text-transform:uppercase;line-height:.95;letter-spacing:-.02em}
+.big-title{font-size:clamp(30px,5.2vw,72px);font-weight:800;text-transform:uppercase;line-height:.96;letter-spacing:-.02em}
+.big-title.sm{font-size:clamp(28px,4.4vw,58px)}
 .big-title em{font-style:normal;color:var(--amber)}
 .sub{color:var(--muted);max-width:58ch;font-size:clamp(16px,1.5vw,18.5px);margin-top:12px}
 .hl .ln{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
@@ -83,15 +85,22 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 .js .hl .ln > span{transform:translateY(105%) rotate(2deg);transform-origin:0 100%;transition:transform .55s cubic-bezier(.2,.8,.2,1) calc(var(--i)*.08s)}
 .js .hl.in .ln > span{transform:none}
 
+/* Comic cliffhangers between chapters */
+.cliff{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:34px;padding:12px 18px;border:2.5px dashed rgba(255,181,71,.55);background:rgba(9,9,17,.62);text-decoration:none;transition:border-color .2s,background .2s,transform .2s}
+.cliff:hover{border-style:solid;border-color:var(--amber);background:rgba(255,181,71,.12);transform:translateX(4px)}
+.cliff .cl-tag{font-family:var(--f-comic);letter-spacing:.16em;font-size:14px;color:var(--black);background:var(--amber);padding:2px 10px;border:2px solid var(--black);flex:none}
+.cliff .cl-txt{font-family:var(--f-head);font-weight:700;font-size:15px;color:var(--off);flex:1}
+.cliff .cl-go{font-family:var(--f-comic);letter-spacing:.14em;font-size:16px;color:var(--cyan);white-space:nowrap}
+
 /* panels */
 .panel{position:relative;border:4px solid var(--off);background:var(--purple);box-shadow:8px 8px 0 var(--black);overflow:hidden}
 .js .panel,.js .rv{opacity:0;transform:translate(var(--dx,0),var(--dy,24px)) rotate(var(--rot,0deg));transition:opacity .45s ease calc(var(--d,0)*1s),transform .5s cubic-bezier(.2,.85,.2,1) calc(var(--d,0)*1s)}
 .js .panel.in,.js .rv.in{opacity:1;transform:none}
 .panel.art{background:var(--black)}
-.panel.art img.a{width:100%;height:100%;object-fit:cover;transform:translate3d(0,var(--py,0px),0) scale(1.08);will-change:transform}
-.panel .tint{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.5}
-.panel .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,transparent 40%,rgba(9,9,17,.7))}
-.panel .dots{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(9,9,17,.35) 1.3px,transparent 1.8px);background-size:6px 6px;-webkit-mask-image:linear-gradient(0deg,#000,transparent 55%);mask-image:linear-gradient(0deg,#000,transparent 55%)}
+.panel.art img.a{width:100%;height:100%;object-fit:cover;transform:translate3d(0,var(--py,0px),0) scale(1.06);will-change:transform}
+.panel .tint{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.38}
+.panel .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,transparent 42%,rgba(9,9,17,.68))}
+.panel .dots{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(9,9,17,.3) 1.3px,transparent 1.8px);background-size:6px 6px;-webkit-mask-image:linear-gradient(0deg,#000,transparent 50%);mask-image:linear-gradient(0deg,#000,transparent 50%)}
 .scene{position:absolute;left:0;top:0;z-index:3;background:var(--off);color:var(--black);font-family:var(--f-comic);letter-spacing:.14em;font-size:15px;padding:3px 12px;border-right:3px solid var(--black);border-bottom:3px solid var(--black)}
 
 /* narration box */
@@ -110,7 +119,7 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 .js .in .bub,.js .bub.in{opacity:1;transform:none}
 
 /* SFX */
-.sfx2{position:absolute;z-index:5;font-family:var(--f-comic);font-size:clamp(38px,6vw,78px);line-height:1;color:var(--amber);-webkit-text-stroke:3px var(--black);paint-order:stroke fill;text-shadow:5px 5px 0 var(--pink);pointer-events:none;letter-spacing:.02em;transform:rotate(var(--r,-8deg))}
+.sfx2{position:absolute;z-index:5;font-family:var(--f-comic);font-size:clamp(36px,5.5vw,74px);line-height:1;color:var(--amber);-webkit-text-stroke:3px var(--black);paint-order:stroke fill;text-shadow:5px 5px 0 var(--pink);pointer-events:none;letter-spacing:.02em;transform:rotate(var(--r,-8deg))}
 .js .sfx2{opacity:0;transform:scale(2.2) rotate(var(--r,-8deg))}
 .js .in .sfx2,.js .sfx2.in{animation:impact .45s cubic-bezier(.2,1.2,.4,1) calc(var(--d,.3)*1s) forwards}
 @keyframes impact{0%{opacity:0;transform:scale(2.2) rotate(var(--r,-8deg))}60%{opacity:1;transform:scale(.92) rotate(var(--r,-8deg))}100%{opacity:1;transform:scale(1) rotate(var(--r,-8deg))}}
@@ -118,27 +127,29 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 24px;text-decoration:none;font-family:var(--f-comic);font-size:20px;letter-spacing:.1em;border:3px solid var(--off);position:relative;transition:transform .15s,box-shadow .15s;min-height:48px}
 .btn.primary{background:var(--pink);color:var(--black);border-color:var(--black);box-shadow:5px 5px 0 var(--off)}
 .btn.ghost{background:rgba(9,9,17,.55);box-shadow:5px 5px 0 var(--violet)}
+.btn.amber{background:var(--amber);color:var(--black);border-color:var(--black);box-shadow:5px 5px 0 var(--pink)}
 .btn:hover{transform:translate(-2px,-2px)}
-.btn.primary:hover{box-shadow:8px 8px 0 var(--off)}.btn.ghost:hover{box-shadow:8px 8px 0 var(--violet)}
+.btn.primary:hover{box-shadow:8px 8px 0 var(--off)}.btn.ghost:hover{box-shadow:8px 8px 0 var(--violet)}.btn.amber:hover{box-shadow:8px 8px 0 var(--pink)}
 .btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--off)}
 .btn svg{width:20px;height:20px;flex:none}
 .lab-s{font-family:var(--f-comic);letter-spacing:.18em;color:var(--cyan);font-size:17px}
 
-/* ---------- Cover (Clean, Zero-Overlap) ---------- */
+/* ---------- Cover (Clean, Zero-Overlap, Unbroken Name) ---------- */
 #home{padding:0;display:block}
 .cover{position:relative;min-height:100svh;padding:calc(var(--nav-h) + 22px) 26px 94px;overflow:hidden;background:radial-gradient(ellipse at 72% 45%,rgba(117,71,216,.55),transparent 60%),radial-gradient(ellipse at 5% 100%,rgba(255,61,145,.2),transparent 55%),linear-gradient(160deg,#17142B,#0b0a18);display:flex;align-items:center;border-bottom:3px solid var(--line)}
 .cover::after{content:"";position:absolute;inset:12px;border:3px solid var(--off);pointer-events:none;z-index:6}
 .cover .spine{position:absolute;left:0;top:0;bottom:0;width:18px;z-index:7;background:linear-gradient(90deg,rgba(0,0,0,.75),transparent)}
 .rays{position:absolute;right:-20%;top:50%;width:140vmin;height:140vmin;transform:translateY(-50%) translate3d(0,var(--py,0),0);background:repeating-conic-gradient(from 0deg,rgba(255,181,71,.16) 0 6deg,transparent 6deg 14deg);-webkit-mask-image:radial-gradient(circle,#000 20%,transparent 68%);mask-image:radial-gradient(circle,#000 20%,transparent 68%);pointer-events:none;animation:spin 120s linear infinite}
 @keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
-.cover-grid{position:relative;z-index:3;width:100%;max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:1.14fr .86fr;gap:38px;align-items:center}
+.cover-grid{position:relative;z-index:3;width:100%;max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:1.15fr .85fr;gap:38px;align-items:center}
 .avail{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;margin-bottom:12px;border:2px solid rgba(52,211,153,.55);background:rgba(9,9,17,.7);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#A7F3D0}
 .avail i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);flex:none;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.8)}}
 .masthead{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
 .issue{font-family:var(--f-comic);letter-spacing:.14em;background:var(--pink);color:var(--black);border:3px solid var(--black);padding:4px 14px;font-size:19px;transform:rotate(-3deg);box-shadow:3px 3px 0 var(--off)}
 .mast-t{font-family:var(--f-comic);letter-spacing:.18em;color:var(--cyan);font-size:16px}
-.cover h1{font-size:clamp(44px,8vw,112px);font-weight:800;text-transform:uppercase;line-height:.88;letter-spacing:-.03em;text-shadow:6px 6px 0 var(--violet),10px 10px 0 rgba(0,0,0,.45)}
+.cover h1{font-size:clamp(38px,6.2vw,94px);font-weight:800;text-transform:uppercase;line-height:.88;letter-spacing:-.025em;text-shadow:6px 6px 0 var(--violet),10px 10px 0 rgba(0,0,0,.45)}
+.cover h1 .ln > span{white-space:nowrap}
 .ribbon{display:inline-block;margin:16px 0 0;background:var(--amber);color:var(--black);font-family:var(--f-comic);font-size:clamp(15px,2vw,24px);letter-spacing:.12em;padding:5px 18px;border:3px solid var(--black);transform:rotate(-2deg);box-shadow:5px 5px 0 var(--black)}
 .cover .prof{margin-top:14px;font-family:var(--f-head);font-weight:700;font-size:clamp(17px,1.9vw,23px);line-height:1.24;max-width:34ch}
 .cover .cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px}
@@ -231,8 +242,40 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 .chip:hover{background:var(--c);color:var(--black);box-shadow:3px 3px 0 var(--black);transform:translateY(-3px) rotate(-1.5deg)!important;transition-delay:0s!important}
 .chip.exact{text-transform:none}
 
-/* ---------- Chapter 03: Interactive Flip Missions ---------- */
-.mi-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:24px}
+/* ---------- Chapter 03: Before/After Impact Slider + Flip Missions ---------- */
+.mi-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:22px}
+.mi-counter{display:inline-flex;align-items:center;gap:10px;padding:7px 14px;border:3px solid var(--amber);background:rgba(9,9,17,.8);font-family:var(--f-comic);letter-spacing:.14em;font-size:17px;color:var(--amber);box-shadow:4px 4px 0 var(--black);transition:all .25s}
+.mi-counter.done{border-color:var(--green);color:var(--black);background:var(--green);box-shadow:4px 4px 0 var(--off)}
+.mi-counter .dots-m{display:flex;gap:4px}
+.mi-counter .dots-m i{width:8px;height:8px;border:1.5px solid currentColor;display:block;transition:background .2s}
+.mi-counter .dots-m i.on{background:currentColor}
+
+/* Interactive Before / After Slider */
+.ba-wrap{margin-bottom:28px;padding:18px 20px;background:linear-gradient(155deg,rgba(26,18,52,.94),rgba(11,9,22,.96))}
+.ba-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px}
+.ba-title{font-family:var(--f-comic);letter-spacing:.14em;font-size:19px;color:var(--amber)}
+.ba-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.ba-tab{padding:6px 14px;border:2px solid var(--line);background:rgba(9,9,17,.7);font-family:var(--f-comic);letter-spacing:.12em;font-size:15px;color:var(--muted);transition:.15s}
+.ba-tab[aria-pressed=true]{background:var(--cyan);color:var(--black);border-color:var(--black);box-shadow:3px 3px 0 var(--pink)}
+.ba-stage{position:relative;height:185px;border:3px solid var(--off);overflow:hidden;background:#0d0a1c;user-select:none;--pos:50%}
+.ba-layer{position:absolute;inset:0;display:flex;align-items:center;padding:18px 24px}
+.ba-before{background:radial-gradient(circle at 18% 50%,rgba(216,30,79,.48),rgba(24,10,22,.96) 72%);justify-content:flex-start;z-index:2;clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.ba-after{background:radial-gradient(circle at 82% 50%,rgba(53,214,232,.36),rgba(11,26,38,.96) 72%);justify-content:flex-end;text-align:right;z-index:1}
+.ba-card{max-width:46%}
+.ba-badge{display:inline-block;font-family:var(--f-comic);letter-spacing:.16em;font-size:14px;padding:2px 10px;border:2px solid var(--black);margin-bottom:6px}
+.ba-before .ba-badge{background:var(--crimson);color:var(--off)}
+.ba-after .ba-badge{background:var(--green);color:var(--black)}
+.ba-num{font-family:var(--f-head);font-weight:800;font-size:clamp(30px,4.5vw,56px);line-height:1;letter-spacing:-.02em}
+.ba-before .ba-num{color:#FDA4AF}
+.ba-after .ba-num{color:var(--cyan)}
+.ba-lbl{font-family:var(--f-comic);letter-spacing:.14em;font-size:15px;color:var(--off);margin-top:4px}
+.ba-sub{font-size:13px;color:var(--muted);line-height:1.3;margin-top:2px}
+.ba-div{position:absolute;top:0;bottom:0;left:var(--pos);width:4px;background:var(--amber);transform:translateX(-50%);z-index:3;pointer-events:none;box-shadow:0 0 14px rgba(255,181,71,.7)}
+.ba-knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;background:var(--amber);color:var(--black);border:3px solid var(--black);box-shadow:0 0 0 3px var(--off);display:grid;place-items:center;font-family:var(--f-comic);font-size:18px;letter-spacing:.05em}
+.ba-range{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;z-index:4;margin:0}
+.ba-foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:14px;color:#E2DCEE}
+.ba-hint{font-family:var(--f-comic);letter-spacing:.12em;color:var(--amber);font-size:14px}
+
 .mi-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .mi{--a:var(--pink);height:390px;perspective:1200px;cursor:pointer;position:relative}
 .mi:nth-child(2){--a:var(--cyan)}.mi:nth-child(3){--a:var(--amber)}
@@ -242,10 +285,10 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 .mi-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:4px solid var(--off);box-shadow:8px 8px 0 var(--black);overflow:hidden;display:flex;flex-direction:column}
 .mi-front{justify-content:flex-end;background:var(--black)}
 .mi-front .bg{position:absolute;inset:0}
-.mi-front .bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform .5s}
-.mi:hover .mi-front .bg img{transform:scale(1.12)}
-.mi-front .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(9,9,17,.97) 14%,rgba(9,9,17,.62) 58%,rgba(9,9,17,.25))}
-.mi-front .bg::before{content:"";position:absolute;inset:0;z-index:1;background:var(--a);mix-blend-mode:color;opacity:.5}
+.mi-front .bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.05);transition:transform .5s}
+.mi:hover .mi-front .bg img{transform:scale(1.11)}
+.mi-front .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(9,9,17,.97) 14%,rgba(9,9,17,.62) 58%,rgba(9,9,17,.22))}
+.mi-front .bg::before{content:"";position:absolute;inset:0;z-index:1;background:var(--a);mix-blend-mode:color;opacity:.38}
 .mi-front .body{position:relative;z-index:3;padding:20px}
 .mi-front .no{font-family:var(--f-comic);letter-spacing:.18em;color:var(--a);font-size:16px}
 .mi-front h3{font-size:clamp(18px,1.7vw,22px);text-transform:uppercase;margin:3px 0 6px}
@@ -253,7 +296,8 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 .mi-front .num s{font-size:.58em;color:var(--off);opacity:.8;text-decoration:none;margin-right:3px}
 .mi-front p{color:#E2DCEE;font-size:14.5px;margin-top:6px;line-height:1.45}
 .mi-front .flip-cue{display:inline-block;margin-top:12px;font-family:var(--f-comic);letter-spacing:.14em;font-size:14px;color:var(--black);background:var(--a);padding:3px 10px;border:2px solid var(--black)}
-.mi-front .stamp{position:absolute;right:12px;top:12px;z-index:4;font-family:var(--f-comic);letter-spacing:.14em;font-size:15px;color:var(--a);border:3px solid var(--a);padding:2px 9px;background:rgba(9,9,17,.75);transform:rotate(7deg)}
+.mi-front .stamp{position:absolute;right:12px;top:12px;z-index:4;font-family:var(--f-comic);letter-spacing:.14em;font-size:15px;color:var(--a);border:3px solid var(--a);padding:2px 9px;background:rgba(9,9,17,.78);transform:rotate(7deg)}
+.mi.seen .stamp{color:var(--green);border-color:var(--green)}
 .mi-back{transform:rotateY(180deg);background:linear-gradient(155deg,#241b47,#0f0c1f);padding:18px 20px;justify-content:space-between;overflow-y:auto}
 .mi-back .b-top{font-family:var(--f-comic);letter-spacing:.16em;color:var(--a);font-size:15px;border-bottom:2px solid var(--line);padding-bottom:7px;flex:none}
 .mi-back .car{display:grid;gap:9px;margin:10px 0}
@@ -290,7 +334,7 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 /* ---------- Chapter 05: Creative ---------- */
 .portal{position:absolute;left:0;right:0;top:0;height:45%;pointer-events:none;background:linear-gradient(180deg,rgba(255,61,145,.25),transparent)}
 .cr-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
-.cr-art{aspect-ratio:16/10;min-height:250px}
+.cr-art{aspect-ratio:16/10;width:100%}
 .interest{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 0}
 .interest li{border:3px solid var(--off);background:rgba(9,9,17,.6);padding:4px 13px;font-weight:700;font-size:14.5px;box-shadow:3px 3px 0 var(--violet)}
 #mic{margin-top:44px;padding-top:34px;border-top:2px solid var(--line)}
@@ -333,11 +377,12 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 .shot:nth-child(4) img{object-position:50% 62%}.shot:nth-child(5) img{object-position:50% 70%}
 
 .uni{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;margin-top:24px;align-items:stretch}
-.u{position:relative;min-height:220px;display:flex;align-items:flex-start;background:var(--black)}
+.u{position:relative;min-height:220px;display:flex;align-items:flex-start;background:#0d0b1a}
 .u img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.u:hover img{transform:scale(1.05)}
+.u:hover img{transform:scale(1.04)}
 .u .lab{position:relative;z-index:2;margin:12px;background:var(--off);color:var(--black);font-family:var(--f-comic);letter-spacing:.1em;padding:3px 11px;font-size:18px;transform:rotate(-2deg);box-shadow:3px 3px 0 var(--pink)}
-.u.t1{grid-column:span 5;min-height:250px}.u.t2{grid-column:span 4}.u.t3{grid-column:span 3}
+.u.t1,.u.t2,.u.t3{grid-column:span 4;min-height:235px}
+.u.t3 img{object-fit:contain;background:#0d0b1a}
 .u.t4{grid-column:span 6;min-height:0;aspect-ratio:570/248;align-self:center}
 .u.t4 img{object-fit:contain;background:#0d0b1a}
 .u-word{grid-column:span 6;display:grid;gap:10px;align-content:center}
@@ -347,10 +392,10 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 .insta h3{font-size:clamp(20px,2.8vw,30px)}
 .insta .handle{font-family:var(--f-comic);letter-spacing:.12em;color:var(--amber);font-size:24px}
 
-/* ---------- Contact ---------- */
+/* ---------- Contact & Choose the Next Chapter ---------- */
 #contact .horizon{position:absolute;left:-10%;right:-10%;bottom:0;height:55%;pointer-events:none;background:radial-gradient(ellipse at 50% 100%,rgba(255,181,71,.55),rgba(255,61,145,.25) 35%,transparent 65%)}
-.ct-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center}
-.ct-art{aspect-ratio:522/300;min-height:240px}
+.ct-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:38px;align-items:center}
+.ct-art{aspect-ratio:16/9;width:100%}
 .contact-list{display:grid;gap:11px;margin:22px 0 24px}
 .c-item{display:flex;align-items:center;gap:16px;padding:13px 18px;border:3px solid var(--off);background:rgba(15,12,30,.82);text-decoration:none;transition:.2s;min-height:60px;box-shadow:5px 5px 0 var(--black)}
 a.c-item:hover{border-color:var(--pink);transform:translate(6px,-2px);background:rgba(255,61,145,.14)}
@@ -359,11 +404,20 @@ a.c-item:hover{border-color:var(--pink);transform:translate(6px,-2px);background
 .c-item small{display:block;color:var(--muted);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
 .c-item span{font-weight:700;word-break:break-word}
 .cta{display:flex;flex-wrap:wrap;gap:14px}
-.end{text-align:center;min-height:68svh}
-.end .tbc{font-family:var(--f-comic);font-size:clamp(46px,11vw,156px);line-height:.95;letter-spacing:.04em;color:var(--amber);-webkit-text-stroke:4px var(--black);paint-order:stroke fill;text-shadow:8px 8px 0 var(--pink),14px 14px 0 rgba(0,0,0,.4)}
-.end .line{font-family:var(--f-head);font-weight:800;text-transform:uppercase;font-size:clamp(18px,2.4vw,28px);margin:18px 0 24px}
-.end .mini{width:140px;margin:0 auto 20px;aspect-ratio:600/941;border:4px solid var(--off);box-shadow:6px 6px 0 var(--pink);overflow:hidden;transform:rotate(-3deg)}
+
+.end{text-align:center;min-height:76svh}
+.end .tbc{font-family:var(--f-comic);font-size:clamp(46px,10.5vw,148px);line-height:.95;letter-spacing:.04em;color:var(--amber);-webkit-text-stroke:4px var(--black);paint-order:stroke fill;text-shadow:8px 8px 0 var(--pink),14px 14px 0 rgba(0,0,0,.4)}
+.end .line{font-family:var(--f-head);font-weight:800;text-transform:uppercase;font-size:clamp(18px,2.4vw,26px);margin:16px 0 26px}
+.end .mini{width:130px;margin:0 auto 18px;aspect-ratio:600/941;border:4px solid var(--off);box-shadow:6px 6px 0 var(--pink);overflow:hidden;transform:rotate(-3deg)}
 .end .mini img{width:100%;height:100%;object-fit:cover}
+.next-choices{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:780px;margin:0 auto 28px;text-align:left}
+.nchoice{padding:22px;background:linear-gradient(155deg,#241b47,#120f24);display:flex;flex-direction:column;gap:10px}
+.nchoice .nc-k{font-family:var(--f-comic);letter-spacing:.16em;font-size:15px;color:var(--cyan)}
+.nchoice:nth-child(2) .nc-k{color:var(--amber)}
+.nchoice h3{font-size:clamp(20px,2.2vw,25px);text-transform:uppercase}
+.nchoice p{font-size:14.5px;color:var(--muted)}
+.nchoice .nc-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:8px}
+.nchoice .btn{font-size:16px;padding:10px 16px;min-height:42px}
 footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13.5px;background:var(--black);border-top:1px solid var(--line)}
 
 /* ---------- Player (Desktop Bar + Mobile Floating FAB) ---------- */
@@ -415,26 +469,28 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
   .j-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media (max-width:900px){
-  /* Hide secondary HUD bar on mobile/tablet to reclaim screen height */
   #hud{display:none}
   .pg{padding:calc(var(--nav-h) + 28px) 18px 54px}
   .cover{align-items:flex-start;padding:calc(var(--nav-h) + 22px) 18px 72px}
-  .cover-grid,.cr-grid,.ct-grid,.edu-grid{grid-template-columns:1fr;gap:24px}
+  .cover-grid,.cr-grid,.ct-grid,.edu-grid,.next-choices{grid-template-columns:1fr;gap:22px}
   .cover-stage{order:-1;width:min(46vw,210px);margin-top:4px}
   .rays{right:-60%}
 
-  /* Horizontal scrollable role tabs on mobile/tablet */
   .j-tabs{display:flex;overflow-x:auto;gap:8px;padding:2px 2px 10px;margin-bottom:14px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--pink) transparent}
   .j-tab{flex:0 0 auto;min-width:138px;max-width:170px;scroll-snap-align:start;padding:10px 12px}
   .j-tab[aria-selected=true]{box-shadow:4px 4px 0 var(--pink)}
 
   .job-grid{grid-template-columns:1fr;grid-template-areas:"art" "info" "met"}
-  .job-grid .art{aspect-ratio:16/10;min-height:200px}
+  .job-grid .art{aspect-ratio:16/10;min-height:0}
+  .cr-art{aspect-ratio:16/10;min-height:0;width:100%}
+  .ct-art{aspect-ratio:16/9;min-height:0;width:100%}
   .mi-grid{grid-template-columns:1fr 1fr}
   .skill-grid{grid-template-columns:1fr}.sk:nth-child(n){grid-column:auto}
   .vids{grid-template-columns:1fr;max-width:360px;margin-left:auto;margin-right:auto}
   .uni{grid-template-columns:repeat(2,1fr)}
-  .u.t1,.u.t2,.u.t3,.u.t4{grid-column:span 1}.u.t1,.u.t4,.u-word{grid-column:1/-1}
+  .u.t1,.u.t2,.u.t3,.u.t4{grid-column:span 1;min-height:190px}
+  .u.t1,.u.t3,.u.t4,.u-word{grid-column:1/-1}
+  .u.t3{aspect-ratio:562/312;min-height:0}
   .certs{grid-template-columns:1fr}
   .sheet{transform:none;will-change:auto}
 
@@ -464,7 +520,7 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
   .masthead{gap:8px;margin-bottom:10px}
   .issue{font-size:16px;padding:3px 10px}
   .mast-t{font-size:13.5px;letter-spacing:.12em}
-  .cover h1{font-size:clamp(36px,11.2vw,54px);line-height:.9;text-shadow:4px 4px 0 var(--violet),7px 7px 0 rgba(0,0,0,.45)}
+  .cover h1{font-size:clamp(34px,10vw,50px);line-height:.9;text-shadow:4px 4px 0 var(--violet),7px 7px 0 rgba(0,0,0,.45)}
   .ribbon{margin-top:12px;font-size:15px;padding:4px 12px}
   .cover .prof{font-size:16.5px;margin-top:10px}
   .cover .cta{gap:10px;margin-top:14px}
@@ -482,24 +538,43 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
   .cover .sfx2{right:-4%;top:-4%;font-size:34px}
   .open-cue{bottom:18px;font-size:13px;padding:5px 12px;letter-spacing:.12em}
 
-  .big-title{font-size:clamp(26px,8.2vw,40px);line-height:.98}
+  /* Safe heading scale on narrow phones so KNOWLEDGE & HERE never clip */
+  .big-title,.big-title.sm{font-size:clamp(24px,7.2vw,38px);line-height:1}
   .sub{font-size:15px}
+
+  /* Before/After mobile tuning */
+  .ba-wrap{padding:14px}
+  .ba-stage{height:165px}
+  .ba-layer{padding:12px}
+  .ba-card{max-width:47%}
+  .ba-num{font-size:clamp(24px,7vw,34px)}
+  .ba-lbl{font-size:12.5px;letter-spacing:.08em}
+  .ba-sub{font-size:11.5px}
+  .ba-knob{width:34px;height:34px;font-size:15px}
+  .ba-foot{font-size:13px}
+
   .mi-grid{grid-template-columns:1fr}
   .mi{height:415px}
   .mi-front .num{font-size:34px}
   .gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:auto;gap:10px}
   .shot:nth-child(n){grid-column:auto;grid-row:auto;aspect-ratio:3/4}
-  .shot:nth-child(1){grid-column:1/-1;aspect-ratio:4/5}.shot:nth-child(4){grid-column:1/-1;aspect-ratio:16/10}
+  .shot:nth-child(1){grid-column:1/-1;aspect-ratio:4/5}
+  .shot:nth-child(4),.shot:nth-child(5){grid-column:1/-1;aspect-ratio:16/10}
   .job-grid .info{padding:18px}.job-grid .met{padding:15px 18px}
   .job-nav{gap:8px}.j-arrow{padding:7px 11px;font-size:14px}
   .btn{font-size:17px;padding:12px 18px}
   .lb-prev{left:6px}.lb-next{right:6px}.lb-btn{width:42px;height:42px;font-size:22px}
   .insta{padding:18px}
-  .bub{max-width:calc(100% - 28px);font-size:13.5px;padding:8px 13px}
+  .bub{max-width:calc(100% - 24px);font-size:13px;padding:7px 12px}
+  .cr-art .bub.r{right:10px;top:36px}
+  .cr-art .sfx2{right:8px;bottom:2px;font-size:28px}
+  .ct-art .bub{left:12px;bottom:26px}
+  .cliff{flex-direction:column;align-items:flex-start;gap:8px;padding:12px 14px;margin-top:26px}
+  .cliff .cl-txt{font-size:14px}
   .pgno{right:8px;bottom:-32px;font-size:13px}
   .panel,.mi-face{border-width:3px;box-shadow:5px 5px 0 var(--black)}
   #mic{margin-top:32px;padding-top:26px}
-  .end .tbc{font-size:clamp(40px,13vw,68px);-webkit-text-stroke:3px var(--black)}
+  .end .tbc{font-size:clamp(38px,12vw,64px);-webkit-text-stroke:3px var(--black)}
   #toasts{bottom:calc(74px + env(safe-area-inset-bottom))}
 }
 @media (max-width:390px){
@@ -609,6 +684,11 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
     </div>
     <div class="j-tabs rv" id="jobTabs" role="tablist" aria-label="Career chapters" style="--d:.16"></div>
     <div id="jobStage" role="tabpanel" aria-live="polite"></div>
+    <a class="cliff rv" href="#superpowers" style="--d:.12">
+      <span class="cl-tag">NEXT UP</span>
+      <span class="cl-txt">The exact toolkit, channels, and AI workflows behind these results.</span>
+      <span class="cl-go">SEE SUPERPOWERS &rarr;</span>
+    </a>
     <span class="pgno" aria-hidden="true"></span>
   </div>
 </section>
@@ -624,22 +704,72 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
       <p class="sub rv" style="--d:.1;margin:0">Every ability comes straight from my CV. Hover a skill to power it up.</p>
     </div>
     <div class="skill-grid" id="skillGrid"></div>
+    <a class="cliff rv" href="#missions" style="--d:.12">
+      <span class="cl-tag">NEXT UP</span>
+      <span class="cl-txt">Drag the impact slider and flip the 6 mission cards to see how the numbers were achieved.</span>
+      <span class="cl-go">INSPECT MISSIONS &rarr;</span>
+    </a>
     <span class="pgno" aria-hidden="true"></span>
   </div>
 </section>
 
-<!-- PAGE 04: MISSIONS (ALL 6 INTERACTIVE FLIP CARDS) -->
+<!-- PAGE 04: MISSIONS (BEFORE/AFTER SLIDER + 6 FLIP CARDS + UNLOCK COUNTER) -->
 <section class="pg" id="missions" data-nav="missions" data-scene="#2c0f27" data-chap="CHAPTER 03 - THE MISSIONS" aria-labelledby="h-missions">
   <div class="sheet">
     <div class="mi-head">
       <div>
         <div class="nar rv" style="--d:0">CHAPTER 03</div>
         <h2 class="big-title hl" id="h-missions" style="margin-top:14px">THE WORK SPEAKS<br>FOR <em>ITSELF.</em></h2>
+        <p class="sub rv" style="--d:.1">Slide to compare before vs. after, then tap any mission card below to reveal the Challenge, Action, and Result.</p>
       </div>
-      <p class="sub rv" style="--d:.1;margin:0">Tap any mission card to flip it and see the Challenge, Action, and Result behind each metric.</p>
+      <div class="mi-counter rv" id="miCounter" aria-live="polite" style="--d:.12">
+        <span id="miCountText">0 / 6 MISSIONS UNLOCKED</span>
+        <span class="dots-m" id="miDots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      </div>
     </div>
+
+    <!-- Interactive Before / After Impact Slider -->
+    <div class="panel ba-wrap rv" style="--d:.1">
+      <div class="ba-top">
+        <div class="ba-title">IMPACT SIMULATOR: BEFORE VS. AFTER</div>
+        <div class="ba-tabs" role="group" aria-label="Select impact case">
+          <button class="ba-tab" type="button" data-ba="0" aria-pressed="true">KANZ CHURN</button>
+          <button class="ba-tab" type="button" data-ba="1" aria-pressed="false">TGC HANDLING TIME</button>
+        </div>
+      </div>
+      <div class="ba-stage" id="baStage">
+        <div class="ba-layer ba-after">
+          <div class="ba-card">
+            <span class="ba-badge">AFTER</span>
+            <div class="ba-num" id="baAfterNum">27%</div>
+            <div class="ba-lbl" id="baAfterLbl">CHURN RATE</div>
+            <div class="ba-sub" id="baAfterSub">Daily follow-up workflows in 6 months</div>
+          </div>
+        </div>
+        <div class="ba-layer ba-before">
+          <div class="ba-card">
+            <span class="ba-badge">BEFORE</span>
+            <div class="ba-num" id="baBeforeNum">56%</div>
+            <div class="ba-lbl" id="baBeforeLbl">CHURN RATE</div>
+            <div class="ba-sub" id="baBeforeSub">High cancellations across 500-1,000 users</div>
+          </div>
+        </div>
+        <div class="ba-div" aria-hidden="true"><div class="ba-knob">&lsaquo;&rsaquo;</div></div>
+        <input class="ba-range" id="baRange" type="range" min="10" max="90" value="50" aria-label="Drag to compare before and after impact">
+      </div>
+      <div class="ba-foot">
+        <span id="baSummary">Cut customer churn from 56% to 27% within six months at KANZ through structured daily retention workflows.</span>
+        <span class="ba-hint">&larr; DRAG SLIDER &rarr;</span>
+      </div>
+    </div>
+
     <div class="mi-grid" id="missionsGrid"></div>
     <p class="mi-note">These are career achievements from my roles at KANZ and TGC, not independent client projects.</p>
+    <a class="cliff rv" href="#education" style="--d:.12">
+      <span class="cl-tag">NEXT UP</span>
+      <span class="cl-txt">Academic background, languages, and 5 verified certificates you can inspect right here.</span>
+      <span class="cl-go">VIEW CREDENTIALS &rarr;</span>
+    </a>
     <span class="pgno" aria-hidden="true"></span>
   </div>
 </section>
@@ -665,8 +795,13 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
 <section class="pg" id="certifications" data-nav="education" data-scene="#0f1a3c" data-chap="CHAPTER 04 - CERTIFICATIONS" aria-labelledby="h-cert">
   <div class="sheet">
     <div class="lab-s rv">CERTIFICATIONS</div>
-    <h3 class="big-title hl" id="h-cert" style="margin-top:6px">THE KNOWLEDGE <em>BASE.</em></h3>
+    <h3 class="big-title sm hl" id="h-cert" style="margin-top:6px">THE KNOWLEDGE <em>BASE.</em></h3>
     <div class="certs" id="certs"></div>
+    <a class="cliff rv" href="#creative" style="--d:.12">
+      <span class="cl-tag">PLOT TWIST</span>
+      <span class="cl-txt">Wait... there is more to the character than dashboards and retention metrics.</span>
+      <span class="cl-go">ENTER CREATIVE SIDE &rarr;</span>
+    </a>
     <span class="pgno" aria-hidden="true"></span>
   </div>
 </section>
@@ -693,7 +828,7 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
 
     <div id="mic">
       <div class="lab-s rv">A. VOICE OVER &amp; STORYTELLING</div>
-      <h3 class="big-title hl" id="h-mic" style="font-size:clamp(26px,4.5vw,56px);margin-top:6px">BEHIND THE <em>MIC.</em></h3>
+      <h3 class="big-title sm hl" id="h-mic" style="margin-top:6px">BEHIND THE <em>MIC.</em></h3>
       <p class="series rv" dir="rtl" lang="ar" style="--d:.08;margin-top:8px">إحساس مش إحساس</p>
       <p class="sub rv" style="--d:.1;margin-top:0">Ehsaas Mesh Ehsaas - my creative series. Tap play for a 14-second preview, then watch the full video on Instagram.</p>
       <div class="vids" id="vids"></div>
@@ -707,7 +842,7 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
 <section class="pg" data-nav="creative" data-scene="#2a1148" data-chap="CHAPTER 05 - THROUGH MY LENS" aria-labelledby="h-lens" id="lens">
   <div class="sheet">
     <div class="lab-s rv">B. PHOTOGRAPHY</div>
-    <h3 class="big-title hl" id="h-lens" style="font-size:clamp(26px,4.5vw,56px);margin-top:6px">THROUGH MY <em>LENS.</em></h3>
+    <h3 class="big-title sm hl" id="h-lens" style="margin-top:6px">THROUGH MY <em>LENS.</em></h3>
     <p class="sub rv" style="--d:.1">Places, architecture, lighting, streets and everyday scenes. Tap any frame to view it full size.</p>
     <div class="gallery" id="gallery"></div>
     <span class="pgno" aria-hidden="true"></span>
@@ -718,7 +853,7 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
 <section class="pg" data-nav="creative" data-scene="#35103f" data-chap="CHAPTER 05 - CREATIVE UNIVERSE" aria-labelledby="h-uni" id="universe">
   <div class="sheet">
     <div class="lab-s rv">C. CREATIVE UNIVERSE</div>
-    <h3 class="big-title hl" id="h-uni" style="font-size:clamp(26px,4.5vw,56px);margin-top:6px">MY CREATIVE <em>UNIVERSE.</em></h3>
+    <h3 class="big-title sm hl" id="h-uni" style="margin-top:6px">MY CREATIVE <em>UNIVERSE.</em></h3>
     <p class="sub rv" style="--d:.1">Comic storytelling, voice-over, rap, creative direction, visual storytelling, content creation and photography.</p>
     <div class="uni">
       <div class="panel u t1" style="--dx:-20px"><img src="assets/images/crop-creative.webp" alt="Comic panel of Karim thinking over a tablet full of artwork" loading="lazy" width="432" height="286"><span class="lab">COMIC STORYTELLING</span></div>
@@ -731,6 +866,11 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
       <div><h3>FOLLOW THE STORY ON INSTAGRAM</h3><p class="handle">@karimalashry</p></div>
       <a class="btn primary" href="https://www.instagram.com/karimalashry/" target="_blank" rel="noopener noreferrer">OPEN INSTAGRAM</a>
     </div>
+    <a class="cliff rv" href="#contact" style="--d:.12">
+      <span class="cl-tag">FINAL CHAPTER</span>
+      <span class="cl-txt">Ready to bring this blend of CX leadership and creativity to your team?</span>
+      <span class="cl-go">LET'S CONNECT &rarr;</span>
+    </a>
     <span class="pgno" aria-hidden="true"></span>
   </div>
 </section>
@@ -742,15 +882,15 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
     <div class="ct-grid">
       <div>
         <div class="panel art ct-art" style="--dx:-24px;--rot:-1.5deg">
-          <img class="a" src="assets/images/crop-cx.webp" alt="Comic panel of Karim looking off to the side toward what comes next" width="494" height="282" data-par=".04">
-          <div class="tint" style="background:#f59e0b;opacity:.35"></div><div class="vignette"></div>
+          <img class="a" src="assets/images/scene-command.webp" alt="Comic panel of Karim in a creative and analytics command center with studio mic, camera, and growth dashboards" loading="lazy" style="object-position:50% 25%" data-par=".04">
+          <div class="vignette"></div>
           <span class="scene">FINAL SCENE</span>
-          <div class="bub" style="left:16px;bottom:44px;--d:.25">What&rsquo;s next?</div>
+          <div class="bub" style="left:16px;bottom:34px;--d:.25">What&rsquo;s next?</div>
         </div>
       </div>
       <div>
         <div class="nar rv" style="--d:0">FINAL CHAPTER</div>
-        <h2 class="big-title hl" id="h-contact" style="margin-top:14px;font-size:clamp(28px,4.8vw,62px)">THE NEXT CHAPTER<br>STARTS <em>HERE.</em></h2>
+        <h2 class="big-title sm hl" id="h-contact" style="margin-top:14px">THE NEXT CHAPTER<br>STARTS <em>HERE.</em></h2>
         <p class="sub rv" style="--d:.1">Let&rsquo;s create what&rsquo;s next.</p>
         <ul class="contact-list rv" style="--d:.14">
           <li><a class="c-item" href="mailto:Karimhatemalashry@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><div><small>Email</small><span>Karimhatemalashry@gmail.com</span></div></a></li>
@@ -768,13 +908,33 @@ footer{padding:22px 20px 104px;text-align:center;color:var(--muted);font-size:13
   </div>
 </section>
 
-<!-- PAGE 11: TO BE CONTINUED -->
+<!-- PAGE 11: TO BE CONTINUED - CHOOSE THE NEXT CHAPTER -->
 <section class="pg end" data-nav="contact" data-scene="#090911" data-chap="THE END (FOR NOW)" aria-label="To be continued">
   <div class="sheet" style="text-align:center">
     <div class="mini rv"><img src="assets/images/karim-comic-portrait.webp" alt="Comic portrait of Karim Alashry giving a thumbs up" loading="lazy" width="600" height="941"></div>
     <p class="tbc hl">TO BE<br>CONTINUED...</p>
-    <p class="line rv" style="--d:.18">The story doesn&rsquo;t end here.</p>
-    <a class="btn ghost rv" style="--d:.22" href="#home">BACK TO THE COVER</a>
+    <p class="line rv" style="--d:.15">Choose how the next chapter starts.</p>
+    <div class="next-choices rv" style="--d:.2">
+      <div class="panel nchoice">
+        <span class="nc-k">OPTION A - DIRECT LINE</span>
+        <h3>START A CONVERSATION</h3>
+        <p>Hiring for a remote Customer Success, CX, or Support Leadership role? Reach out directly.</p>
+        <div class="nc-acts">
+          <a class="btn primary" href="https://wa.me/201050956809" target="_blank" rel="noopener noreferrer">WHATSAPP ME</a>
+          <a class="btn ghost" href="mailto:Karimhatemalashry@gmail.com">SEND EMAIL</a>
+        </div>
+      </div>
+      <div class="panel nchoice">
+        <span class="nc-k">OPTION B - FULL DOSSIER</span>
+        <h3>TAKE THE STORY WITH YOU</h3>
+        <p>Download my latest ATS-ready CV or connect on LinkedIn to keep in touch for upcoming roles.</p>
+        <div class="nc-acts">
+          <a class="btn amber" href="Karim_Alashry_CV.pdf" download="Karim_Alashry_CV.pdf">DOWNLOAD CV</a>
+          <a class="btn ghost" href="https://www.linkedin.com/in/karimalashry/" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
+        </div>
+      </div>
+    </div>
+    <a class="btn ghost rv" style="--d:.25" href="#home">&uarr; BACK TO THE COVER</a>
     <span class="pgno" aria-hidden="true"></span>
   </div>
 </section>
@@ -822,7 +982,7 @@ var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
 
 /* ================= DATA (source of truth: CV) ================= */
 var XP=[
- {co:'KANZ',short:'CS Manager',role:'Customer Success Manager',per:'February 2026 - September 2026',loc:'UK | Remote',img:'crop-face',pos:'50% 25%',tint:'#3b5bdb',w:['ZAP!','56% → 27% churn','left:14px;bottom:44px'],
+ {co:'KANZ',tabCo:'KANZ',short:'CS Manager',role:'Customer Success Manager',per:'February 2026 - September 2026',loc:'UK | Remote',img:'scene-kanz',pos:'42% 25%',tint:'#3b5bdb',w:['ZAP!','56% → 27% churn','left:14px;bottom:44px'],
   sum:'Owned customer success for a subscriber base of traders and investors: engagement, onboarding, and retention.',
   ach:['Reduced customer churn rate from 56% to 27% within six months by designing and implementing structured daily follow-up workflows, improving subscriber engagement and reducing cancellation requests.',
    'Supported customer success operations across a company-wide subscriber base of 500-1,000 traders and investors, contributing to onboarding, platform adoption, engagement, and retention.',
@@ -831,7 +991,7 @@ var XP=[
    'Established structured daily communication and follow-up processes to identify disengaged subscribers, address cancellation risks, and strengthen customer relationships.'],
   met:['56% → 27% churn','500-1,000 subscribers','20-50 onboarded / month','50-100 escalations / month'],
   tags:['Customer Retention','Churn Reduction','Onboarding','Escalation Management','Customer Engagement']},
- {co:'TGC',short:'CX Manager',role:'Customer Experience Manager',per:'September 2024 - December 2025',loc:'Saudi Arabia | Remote',img:'crop-cx',pos:'40% 50%',tint:'#e11d48',w:['BOOM!','Mentored 15+ agents','right:14px;bottom:44px'],
+ {co:'TGC',tabCo:'TGC',short:'CX Manager',role:'Customer Experience Manager',per:'September 2024 - December 2025',loc:'Saudi Arabia | Remote',img:'scene-tgc-lead',pos:'50% 20%',tint:'#e11d48',w:['BOOM!','Mentored 15+ agents','right:14px;bottom:44px'],
   sum:'Led customer experience across multiple product lines, balancing satisfaction, retention, and service quality.',
   ach:['Led customer experience operations across multiple product lines, focusing on customer satisfaction, retention, and service quality.',
    'Reduced customer churn by 22 percentage points through targeted retention initiatives and structured customer engagement processes.',
@@ -839,7 +999,7 @@ var XP=[
    'Mentored and supported 15+ customer service agents, contributing to a 35% improvement in the team’s average resolution time through coaching, knowledge sharing, and performance guidance.'],
   met:['-22 pts churn','+40% documentation clarity','15+ agents mentored','35% faster resolution'],
   tags:['CX Management','Customer Retention','Agent Coaching & Training','Support Team Leadership']},
- {co:'TGC',short:'SME',role:'Subject Matter Expert',per:'March 2024 - September 2024',loc:'Saudi Arabia | Remote',img:'crop-team',pos:'50% 40%',tint:'#f59e0b',w:['#1!','Ranked #1 among agents','left:14px;bottom:44px'],
+ {co:'TGC',tabCo:'TGC',short:'SME',role:'Subject Matter Expert',per:'March 2024 - September 2024',loc:'Saudi Arabia | Remote',img:'crop-team',pos:'50% 40%',tint:'#f59e0b',w:['#1!','Ranked #1 among agents','left:14px;bottom:44px'],
   sum:'Top-ranked agent and product expert delivering bilingual Arabic/English support at high volume.',
   ach:['Ranked #1 among agents after resolving 30,836+ customer inquiries within 12 months across Agent and SME roles.',
    'Achieved 77.1% CSAT, exceeding the team average by 12.1%.',
@@ -851,7 +1011,7 @@ var XP=[
    'Provided bilingual Arabic/English support across 3 product lines and developed strong product expertise across 250+ SKUs.'],
   met:['#1 among agents','30,836+ inquiries','77.1% CSAT','8h → 4.9h handling','88.6% FCR','98% SLA','99.2% CRM accuracy'],
   tags:['Zendesk','SLA Management','CSAT','FCR','Ticket Management','Arabic / English']},
- {co:'TGC',short:'CS Agent',role:'Customer Service Agent',per:'September 2023 - March 2024',loc:'Saudi Arabia | Remote',img:'crop-voice',pos:'45% 40%',tint:'#0891b2',w:['DING!','~250 inquiries a day','right:14px;bottom:44px'],
+ {co:'TGC',tabCo:'TGC',short:'CS Agent',role:'Customer Service Agent',per:'September 2023 - March 2024',loc:'Saudi Arabia | Remote',img:'crop-voice',pos:'45% 40%',tint:'#0891b2',w:['DING!','~250 inquiries a day','right:14px;bottom:44px'],
   sum:'Frontline omnichannel support for three e-commerce brands across nine communication channels.',
   ach:['Handled approximately 250 customer inquiries daily across 3 e-commerce brands through 9 communication channels, including WhatsApp, Instagram, Facebook, TikTok, Snapchat, Live Chat, and Email.',
    'Achieved an 88% First Contact Resolution (FCR) rate, resolving customer inquiries efficiently while minimizing repeat contacts and unnecessary escalations.',
@@ -859,7 +1019,7 @@ var XP=[
    'Managed customer complaints, order inquiries, and product-related issues through Zendesk, maintaining accurate ticket records, follow-ups, and escalations.'],
   met:['~250 inquiries / day','9 channels','88% FCR','4/5 CSAT'],
   tags:['Omnichannel Support','Zendesk','Complaint Management','WhatsApp Business']},
- {co:'KOUT FOOD GROUP',short:'CS Agent',role:'Customer Service Agent',per:'February 2021 - May 2023',loc:'Kuwait',img:'crop-creative',pos:'50% 30%',tint:'#7c3aed',w:['POP!','+25% satisfaction','left:14px;bottom:44px'],
+ {co:'KOUT FOOD GROUP',tabCo:'KOUT FOOD',short:'CS Agent',role:'Customer Service Agent',per:'February 2021 - May 2023',loc:'Kuwait',img:'scene-kout',pos:'50% 22%',tint:'#7c3aed',w:['POP!','+25% satisfaction','left:14px;bottom:44px'],
   sum:'Customer service across multiple restaurant brands, including Taco Bell, Burger King, and Applebee’s.',
   ach:['Resolved customer inquiries and complaints efficiently across multiple restaurant brands, improving satisfaction ratings by 25% through implementation of a streamlined communication protocol and advanced CRM tools.',
    'Facilitated a comprehensive training program for new hires in customer engagement and complaint resolution, leading to a 30% improvement in first-call resolution rates across franchises (Taco Bell and Burger King).',
@@ -876,12 +1036,21 @@ var CATS={
 };
 var ICO={cs:'<path d="M12 21s-7-4.4-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.6-9 9-9 9z"/>',ops:'<path d="M4 6h16M4 12h10M4 18h16"/><circle cx="19" cy="12" r="2"/>',tools:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',ai:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/><circle cx="12" cy="12" r="2.5"/>'};
 
+var BA_CASES=[
+ {bNum:'56%',bLbl:'CHURN RATE',bSub:'High cancellations across 500-1,000 users',
+  aNum:'27%',aLbl:'CHURN RATE',aSub:'Daily follow-up workflows in 6 months',
+  sum:'Cut customer churn from 56% to 27% within six months at KANZ through structured daily retention workflows.'},
+ {bNum:'8.0h',bLbl:'AVG HANDLING TIME',bSub:'Heavy multi-brand ticket backlog',
+  aNum:'4.9h',aLbl:'AVG HANDLING TIME',aSub:'38.8% faster via streamlined Zendesk triage',
+  sum:'Reduced handling time from 8 hours to 4.9 hours at TGC while maintaining 98% SLA and 88.6% FCR.'}
+];
+
 var MIS=[
- ['01','THE RETENTION CHALLENGE',{from:56,to:27,suf:'%',pre:'56%→'},'Reduced customer churn from 56% to 27% within 6 months at KANZ.','crop-face','50% 25%',
+ ['01','THE RETENTION CHALLENGE',{from:56,to:27,suf:'%',pre:'56%→'},'Reduced customer churn from 56% to 27% within 6 months at KANZ.','scene-kanz','42% 25%',
   'High subscriber churn (56%) across a 500-1,000 trader and investor base.',
   'Built structured daily follow-up workflows to spot disengaged users and handle cancellation risks early.',
   'Cut churn from 56% to 27% in six months while onboarding 20-50 new users monthly.'],
- ['02','THE TEAM BUILDER',{to:15,suf:'+'},'Mentored and supported 15+ remote customer service agents at TGC.','crop-team','50% 45%',
+ ['02','THE TEAM BUILDER',{to:15,suf:'+'},'Mentored and supported 15+ remote customer service agents at TGC.','scene-tgc-lead','50% 20%',
   'Maintaining consistent quality and speed across a remote multi-product support team.',
   'Led hands-on coaching, knowledge sharing, and ongoing performance guidance for 15+ agents.',
   'Helped drive a 35% improvement in average team resolution time.'],
@@ -889,7 +1058,7 @@ var MIS=[
   'High bilingual Arabic/English inquiry volume spanning 3 product lines and 250+ SKUs.',
   'Streamlined ticket handling while maintaining 88.6% FCR and 99.2% CRM accuracy.',
   'Ranked #1 among agents and achieved 77.1% CSAT (+12.1% above team average).'],
- ['04','HIGH-VOLUME OPS',{to:120,suf:'+'},'Processed 120+ daily Zendesk tickets with 98% SLA compliance.','crop-voice','45% 40%',
+ ['04','HIGH-VOLUME OPS',{to:120,suf:'+'},'Processed 120+ daily Zendesk tickets with 98% SLA compliance.','scene-kout','50% 22%',
   'Sustaining response speed and accuracy under heavy daily omnichannel ticket loads.',
   'Standardized Zendesk triage, escalation tracking, and resolution workflows.',
   'Maintained 98% SLA compliance and reduced handling time from 8h to 4.9h (38.8% faster).'],
@@ -897,7 +1066,7 @@ var MIS=[
   'Documentation gaps slowed down troubleshooting and created repeat customer contacts.',
   'Collaborated cross-functionally to reorganize and clarify product knowledge resources.',
   'Improved clarity by 40%, reducing information gaps and speeding up issue resolution.'],
- ['06','RESOLUTION UPGRADE',{to:35,suf:'%'},'Contributed to a 35% faster average team resolution time.','karim-comic-portrait','50% 20%',
+ ['06','RESOLUTION UPGRADE',{to:35,suf:'%'},'Contributed to a 35% faster average team resolution time.','scene-command','50% 20%',
   'Longer resolution cycles were impacting customer satisfaction and retention.',
   'Combined workflow optimization, targeted coaching, and proactive retention processes.',
   'Improved average resolution time by 35% and reduced customer churn by 22 percentage points.']
@@ -948,7 +1117,7 @@ copyBtn.addEventListener('click',function(){
 function imgSrc(n){return 'assets/images/'+n+'.webp'}
 var curJob=0;
 $('#jobTabs').innerHTML=XP.map(function(x,i){
- return '<button class="j-tab" type="button" role="tab" aria-selected="'+(i===0?'true':'false')+'" data-ji="'+i+'"><span class="t-num">ISSUE 0'+(i+1)+'</span><span class="t-co">'+x.co+'</span><span class="t-role">'+x.short+'</span></button>';
+ return '<button class="j-tab" type="button" role="tab" aria-selected="'+(i===0?'true':'false')+'" data-ji="'+i+'"><span class="t-num">ISSUE 0'+(i+1)+'</span><span class="t-co">'+x.tabCo+'</span><span class="t-role">'+x.short+'</span></button>';
 }).join('');
 
 function renderJob(i,scrollToCard){
@@ -962,7 +1131,7 @@ function renderJob(i,scrollToCard){
  });
  $('#jobStage').innerHTML='<div class="job-stage"><div class="job-grid">'+
   '<div class="panel art in"><img class="a" src="'+imgSrc(x.img)+'" alt="Comic scene for '+x.role+' at '+x.co+'" style="object-position:'+x.pos+'"><div class="tint" style="background:'+x.tint+'"></div><div class="vignette"></div><div class="dots"></div><span class="scene">SCENE 0'+(curJob+1)+'</span>'+
-  '<div class="bub in'+(w[2].indexOf('right')===0?' r':'')+'" style="'+w[2]+'">'+w[1]+'</div><span class="sfx2 in" style="'+(w[2].indexOf('right')===0?'left':'right')+':12px;top:42px;--r:'+(curJob%2?'7':'-8')+'deg;font-size:clamp(30px,4.5vw,56px)">'+w[0]+'</span></div>'+
+  '<div class="bub in'+(w[2].indexOf('right')===0?' r':'')+'" style="'+w[2]+'">'+w[1]+'</div><span class="sfx2 in" style="'+(w[2].indexOf('right')===0?'left':'right')+':12px;top:42px;--r:'+(curJob%2?'7':'-8')+'deg;font-size:clamp(30px,4.5vw,54px)">'+w[0]+'</span></div>'+
   '<div class="panel info in"><div class="nar in">EXPERIENCE 0'+(curJob+1)+' &bull; '+x.loc+'</div><div class="co">'+x.co+'</div><h3>'+x.role+'</h3><div class="meta"><b>'+x.per+'</b><span>'+x.loc+'</span></div><p class="resp">'+x.sum+'</p>'+
   '<ul class="ach" id="achList">'+x.ach.map(function(a,idx){return '<li class="'+(hasMore&&idx>=3?'extra':'')+'">'+a+'</li>'}).join('')+'</ul>'+
   (hasMore?'<button class="exp-toggle" id="expToggle" type="button" aria-expanded="false">+ SHOW ALL '+x.ach.length+' ACHIEVEMENTS</button>':'')+
@@ -987,17 +1156,52 @@ $('#skillGrid').innerHTML=['cs','ops','tools','ai'].map(function(c,i){
   CATS[c][1].map(function(s,j){return '<span class="chip'+(c==='tools'?' exact':'')+'" style="--k:'+j+'">'+s.replace(/&/g,'&amp;')+'</span>'}).join('')+'</div></div>';
 }).join('');
 
-/* ================= RENDER INTERACTIVE FLIP MISSIONS ================= */
+/* ================= BEFORE / AFTER IMPACT SLIDER ================= */
+var baStage=$('#baStage'),baRange=$('#baRange');
+baRange.addEventListener('input',function(){baStage.style.setProperty('--pos',baRange.value+'%')});
+$$('.ba-tab').forEach(function(btn){
+ btn.addEventListener('click',function(){
+  var c=BA_CASES[+btn.dataset.ba];
+  $$('.ba-tab').forEach(function(b){b.setAttribute('aria-pressed',b===btn?'true':'false')});
+  $('#baBeforeNum').textContent=c.bNum;$('#baBeforeLbl').textContent=c.bLbl;$('#baBeforeSub').textContent=c.bSub;
+  $('#baAfterNum').textContent=c.aNum;$('#baAfterLbl').textContent=c.aLbl;$('#baAfterSub').textContent=c.aSub;
+  $('#baSummary').textContent=c.sum;
+  baRange.value=50;baStage.style.setProperty('--pos','50%');
+ });
+});
+
+/* ================= RENDER INTERACTIVE FLIP MISSIONS + UNLOCK COUNTER ================= */
 $('#missionsGrid').innerHTML=MIS.map(function(m,i){
  var n=m[2];
- return '<article class="mi rv" tabindex="0" role="button" aria-pressed="false" aria-label="Mission '+m[0]+': '+m[1]+'. Activate to flip for details." style="--d:'+((i%3)*.06)+'"><div class="mi-inner">'+
+ return '<article class="mi rv" data-mi="'+i+'" tabindex="0" role="button" aria-pressed="false" aria-label="Mission '+m[0]+': '+m[1]+'. Activate to flip for details." style="--d:'+((i%3)*.06)+'"><div class="mi-inner">'+
   '<div class="mi-face mi-front"><div class="bg"><img src="assets/images/'+m[4]+'.webp" alt="" loading="lazy" style="object-position:'+m[5]+'"></div><span class="stamp">COMPLETE</span>'+
   '<div class="body"><div class="no">MISSION '+m[0]+'</div><h3>'+m[1]+'</h3><div class="num">'+(n.pre?'<s>'+n.pre+'</s>':'')+'<span class="cnt" data-to="'+n.to+'"'+(n.from!==undefined?' data-from="'+n.from+'"':'')+' data-fmt="1">'+n.to.toLocaleString('en-US')+'</span>'+n.suf+'</div><p>'+m[3]+'</p><span class="flip-cue">TAP TO SEE HOW &rarr;</span></div></div>'+
   '<div class="mi-face mi-back"><div class="b-top">MISSION '+m[0]+' BRIEFING</div><div class="car"><div><b>CHALLENGE</b>'+m[6]+'</div><div><b>ACTION</b>'+m[7]+'</div><div><b>RESULT</b>'+m[8]+'</div></div><div class="b-foot">&larr; TAP TO FLIP BACK</div></div>'+
   '</div></article>';
 }).join('');
+
+var unlocked={},allNotified=false,miDots=$$('#miDots i'),miCounter=$('#miCounter'),miCountText=$('#miCountText');
+function markUnlocked(idx,card){
+ if(!unlocked[idx]){
+  unlocked[idx]=true;
+  card.classList.add('seen');
+  var count=Object.keys(unlocked).length;
+  miDots.forEach(function(d,k){if(k<count)d.classList.add('on')});
+  if(count===MIS.length){
+   miCounter.classList.add('done');
+   miCountText.textContent='6 / 6 ALL MISSIONS UNLOCKED';
+   if(!allNotified){allNotified=true;toast('FULL DOSSIER UNLOCKED','You inspected all 6 career missions!')}
+  }else{
+   miCountText.textContent=count+' / '+MIS.length+' MISSIONS UNLOCKED';
+  }
+ }
+}
 $$('.mi').forEach(function(card){
- function flip(){var on=card.classList.toggle('flipped');card.setAttribute('aria-pressed',on)}
+ function flip(){
+  var on=card.classList.toggle('flipped');
+  card.setAttribute('aria-pressed',on);
+  if(on)markUnlocked(+card.dataset.mi,card);
+ }
  card.addEventListener('click',flip);
  card.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();flip()}});
 });
