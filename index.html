@@ -81,10 +81,14 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 #hud{position:fixed;left:max(14px,env(safe-area-inset-left));bottom:max(14px,env(safe-area-inset-bottom));z-index:260;background:rgba(9,9,17,.88);border:2px solid var(--off);box-shadow:4px 4px 0 var(--pink);padding:8px 14px 10px;min-width:225px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 #hud .h1{font-family:var(--f-comic);letter-spacing:.12em;font-size:14px;color:var(--amber);line-height:1.1}
 #hud .h2{font-family:var(--f-comic);letter-spacing:.14em;font-size:19px;line-height:1.1}
-#hud .ticks{display:flex;gap:3px;margin-top:6px}
-#hud .ticks i{flex:1;height:5px;background:rgba(243,240,245,.18);transition:background .25s}
-#hud .ticks i.on{background:var(--pink)}
-#hud .ticks i.cur{background:var(--amber)}
+#hud .ticks{display:flex;gap:3px;margin-top:6px;position:relative}
+#hud .ticks .htick{flex:1;height:14px;display:flex;align-items:center;padding:0;cursor:pointer;position:relative;background:none;border:0}
+#hud .ticks .htick::before{content:"";display:block;width:100%;height:5px;background:rgba(243,240,245,.18);transition:background .2s,height .18s,box-shadow .18s}
+#hud .ticks .htick.on::before{background:var(--pink)}
+#hud .ticks .htick.cur::before{background:var(--amber)}
+#hud .ticks .htick:hover::before,#hud .ticks .htick:focus-visible::before{height:9px;background:var(--cyan);box-shadow:0 0 10px rgba(53,214,232,.65)}
+#hud .hud-tip{position:absolute;left:0;bottom:calc(100% + 10px);background:var(--amber);color:var(--black);border:2.5px solid var(--black);box-shadow:4px 4px 0 var(--pink);padding:4px 10px;font-family:var(--f-comic);letter-spacing:.1em;font-size:13.5px;white-space:nowrap;pointer-events:none;opacity:0;transform:translateY(6px);transition:opacity .16s ease,transform .16s ease}
+#hud .hud-tip.show{opacity:1;transform:none}
 
 /* ---------- Layout / comic atoms ---------- */
 .pg{position:relative;padding:calc(var(--nav-h) + 34px) 22px 68px;display:flex;align-items:center;scroll-margin-top:0}
@@ -754,12 +758,29 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
 .rtl .stat b,.rtl .ba-num,.rtl .mi-front .num,.rtl .handle,.rtl .c-item span,.rtl .qbtn,.rtl .meta b{direction:ltr;unicode-bidi:isolate;text-align:inherit}
 @media(max-width:900px){.nav-tools{gap:6px}.lang-toggle{padding:6px 7px;font-size:11px}}
 @media(max-width:420px){.logo{font-size:12px;gap:6px}.logo i{width:26px;height:26px}.nav-tools{gap:4px}.lang-toggle{font-size:10px;padding:5px 6px}.menu-btn{width:38px;height:40px}}
+
+
+/* 3D Card Tilt & Mouse-Tracking Sheen (Desktop Hover Only) */
+.cert.in,.mi.in{will-change:transform}
+.cert::after,.mi-front::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:6;opacity:0;transition:opacity .25s ease;background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),rgba(53,214,232,.22),rgba(255,181,71,.09) 42%,transparent 72%)}
+.mi-front::after{z-index:5}
+@media(hover:hover){
+ .cert.in.tilting,.mi.in.tilting{transition:transform .1s ease-out}
+ .cert.in:hover::after,.mi.in:not(.flipped):hover::after{opacity:1}
+}
+.brief-acts .btn.pitch-btn{border-color:var(--cyan);color:var(--cyan);box-shadow:5px 5px 0 var(--cyan)}
+.brief-acts .btn.pitch-btn:hover{background:var(--cyan);color:var(--black)}
+.brief-acts .btn.pitch-btn.copied{border-color:var(--green);color:var(--black);background:var(--green);box-shadow:5px 5px 0 var(--off)}
+
+/* Arabic Cover Typography & RTL Polish */
 .rtl .cover h1{line-height:1.22;text-shadow:-6px 6px 0 var(--violet),-10px 10px 0 rgba(0,0,0,.45)}
 .rtl .big-title{line-height:1.22}
 .rtl .hl .ln{padding-bottom:.28em;margin-bottom:-.12em}
 .rtl .cover h1 .ln{padding-right:10px;padding-left:18px}
 .rtl .sfx2,.rtl .sfx-pop{direction:ltr;unicode-bidi:isolate;font-family:var(--f-comic)!important}
 .rtl .stat:first-child b{direction:rtl}
+.rtl #hud .hud-tip{left:auto;right:0;font-family:var(--f-ar)!important;letter-spacing:0!important}
+
 </style>
 </head>
 <body>
@@ -783,10 +804,11 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
   <div id="scrollbar"></div>
 </nav>
 
-<div id="hud" role="status" aria-live="off" aria-label="Reading progress">
+<div id="hud" role="navigation" aria-label="Chapter progress and quick jump">
+  <div class="hud-tip" id="hudTip" aria-hidden="true"></div>
   <div class="h1" id="hudChap">THE COVER</div>
   <div class="h2" id="hudPage">PAGE 01 / 11</div>
-  <div class="ticks" id="hudTicks" aria-hidden="true"></div>
+  <div class="ticks" id="hudTicks"></div>
 </div>
 
 <main id="book">
@@ -1342,6 +1364,9 @@ copyBtn.addEventListener('click',function(){
   trackEvent('contact_click',{channel:'copy_email'});
   copyBtn.classList.add('copied');copyTxt.textContent=currentLanguage==='ar'?'تم النسخ!':'Copied!';
   toast(currentLanguage==='ar'?'تم نسخ البريد':'EMAIL COPIED',emailAddr);
+  if(window.buddyReact&&!briefModal.classList.contains('open')){
+   window.buddyReact('EMAIL COPIED!','تم النسخ!','Got it! My inbox is always open for the next chapter.','الإيميل اتنسخ عندك! بريدي مفتوح دايماً لأي فرصة جديدة.',{onceKey:'copy_email'});
+  }
   setTimeout(function(){copyBtn.classList.remove('copied');copyTxt.textContent=currentLanguage==='ar'?'نسخ البريد الإلكتروني':'Copy Email'},2200);
  }
  if(navigator.clipboard&&navigator.clipboard.writeText){
@@ -1503,7 +1528,13 @@ function onBaUserInteract(){
  var cid=BA_CASES[curBaIdx].id;
  if(!baTracked[cid]){baTracked[cid]=true;trackEvent('impact_scrubber_use',{case_name:cid})}
 }
-baRange.addEventListener('input',function(){onBaUserInteract();updateBaUI(baRange.value)});
+baRange.addEventListener('input',function(){
+ onBaUserInteract();
+ updateBaUI(baRange.value);
+ if(+baRange.value>=95&&window.buddyReact){
+  window.buddyReact('REAL IMPACT!','شفت الفرق؟','That’s the drop in action! Flip the 6 cards below to see the exact playbook.','ده التحوّل الحقيقي بالأرقام! اقلب الكروت الستة تحت عشان تشوف الكواليس.',{onceKey:'ba_full'});
+ }
+});
 baJumpBefore.addEventListener('click',function(){onBaUserInteract();if(window.playComicSfx)window.playComicSfx('tab');animateBaTo(0,550)});
 baJumpAfter.addEventListener('click',function(){onBaUserInteract();if(window.playComicSfx)window.playComicSfx('tab');animateBaTo(100,650)});
 $$('.ba-tab').forEach(function(btn){
@@ -1560,11 +1591,16 @@ function markUnlocked(idx,card){
    if(window.playComicSfx)window.playComicSfx('unlock');
    trackEvent('all_missions_unlocked',{unlocked_count:count});
    toast(currentLanguage==='ar'?'تم فتح الملف الكامل':'FULL DOSSIER UNLOCKED',currentLanguage==='ar'?'لقد استكشفت جميع المهام الست!':'You inspected all 6 career missions!');
+   if(window.buddyReact){
+    window.buddyReact('FULL DOSSIER!','عاش جداً!','You unlocked all 6 missions! That’s the full track record right there.','فتحت الست مهام بالكامل! دي كل الكواليس والأرقام الحقيقية.',{onceKey:'all_missions'});
+   }
   }
  }
 }
 $$('.mi').forEach(function(card){
  function flip(){
+  card.style.transform='';
+  card.classList.remove('tilting');
   var on=card.classList.toggle('flipped');
   card.setAttribute('aria-pressed',on);
   if(window.playComicSfx)window.playComicSfx('flip');
@@ -1611,12 +1647,45 @@ function runCounter(el){
 }
 setTimeout(function(){$$('#stats .cnt').forEach(runCounter)},300);
 
-/* ================= BOOK: dynamic page numbers, parallax, HUD ================= */
+/* ================= BOOK: dynamic page numbers, parallax, Clickable HUD ================= */
 var pages=$$('.pg'),TOTAL=pages.length;
+var CHAP_AR={
+ 'THE COVER':'الغلاف',
+ 'CHAPTER 01 - THE JOURNEY':'الفصل 01 - الرحلة',
+ 'CHAPTER 02 - THE SKILLS':'الفصل 02 - المهارات',
+ 'CHAPTER 03 - THE MISSIONS':'الفصل 03 - الإنجازات',
+ 'CHAPTER 04 - EDUCATION':'الفصل 04 - التعليم',
+ 'CHAPTER 04 - CERTIFICATIONS':'الفصل 04 - الشهادات',
+ 'CHAPTER 05 - CREATIVE UNIVERSE':'الفصل 05 - العالم الإبداعي',
+ 'CHAPTER 05 - THROUGH MY LENS':'الفصل 05 - من خلال عدستي',
+ 'FINAL CHAPTER - THE NEXT CHAPTER':'الفصل الأخير - الفصل القادم',
+ 'THE END (FOR NOW)':'النهاية (حالياً)'
+};
+function chapLabel(chap){return (window.KARIM_LANG==='ar')?(CHAP_AR[chap]||chap):chap}
 function pad(n){return n<10?'0'+n:''+n}
 pages.forEach(function(p,i){var no=$('.pgno',p);if(no)no.textContent='- '+pad(i+1)+' -'});
-var ticks=$('#hudTicks');ticks.innerHTML=pages.map(function(){return '<i></i>'}).join('');
-var tickEls=$$('i',ticks),links=$('#links'),navA=$$('#links a'),sb=$('#scrollbar');
+var ticks=$('#hudTicks'),hudTip=$('#hudTip');
+ticks.innerHTML=pages.map(function(p,i){
+ return '<button type="button" class="htick" data-pi="'+i+'" aria-label="Jump to '+p.dataset.chap+'"></button>';
+}).join('');
+var tickEls=$$('.htick',ticks),links=$('#links'),navA=$$('#links a'),sb=$('#scrollbar');
+tickEls.forEach(function(btn,idx){
+ function showTip(){
+  hudTip.textContent=pad(idx+1)+' · '+chapLabel(pages[idx].dataset.chap);
+  hudTip.classList.add('show');
+ }
+ function hideTip(){hudTip.classList.remove('show')}
+ btn.addEventListener('mouseenter',showTip);
+ btn.addEventListener('focus',showTip);
+ btn.addEventListener('mouseleave',hideTip);
+ btn.addEventListener('blur',hideTip);
+ btn.addEventListener('click',function(){
+  if(window.lockBuddyNav)window.lockBuddyNav(1200);
+  if(window.playComicSfx)window.playComicSfx('tab');
+  trackEvent('hud_jump',{page:idx+1,section:pages[idx].id||('page_'+idx)});
+  pages[idx].scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});
+ });
+});
 var par=$$('[data-par]'),lastPage=-1,mobile=function(){return innerWidth<=900};
 function frame(){
  var vh=innerHeight,y=scrollY,H=document.documentElement.scrollHeight-vh;
@@ -1635,22 +1704,14 @@ function frame(){
  }
  if(cur!==lastPage){
   lastPage=cur;var pg=pages[cur];
-  var chapAr={
-   'THE COVER':'الغلاف',
-   'CHAPTER 01 - THE JOURNEY':'الفصل 01 - الرحلة',
-   'CHAPTER 02 - THE SKILLS':'الفصل 02 - المهارات',
-   'CHAPTER 03 - THE MISSIONS':'الفصل 03 - الإنجازات',
-   'CHAPTER 04 - EDUCATION':'الفصل 04 - التعليم',
-   'CHAPTER 04 - CERTIFICATIONS':'الفصل 04 - الشهادات',
-   'CHAPTER 05 - CREATIVE UNIVERSE':'الفصل 05 - العالم الإبداعي',
-   'CHAPTER 05 - THROUGH MY LENS':'الفصل 05 - من خلال عدستي',
-   'FINAL CHAPTER - THE NEXT CHAPTER':'الفصل الأخير - الفصل القادم',
-   'THE END (FOR NOW)':'النهاية (حالياً)'
-  };
   var isAr=(window.KARIM_LANG==='ar');
-  $('#hudChap').textContent=isAr?(chapAr[pg.dataset.chap]||pg.dataset.chap):pg.dataset.chap;
+  $('#hudChap').textContent=chapLabel(pg.dataset.chap);
   $('#hudPage').textContent=(isAr?'صفحة ':'PAGE ')+pad(cur+1)+' / '+pad(TOTAL);
-  tickEls.forEach(function(t,i){t.className=i<cur?'on':(i===cur?'cur':'')});
+  tickEls.forEach(function(t,i){
+   t.className='htick'+(i<cur?' on':(i===cur?' cur':''));
+   t.setAttribute('aria-label',(isAr?'الانتقال إلى ':'Jump to ')+chapLabel(pages[i].dataset.chap));
+   if(i===cur)t.setAttribute('aria-current','step');else t.removeAttribute('aria-current');
+  });
   document.body.style.setProperty('--scene',pg.dataset.scene);
   navA.forEach(function(a){var on=a.dataset.s===pg.dataset.nav;a.classList.toggle('active',on);if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')});
  }
@@ -1874,6 +1935,24 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
  }
  window.hideBuddyBubble=hideBubble;
  window.isBuddyVoiceOn=function(){return !!voiceOn};
+ window.lockBuddyNav=function(ms){navLockUntil=performance.now()+(ms||1100);fastAccum=0};
+ var reactedKeys={};
+ window.buddyReact=function(tagEn,tagAr,msgEn,msgAr,opts){
+  if(buddy.classList.contains('min')||isSpeaking||state==='panic'||state==='tired')return;
+  if(opts&&opts.onceKey){
+   if(reactedKeys[opts.onceKey])return;
+   reactedKeys[opts.onceKey]=true;
+  }
+  clearTimeout(hideBubTimer);clearTimeout(idleTimer);
+  var isAr=(language==='ar');
+  bTag.textContent=isAr?tagAr:tagEn;
+  bMsg.textContent=isAr?msgAr:msgEn;
+  if(state==='idle'||state==='talk'){setMood('talk')}
+  buddy.classList.add('show-bub');
+  bubShownY=scrollY;
+  idleTimer=setTimeout(function(){if(state==='talk'&&!isSpeaking)setMood('idle')},2000);
+  scheduleBubbleHide(mobile()?3000:4200);
+ };
  function scheduleBubbleHide(ms){
   clearTimeout(hideBubTimer);
   if(!ms||ms<=0)return;
@@ -2311,7 +2390,7 @@ var AR_UI={
  'LINKEDIN':'LinkedIn','↑ BACK TO THE COVER':'↑ العودة إلى الغلاف',
  'VIEW CERTIFICATE':'عرض الشهادة','WATCH FULL VIDEO →':'شاهد الفيديو كاملاً ←','MUSIC OFF':'الصوت متوقف',
  'CHAPTER 01':'الفصل 01','CHAPTER 02':'الفصل 02','CHAPTER 03':'الفصل 03','CHAPTER 04':'الفصل 04','CHAPTER 05 - MY CREATIVE UNIVERSE':'الفصل 05 - عالمي الإبداعي',
- 'ISSUE #01':'العدد #01','ISSUE #02':'العدد #02','ISSUE #03':'العدد #03','SCENE 01':'المشهد 01','SCENE 02':'المشهد 02','SCENE 03':'المشهد 03','SCENE 04':'المشهد 04','SCENE 05':'المشهد 05',
+ 'ISSUE #01':'العدد 01','ISSUE #02':'العدد 02','ISSUE #03':'العدد 03','SCENE 01':'المشهد 01','SCENE 02':'المشهد 02','SCENE 03':'المشهد 03','SCENE 04':'المشهد 04','SCENE 05':'المشهد 05',
  'PREV':'السابق','NEXT':'التالي','ACHIEVEMENT PANEL':'لوحة الإنجازات','ROLE 01 / 05':'الدور 01 / 05','EXPERIENCE 01':'الخبرة 01','SHOW LESS':'عرض أقل',
  'CUSTOMER SUCCESS & CX':'نجاح العملاء وتجربة العملاء','SUPPORT OPERATIONS':'عمليات الدعم','TOOLS & CHANNELS':'الأدوات والقنوات','AI & DIGITAL SKILLS':'الذكاء الاصطناعي والمهارات الرقمية',
  'COMPLETE':'مكتمل','TAP TO SEE HOW →':'اضغط لاكتشاف التفاصيل ←','TAP TO FLIP BACK':'اضغط للعودة للوجه الأمامي','BRIEFING':'تفاصيل المهمة',
@@ -2581,7 +2660,34 @@ function setLanguage(l,fromUser){
  if(typeof frame==='function')frame();
 }
 /* ================= 30-SECOND RECRUITER QUICK BRIEF MODAL ================= */
-var briefModal=$('#briefModal'),briefBody=$('#briefBody'),briefClose=$('#briefClose'),briefLastF=null;
+var briefModal=$('#briefModal'),briefBody=$('#briefBody'),briefClose=$('#briefClose'),briefLastF=null,briefActionTaken='';
+function getHiringPitch(ar){
+ if(ar){
+  return [
+   'كريم العشري | قيادة نجاح وتجربة العملاء (متاح للعمل عن بُعد)',
+   'خبرة 5+ سنوات (بريطانيا، السعودية، الكويت) | خفض فقد العملاء من 56% إلى 27% خلال 6 أشهر (KANZ) | تدريب 15+ موظفاً (حل أسرع 35%) | 30,836+ استفساراً (المركز #1).',
+   'الأدوات: Zendesk, Avaya, DelightChat, WATI, Circle.so, CRM/SLA/CSAT/FCR, Generative AI | العربية (اللغة الأم)، الإنجليزية (B2).',
+   'البورتفوليو: https://karim-alashry.github.io/ | واتساب: +20 105 095 6809 | البريد: Karimhatemalashry@gmail.com'
+  ].join('\n');
+ }
+ return [
+  'Karim Alashry | CS & CX Leadership (Open to Remote)',
+  '5+ yrs experience (UK, KSA, Kuwait) | Cut churn 56% -> 27% in 6 mos (KANZ) | Mentored 15+ agents (35% faster resolution) | 30,836+ inquiries (#1 agent).',
+  'Stack: Zendesk, Avaya, DelightChat, WATI, Circle.so, CRM/SLA/CSAT/FCR, Generative AI | Arabic (Native), English (B2).',
+  'Portfolio: https://karim-alashry.github.io/ | WhatsApp: +20 105 095 6809 | Email: Karimhatemalashry@gmail.com'
+ ].join('\n');
+}
+function copyPlainText(text,onDone){
+ if(navigator.clipboard&&navigator.clipboard.writeText){
+  navigator.clipboard.writeText(text).then(onDone).catch(function(){fb()});
+ }else{fb()}
+ function fb(){
+  var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');onDone()}catch(e){}
+  ta.remove();
+ }
+}
 function renderBrief(){
  if(!briefBody)return;
  var ar=currentLanguage==='ar';
@@ -2604,14 +2710,34 @@ function renderBrief(){
   '</div></div>'+
   '<div class="brief-acts">'+
    '<a class="btn primary" href="Karim_Alashry_CV.pdf" download="Karim_Alashry_CV.pdf" data-track-cv="brief_modal">'+(ar?'حمّل السيرة الذاتية (PDF)':'DOWNLOAD CV (PDF)')+'</a>'+
+   '<button class="btn ghost pitch-btn" id="briefPitchBtn" type="button">'+(ar?'نسخ ملخص للترشيح':'COPY HIRING PITCH')+'</button>'+
    '<a class="btn amber" href="https://wa.me/201050956809" target="_blank" rel="noopener noreferrer" data-track-ct="whatsapp_brief">'+(ar?'تواصل عبر WhatsApp':'WHATSAPP ME')+'</a>'+
    '<a class="btn ghost" href="https://www.linkedin.com/in/karimalashry/" target="_blank" rel="noopener noreferrer" data-track-ct="linkedin_brief">LinkedIn</a>'+
    '<button class="btn ghost" id="briefCopyBtn" type="button">'+(ar?'نسخ الإيميل':'COPY EMAIL')+'</button>'+
   '</div>';
  var bCopy=$('#briefCopyBtn',briefBody);
- if(bCopy){bCopy.addEventListener('click',function(){copyBtn.click()})}
+ if(bCopy){bCopy.addEventListener('click',function(){briefActionTaken='email';copyBtn.click()})}
+ var bPitch=$('#briefPitchBtn',briefBody);
+ if(bPitch){
+  bPitch.addEventListener('click',function(){
+   var isAr=currentLanguage==='ar';
+   copyPlainText(getHiringPitch(isAr),function(){
+    briefActionTaken='pitch';
+    bPitch.classList.add('copied');
+    bPitch.textContent=isAr?'تم نسخ الملخص!':'PITCH COPIED!';
+    if(window.playComicSfx)window.playComicSfx('tab');
+    trackEvent('copy_hiring_pitch',{});
+    toast(isAr?'جاهز للمشاركة':'PITCH COPIED',isAr?'الصق الملخص مباشرة في Slack أو WhatsApp':'Ready to paste on Slack, Teams, or WhatsApp.');
+    setTimeout(function(){
+     bPitch.classList.remove('copied');
+     bPitch.textContent=currentLanguage==='ar'?'نسخ ملخص للترشيح':'COPY HIRING PITCH';
+    },2200);
+   });
+  });
+ }
 }
 function openBrief(){
+ briefActionTaken='';
  renderBrief();
  briefLastF=document.activeElement;
  briefModal.classList.add('open');
@@ -2625,6 +2751,15 @@ function closeBrief(){
  briefModal.classList.remove('open');
  document.body.classList.remove('locked');
  if(briefLastF)briefLastF.focus();
+ if(window.buddyReact){
+  if(briefActionTaken==='pitch'){
+   window.buddyReact('READY TO SHARE!','جاهز للمشاركة!','Short pitch copied! Just paste it on Slack, Teams, or WhatsApp.','الملخص اتنسخ! تقدر تبعته مباشرة لفريقك على Slack أو WhatsApp.');
+  }else if(briefActionTaken==='cv'){
+   window.buddyReact('GREAT CHOICE!','اختيار ممتاز!','CV is on the way! Ping me on WhatsApp if anything catches your eye.','السيرة الذاتية بتتحمل عندك أهو! ولو في أي سؤال ابعتلي على واتساب.');
+  }else{
+   window.buddyReact('SHORT & SWEET!','ملخص سريع!','That was the 30-second version. Scroll down for the full comic story!','دي كانت نسخة الـ 30 ثانية. انزل تحت لو حابب تشوف القصة كاملة!',{onceKey:'brief_close'});
+  }
+ }
 }
 $('#briefNavBtn').addEventListener('click',openBrief);
 $('#briefCoverBtn').addEventListener('click',openBrief);
@@ -2641,6 +2776,10 @@ document.addEventListener('click',function(e){
  var href=a.getAttribute('href')||'';
  if(a.hasAttribute('download')||href.indexOf('Karim_Alashry_CV.pdf')!==-1){
   trackEvent('cv_download',{location:a.dataset.trackCv||(a.closest('section')?a.closest('section').id:'page')});
+  if(briefModal.classList.contains('open')){briefActionTaken='cv'}
+  else if(window.buddyReact){
+   window.buddyReact('GREAT CHOICE!','اختيار ممتاز!','CV is on the way! Ping me on WhatsApp if anything catches your eye.','السيرة الذاتية بتتحمل عندك أهو! ولو في أي سؤال ابعتلي على واتساب.');
+  }
  }else if(href.indexOf('wa.me')!==-1){
   trackEvent('contact_click',{channel:'whatsapp'});
  }else if(href.indexOf('linkedin.com')!==-1){
@@ -2666,6 +2805,28 @@ portrait.addEventListener('click',pow);portrait.addEventListener('keydown',funct
 if(!RM&&matchMedia('(hover:hover)').matches){
  stage.addEventListener('mousemove',function(e){var r=stage.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;portrait.style.transform='rotateY('+(x*7)+'deg) rotateX('+(-y*5)+'deg)'});
  stage.addEventListener('mouseleave',function(){portrait.style.transform=''});
+ function bindCardTilt(el,isMission){
+  el.addEventListener('mousemove',function(e){
+   if(!el.classList.contains('in'))return;
+   if(isMission&&el.classList.contains('flipped'))return;
+   var r=el.getBoundingClientRect();
+   var px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
+   var target=isMission?$('.mi-front',el):el;
+   if(target){
+    target.style.setProperty('--mx',(px*100).toFixed(1)+'%');
+    target.style.setProperty('--my',(py*100).toFixed(1)+'%');
+   }
+   var rx=((0.5-py)*7).toFixed(2),ry=((px-0.5)*7).toFixed(2);
+   el.classList.add('tilting');
+   el.style.transform='perspective(1100px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateY(-3px)';
+  });
+  el.addEventListener('mouseleave',function(){
+   el.classList.remove('tilting');
+   el.style.transform='';
+  });
+ }
+ $$('.mi').forEach(function(c){bindCardTilt(c,true)});
+ $$('.cert').forEach(function(c){bindCardTilt(c,false)});
 }
 var buf='';document.addEventListener('keydown',function(e){if(e.target.tagName==='INPUT')return;buf=(buf+e.key.toLowerCase()).slice(-5);if(buf==='karim'){toast('SECRET PANEL','You typed the hero’s name. Plot twist: the story is only getting started.');buf=''}});
 var lc=0,lt;$('#logo').addEventListener('click',function(){lc++;clearTimeout(lt);lt=setTimeout(function(){lc=0},700);if(lc===3){toast('EASTER EGG','Triple-tap on the logo: the hero approves.');lc=0}});
