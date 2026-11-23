@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
+<!-- Google tag (GTM-W67GK774) -->
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-W67GK774"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "zi5j9uab2t");
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Karim Alashry | Customer Experience, Customer Success &amp; Creative Portfolio</title>
@@ -252,31 +267,73 @@ nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:300;disp
 .mi-counter .dots-m i{width:8px;height:8px;border:1.5px solid currentColor;display:block;transition:background .2s}
 .mi-counter .dots-m i.on{background:currentColor}
 
-/* Interactive Before / After Slider */
-.ba-wrap{margin-bottom:28px;padding:18px 20px;background:linear-gradient(155deg,rgba(26,18,52,.94),rgba(11,9,22,.96))}
+/* Live Transformation Scrubber (Impact Simulator) */
+.ba-wrap{margin-bottom:28px;padding:18px 22px;background:linear-gradient(155deg,rgba(26,18,52,.95),rgba(11,9,22,.98))}
 .ba-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px}
 .ba-title{font-family:var(--f-comic);letter-spacing:.14em;font-size:19px;color:var(--amber)}
 .ba-tabs{display:flex;gap:8px;flex-wrap:wrap}
 .ba-tab{padding:6px 14px;border:2px solid var(--line);background:rgba(9,9,17,.7);font-family:var(--f-comic);letter-spacing:.12em;font-size:15px;color:var(--muted);transition:.15s}
 .ba-tab[aria-pressed=true]{background:var(--cyan);color:var(--black);border-color:var(--black);box-shadow:3px 3px 0 var(--pink)}
-.ba-stage{position:relative;height:185px;border:3px solid var(--off);overflow:hidden;background:#0d0a1c;user-select:none;--pos:50%}
-.ba-layer{position:absolute;inset:0;display:flex;align-items:center;padding:18px 24px}
-.ba-before{background:radial-gradient(circle at 18% 50%,rgba(216,30,79,.48),rgba(24,10,22,.96) 72%);justify-content:flex-start;z-index:2;clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
-.ba-after{background:radial-gradient(circle at 82% 50%,rgba(53,214,232,.36),rgba(11,26,38,.96) 72%);justify-content:flex-end;text-align:right;z-index:1}
-.ba-card{max-width:46%}
-.ba-badge{display:inline-block;font-family:var(--f-comic);letter-spacing:.16em;font-size:14px;padding:2px 10px;border:2px solid var(--black);margin-bottom:6px}
-.ba-before .ba-badge{background:var(--crimson);color:var(--off)}
-.ba-after .ba-badge{background:var(--green);color:var(--black)}
-.ba-num{font-family:var(--f-head);font-weight:800;font-size:clamp(30px,4.5vw,56px);line-height:1;letter-spacing:-.02em}
-.ba-before .ba-num{color:#FDA4AF}
-.ba-after .ba-num{color:var(--cyan)}
-.ba-lbl{font-family:var(--f-comic);letter-spacing:.14em;font-size:15px;color:var(--off);margin-top:4px}
-.ba-sub{font-size:13px;color:var(--muted);line-height:1.3;margin-top:2px}
-.ba-div{position:absolute;top:0;bottom:0;left:var(--pos);width:4px;background:var(--amber);transform:translateX(-50%);z-index:3;pointer-events:none;box-shadow:0 0 14px rgba(255,181,71,.7)}
-.ba-knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;background:var(--amber);color:var(--black);border:3px solid var(--black);box-shadow:0 0 0 3px var(--off);display:grid;place-items:center;font-family:var(--f-comic);font-size:18px;letter-spacing:.05em}
-.ba-range{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;z-index:4;margin:0}
-.ba-foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:14px;color:#E2DCEE}
+.ba-stage{position:relative;border:3px solid var(--off);background:radial-gradient(circle at 85% 20%,rgba(53,214,232,.14),transparent 52%),radial-gradient(circle at 12% 85%,rgba(216,30,79,.22),transparent 55%),#0d0a1c;padding:20px 22px 18px;display:grid;gap:14px;--accent:#D81E4F;--pct:0%}
+.ba-readout{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:14px}
+.ba-main-stat{display:flex;flex-direction:column;gap:4px}
+.ba-state-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ba-badge{display:inline-block;font-family:var(--f-comic);letter-spacing:.16em;font-size:14px;padding:2px 11px;border:2px solid var(--black);background:var(--accent);color:var(--black);transition:background-color .2s,color .2s}
+.ba-stage[data-phase="before"] .ba-badge{color:var(--off)}
+.ba-lbl{font-family:var(--f-comic);letter-spacing:.14em;font-size:15px;color:var(--muted)}
+.ba-num-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.ba-num{font-family:var(--f-head);font-weight:800;font-size:clamp(38px,5.5vw,66px);line-height:.95;letter-spacing:-.03em;color:var(--accent);text-shadow:3px 3px 0 var(--black);transition:color .15s}
+.ba-orig{font-family:var(--f-head);font-weight:700;font-size:clamp(14px,1.5vw,18px);color:var(--muted);text-decoration:line-through;opacity:.72}
+.ba-delta{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:2.5px solid var(--accent);background:rgba(9,9,17,.82);font-family:var(--f-comic);letter-spacing:.13em;font-size:17px;color:var(--accent);box-shadow:4px 4px 0 var(--black);transition:border-color .2s,color .2s}
+.ba-meter-box{display:grid;gap:6px}
+.ba-meter-track{position:relative;height:26px;border:2.5px solid var(--off);background:rgba(9,9,17,.85);overflow:hidden;box-shadow:inset 0 2px 8px rgba(0,0,0,.6)}
+.ba-meter-ghost{position:absolute;left:0;top:0;bottom:0;background:rgba(216,30,79,.16);border-right:2px dashed rgba(253,164,175,.65);pointer-events:none;transition:width .25s ease}
+.ba-meter-fill{position:relative;height:100%;width:100%;background:var(--accent);box-shadow:0 0 18px var(--accent);transition:background-color .15s}
+.ba-meter-fill::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-45deg,rgba(255,255,255,.16) 0 8px,transparent 8px 16px)}
+.ba-meter-caps{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--muted)}
+.ba-note-box{display:flex;align-items:center;gap:10px;padding:10px 14px;border-left:4px solid var(--accent);background:rgba(255,255,255,.04);font-size:14.5px;color:#ECE7F6;min-height:46px;transition:border-color .2s}
+.ba-note-tag{font-family:var(--f-comic);letter-spacing:.14em;font-size:14px;color:var(--amber);white-space:nowrap}
+.ba-scrub-row{display:flex;align-items:center;gap:12px;margin-top:2px}
+.ba-jump{padding:6px 12px;border:2px solid var(--line);background:rgba(9,9,17,.85);font-family:var(--f-comic);letter-spacing:.12em;font-size:14px;color:var(--off);white-space:nowrap;transition:.15s}
+.ba-jump:hover{border-color:var(--amber);color:var(--amber)}
+.ba-jump.is-after.active{background:var(--green);color:var(--black);border-color:var(--black)}
+.ba-jump.is-before.active{background:var(--crimson);color:var(--off);border-color:var(--black)}
+.ba-slider-wrap{position:relative;flex:1;height:36px;display:flex;align-items:center}
+.ba-range{width:100%;-webkit-appearance:none;appearance:none;height:10px;border:2px solid var(--off);border-radius:99px;background:linear-gradient(90deg,var(--cyan) 0 var(--pct),rgba(243,240,245,.16) var(--pct) 100%);outline:none;cursor:ew-resize}
+.ba-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:30px;height:30px;border-radius:50%;background:var(--amber);border:3px solid var(--black);box-shadow:0 0 0 3px var(--off),0 4px 12px rgba(0,0,0,.6);cursor:grab;transition:transform .15s}
+.ba-range::-webkit-slider-thumb:active{cursor:grabbing;transform:scale(1.12)}
+.ba-range::-moz-range-thumb{width:30px;height:30px;border-radius:50%;background:var(--amber);border:3px solid var(--black);box-shadow:0 0 0 3px var(--off);cursor:grab}
+.ba-foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px;font-size:14px;color:#E2DCEE}
 .ba-hint{font-family:var(--f-comic);letter-spacing:.12em;color:var(--amber);font-size:14px}
+
+/* 30-Second Recruiter Brief Button & Modal */
+.brief-nav-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border:2px solid var(--amber);background:rgba(255,181,71,.12);color:var(--amber);box-shadow:3px 3px 0 var(--violet);font:700 12.5px var(--f-comic);letter-spacing:.1em;white-space:nowrap;transition:transform .15s,background .15s,color .15s}
+.brief-nav-btn:hover{background:var(--amber);color:var(--black);transform:translate(-1px,-1px)}
+.brief-nav-btn svg{width:14px;height:14px;flex:none}
+.qbtn.brief-q svg{color:var(--pink)}.qbtn.brief-q:hover{border-color:var(--pink);background:rgba(255,61,145,.16)}
+#briefModal{position:fixed;inset:0;z-index:520;background:rgba(9,9,17,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:18px}
+#briefModal.open{display:flex;animation:fade .22s}
+.brief-card{position:relative;width:min(760px,100%);max-height:90svh;overflow-y:auto;background:linear-gradient(160deg,#241b47,#100d21);border:4px solid var(--off);box-shadow:10px 10px 0 var(--pink);padding:26px 28px;animation:zoom .26s cubic-bezier(.2,.8,.2,1)}
+.brief-close{position:absolute;top:14px;right:14px;width:40px;height:40px;border:2px solid var(--off);background:rgba(9,9,17,.82);color:var(--off);font-size:24px;display:grid;place-items:center;transition:.15s}
+.brief-close:hover{background:var(--pink);color:var(--black)}
+.brief-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:10px;padding-right:46px}
+.brief-badge{background:var(--amber);color:var(--black);border:2px solid var(--black);padding:3px 11px;font-family:var(--f-comic);letter-spacing:.14em;font-size:15px}
+.brief-avail{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border:1.5px solid rgba(52,211,153,.55);background:rgba(9,9,17,.65);color:#A7F3D0;font-size:12px;font-weight:700}
+.brief-avail i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+.brief-card h3{font-size:clamp(22px,3.2vw,32px);text-transform:uppercase;margin-bottom:6px}
+.brief-lead{color:#DDD7EA;font-size:15px;margin-bottom:16px}
+.brief-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.bkpi{background:rgba(9,9,17,.75);border:2.5px solid var(--off);border-top:5px solid var(--pink);padding:10px 11px}
+.bkpi:nth-child(2){border-top-color:var(--cyan)}.bkpi:nth-child(3){border-top-color:var(--amber)}.bkpi:nth-child(4){border-top-color:var(--green)}
+.bkpi b{display:block;font-family:var(--f-head);font-weight:800;font-size:clamp(18px,2.2vw,24px);line-height:1.05;color:var(--off)}
+.bkpi span{display:block;font-size:12px;color:var(--muted);line-height:1.25;margin-top:4px}
+.brief-sec{margin-bottom:14px}
+.brief-sec-t{font-family:var(--f-comic);letter-spacing:.15em;font-size:14.5px;color:var(--cyan);margin-bottom:7px}
+.brief-pills{display:flex;flex-wrap:wrap;gap:7px}
+.brief-pills span{padding:4px 10px;border:1.5px solid var(--line);background:rgba(9,9,17,.65);font-size:13px;font-weight:700;color:var(--off)}
+.brief-pills.accent span{border-color:var(--violet-soft);color:var(--violet-soft)}
+.brief-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.brief-acts .btn{font-size:16px;padding:10px 16px;min-height:42px}
 
 .mi-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .mi{--a:var(--pink);height:390px;perspective:1200px;cursor:pointer;position:relative}
@@ -607,14 +664,15 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
   .sub{font-size:15px}
 
   .ba-wrap{padding:14px}
-  .ba-stage{height:165px}
-  .ba-layer{padding:12px}
-  .ba-card{max-width:47%}
-  .ba-num{font-size:clamp(24px,7vw,34px)}
-  .ba-lbl{font-size:12.5px;letter-spacing:.08em}
-  .ba-sub{font-size:11.5px}
-  .ba-knob{width:34px;height:34px;font-size:15px}
+  .ba-stage{padding:14px 14px 12px;gap:11px}
+  .ba-num{font-size:clamp(32px,9vw,44px)}
+  .ba-delta{font-size:14px;padding:5px 10px}
+  .ba-note-box{font-size:13px;padding:8px 10px}
+  .ba-scrub-row{gap:8px}
+  .ba-jump{padding:5px 9px;font-size:12.5px}
   .ba-foot{font-size:13px}
+  .brief-card{padding:20px 18px}
+  .brief-kpis{grid-template-columns:1fr 1fr}
 
   .mi-grid{grid-template-columns:1fr}
   .mi{height:415px}
@@ -672,8 +730,16 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
 .rtl .bub.r::after,.rtl .bub.r::before{left:auto;right:var(--tail,calc(100% - 58px))}
 .rtl .scene{left:auto;right:0;border-right:0;border-left:3px solid var(--black)}
 .rtl .pgno{right:auto;left:6px}
-.rtl .ba-stage{direction:ltr!important}
-.rtl .ba-stage *{direction:ltr!important}
+.rtl .ba-stage{text-align:right}
+.rtl .ba-note-box{border-left:0;border-right:4px solid var(--accent)}
+.rtl .ba-meter-ghost{left:auto;right:0;border-right:0;border-left:2px dashed rgba(253,164,175,.65)}
+.rtl .ba-range{background:linear-gradient(270deg,var(--cyan) 0 var(--pct),rgba(243,240,245,.16) var(--pct) 100%)}
+.rtl .ba-num,.rtl .ba-orig,.rtl .ba-delta,.rtl .bkpi b{direction:ltr;unicode-bidi:isolate}
+.rtl .brief-card{text-align:right}
+.rtl .brief-close{right:auto;left:14px}
+.rtl .brief-top{padding-right:0;padding-left:46px}
+@media(max-width:520px){.brief-nav-btn .brief-long{display:none}}
+@media(min-width:521px){.brief-nav-btn .brief-short{display:none}}
 .rtl .stat,.rtl .job-grid .info,.rtl .degree,.rtl .langs,.rtl .cert,.rtl .mi-back,.rtl .nchoice{text-align:right}
 .rtl .cert h4{padding-right:0;padding-left:52px}
 .rtl .cert .seal{right:auto;left:18px}
@@ -707,7 +773,7 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
     <li><a href="#creative" data-s="creative">Creative Side</a></li>
     <li><a href="#contact" data-s="contact">Contact</a></li>
   </ul>
-  <div class="nav-tools"><button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language"><span class="lang-en active">EN</span><i>|</i><span class="lang-ar">عربي</span></button>
+  <div class="nav-tools"><button class="brief-nav-btn" id="briefNavBtn" type="button" aria-label="Open 30-second recruiter summary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span class="brief-long">30s BRIEF</span><span class="brief-short">30s</span></button><button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language"><span class="lang-en active">EN</span><i>|</i><span class="lang-ar">عربي</span></button>
   <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="links" aria-label="Open menu"><span></span><span></span><span></span></button></div>
   <div id="scrollbar"></div>
 </nav>
@@ -748,6 +814,10 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
           <button class="qbtn mail" id="copyEmailBtn" type="button" aria-label="Copy email address Karimhatemalashry@gmail.com">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
             <span id="copyEmailText">Copy Email</span>
+          </button>
+          <button class="qbtn brief-q" id="briefCoverBtn" type="button" aria-label="Open 30-second recruiter summary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>30s Brief</span>
           </button>
         </div>
         <div class="stats" id="stats">
@@ -827,38 +897,54 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
       </div>
     </div>
 
-    <!-- Interactive Before / After Impact Slider -->
-    <div class="panel ba-wrap rv" style="--d:.1">
+    <!-- Live Transformation Scrubber (Impact Simulator) -->
+    <div class="panel ba-wrap rv" id="baWrap" style="--d:.1">
       <div class="ba-top">
-        <div class="ba-title">IMPACT SIMULATOR: BEFORE VS. AFTER</div>
+        <div class="ba-title" id="baTitle">IMPACT SIMULATOR: BEFORE VS. AFTER</div>
         <div class="ba-tabs" role="group" aria-label="Select impact case">
           <button class="ba-tab" type="button" data-ba="0" aria-pressed="true">KANZ CHURN</button>
           <button class="ba-tab" type="button" data-ba="1" aria-pressed="false">TGC HANDLING TIME</button>
         </div>
       </div>
-      <div class="ba-stage" id="baStage" dir="ltr">
-        <div class="ba-layer ba-after">
-          <div class="ba-card">
-            <span class="ba-badge">AFTER</span>
-            <div class="ba-num" id="baAfterNum">27%</div>
-            <div class="ba-lbl" id="baAfterLbl">CHURN RATE</div>
-            <div class="ba-sub" id="baAfterSub">Daily follow-up workflows in 6 months</div>
+      <div class="ba-stage" id="baStage" data-phase="before">
+        <div class="ba-readout">
+          <div class="ba-main-stat">
+            <div class="ba-state-row">
+              <span class="ba-badge" id="baStateBadge">BEFORE</span>
+              <span class="ba-lbl" id="baMetricLbl">CHURN RATE</span>
+            </div>
+            <div class="ba-num-wrap">
+              <div class="ba-num" id="baLiveNum">56%</div>
+              <span class="ba-orig" id="baOrigNum"></span>
+            </div>
+          </div>
+          <div class="ba-delta" id="baDelta">0% CHANGE</div>
+        </div>
+        <div class="ba-meter-box">
+          <div class="ba-meter-track">
+            <div class="ba-meter-ghost" id="baGhost" style="width:100%"></div>
+            <div class="ba-meter-fill" id="baFill" style="width:100%"></div>
+          </div>
+          <div class="ba-meter-caps">
+            <span id="baCapLow">0%</span>
+            <span id="baCapHigh">BASELINE: 56%</span>
           </div>
         </div>
-        <div class="ba-layer ba-before">
-          <div class="ba-card">
-            <span class="ba-badge">BEFORE</span>
-            <div class="ba-num" id="baBeforeNum">56%</div>
-            <div class="ba-lbl" id="baBeforeLbl">CHURN RATE</div>
-            <div class="ba-sub" id="baBeforeSub">High cancellations across 500-1,000 users</div>
-          </div>
+        <div class="ba-note-box">
+          <span class="ba-note-tag" id="baNoteTag">CHALLENGE</span>
+          <span id="baNoteText">High cancellations across 500-1,000 traders and investors.</span>
         </div>
-        <div class="ba-div" aria-hidden="true"><div class="ba-knob">&lsaquo;&rsaquo;</div></div>
-        <input class="ba-range" id="baRange" type="range" min="10" max="90" value="50" aria-label="Drag to compare before and after impact">
+        <div class="ba-scrub-row">
+          <button class="ba-jump is-before active" id="baJumpBefore" type="button">BEFORE</button>
+          <div class="ba-slider-wrap">
+            <input class="ba-range" id="baRange" type="range" min="0" max="100" value="0" aria-label="Drag to transform metric from before to after">
+          </div>
+          <button class="ba-jump is-after" id="baJumpAfter" type="button">AFTER</button>
+        </div>
       </div>
       <div class="ba-foot">
         <span id="baSummary">Cut customer churn from 56% to 27% within six months at KANZ through structured daily retention workflows.</span>
-        <span class="ba-hint">&larr; DRAG SLIDER &rarr;</span>
+        <span class="ba-hint" id="baHint">&larr; DRAG TO TRANSFORM &rarr;</span>
       </div>
     </div>
 
@@ -1082,6 +1168,13 @@ footer{padding:22px 20px 210px;text-align:center;color:var(--muted);font-size:13
   <audio id="bgm" preload="metadata" loop><source src="assets/audio/karim-universe-soundtrack.mp3" type="audio/mpeg"></audio>
 </div>
 
+<div id="briefModal" role="dialog" aria-modal="true" aria-labelledby="briefTitle">
+  <div class="brief-card" id="briefCard">
+    <button class="brief-close" id="briefClose" type="button" aria-label="Close recruiter brief">&times;</button>
+    <div id="briefBody"></div>
+  </div>
+</div>
+
 <div id="lb" role="dialog" aria-modal="true" aria-label="Image viewer">
   <button class="lb-btn lb-close" id="lbClose" type="button" aria-label="Close viewer">&times;</button>
   <button class="lb-btn lb-prev" id="lbPrev" type="button" aria-label="Previous image">&lsaquo;</button>
@@ -1101,6 +1194,13 @@ var $=function(s,r){return (r||document).querySelector(s)};
 var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
 var currentLanguage=window.KARIM_LANG||'en';
+function trackEvent(name,params){
+ try{
+  var p=Object.assign({language:currentLanguage},params||{});
+  if(typeof window.gtag==='function'){window.gtag('event',name,p)}
+  if(typeof window.clarity==='function'){window.clarity('event',name)}
+ }catch(e){}
+}
 
 /* ================= DATA (source of truth: CV) ================= */
 var XP=[
@@ -1159,12 +1259,26 @@ var CATS={
 var ICO={cs:'<path d="M12 21s-7-4.4-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.6-9 9-9 9z"/>',ops:'<path d="M4 6h16M4 12h10M4 18h16"/><circle cx="19" cy="12" r="2"/>',tools:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',ai:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/><circle cx="12" cy="12" r="2.5"/>'};
 
 var BA_CASES=[
- {bNum:'56%',bLbl:'CHURN RATE',bSub:'High cancellations across 500-1,000 users',
-  aNum:'27%',aLbl:'CHURN RATE',aSub:'Daily follow-up workflows in 6 months',
-  sum:'Cut customer churn from 56% to 27% within six months at KANZ through structured daily retention workflows.'},
- {bNum:'8.0h',bLbl:'AVG HANDLING TIME',bSub:'Heavy multi-brand ticket backlog',
-  aNum:'4.9h',aLbl:'AVG HANDLING TIME',aSub:'38.8% faster via streamlined Zendesk triage',
-  sum:'Reduced handling time from 8 hours to 4.9 hours at TGC while maintaining 98% SLA and 88.6% FCR.'}
+ {id:'kanz_churn',from:56,to:27,dec:0,unit:'%',unitAr:'%',max:65,
+  lblEn:'CHURN RATE',lblAr:'معدل فقد العملاء',
+  bNoteEn:'High cancellations (56%) across 500-1,000 traders and investors.',
+  bNoteAr:'معدلات إلغاء مرتفعة (56%) بين 500 إلى 1,000 متداول ومستثمر.',
+  mNoteEn:'Rolled out structured daily follow-up workflows and proactive outreach for disengaged subscribers.',
+  mNoteAr:'تطبيق آليات متابعة يومية منظمة وتواصل استباقي مع المشتركين منخفضي التفاعل.',
+  aNoteEn:'Churn cut to 27% within 6 months while onboarding 20-50 new subscribers monthly.',
+  aNoteAr:'انخفض معدل الفقد إلى 27% خلال 6 أشهر مع تهيئة 20 إلى 50 مشتركاً جديداً شهرياً.',
+  sumEn:'Cut customer churn from 56% to 27% within six months at KANZ through structured daily retention workflows.',
+  sumAr:'خفض معدل فقد العملاء من 56% إلى 27% خلال ستة أشهر في KANZ عبر عمليات يومية منظمة للاحتفاظ بالعملاء.'},
+ {id:'tgc_handling',from:8.0,to:4.9,dec:1,unit:'h',unitAr:' س',max:9.0,
+  lblEn:'AVG HANDLING TIME',lblAr:'متوسط وقت المعالجة',
+  bNoteEn:'Heavy multi-brand ticket backlog averaging 8.0 hours per case.',
+  bNoteAr:'تراكم كبير للتذاكر عبر عدة علامات تجارية بمتوسط 8.0 ساعات للحالة.',
+  mNoteEn:'Standardized Zendesk triage, escalation tracking, and cross-functional documentation.',
+  mNoteAr:'توحيد فرز تذاكر Zendesk ومتابعة التصعيدات وتطوير وضوح التوثيق بين الفرق.',
+  aNoteEn:'Handling time dropped to 4.9h (38.8% faster) with 98% SLA compliance and 88.6% FCR.',
+  aNoteAr:'انخفض وقت المعالجة إلى 4.9 ساعات (أسرع بـ 38.8%) مع التزام SLA بنسبة 98% وFCR بنسبة 88.6%.' ,
+  sumEn:'Reduced handling time from 8 hours to 4.9 hours at TGC while maintaining 98% SLA and 88.6% FCR.',
+  sumAr:'خفض وقت المعالجة من 8 ساعات إلى 4.9 ساعات في TGC مع الحفاظ على التزام SLA بنسبة 98% وFCR بنسبة 88.6%.'}
 ];
 
 var MIS=[
@@ -1220,9 +1334,10 @@ function toast(t,m){var d=document.createElement('div');d.className='toast';d.in
 var copyBtn=$('#copyEmailBtn'),copyTxt=$('#copyEmailText'),emailAddr='Karimhatemalashry@gmail.com';
 copyBtn.addEventListener('click',function(){
  function done(){
-  copyBtn.classList.add('copied');copyTxt.textContent='Copied!';
-  toast('EMAIL COPIED',emailAddr);
-  setTimeout(function(){copyBtn.classList.remove('copied');copyTxt.textContent='Copy Email'},2200);
+  trackEvent('contact_click',{channel:'copy_email'});
+  copyBtn.classList.add('copied');copyTxt.textContent=currentLanguage==='ar'?'تم النسخ!':'Copied!';
+  toast(currentLanguage==='ar'?'تم نسخ البريد':'EMAIL COPIED',emailAddr);
+  setTimeout(function(){copyBtn.classList.remove('copied');copyTxt.textContent=currentLanguage==='ar'?'نسخ البريد الإلكتروني':'Copy Email'},2200);
  }
  if(navigator.clipboard&&navigator.clipboard.writeText){
   navigator.clipboard.writeText(emailAddr).then(done).catch(function(){fallbackCopy()});
@@ -1260,8 +1375,8 @@ function renderJob(i,scrollToCard){
   '<div class="job-nav"><button class="j-arrow" id="prevJob" type="button">'+(currentLanguage==='ar'?'→ السابق':'← PREV')+'</button><span class="j-count">'+(currentLanguage==='ar'?'الدور ':'ROLE ')+'0'+(curJob+1)+' / 0'+XP.length+'</span><button class="j-arrow" id="nextJob" type="button">'+(currentLanguage==='ar'?'التالي ←':'NEXT →')+'</button></div></div>'+
   '<div class="panel met in"><div><div class="met-l">ACHIEVEMENT PANEL</div><div class="burst">'+x.met.map(function(m,k){return '<span class="chip-m" style="--r:'+(k%2?1.2:-1.2)+'deg">'+m+'</span>'}).join('')+'</div></div><div class="tags">'+x.tags.map(function(t){return '<span class="tag">'+t+'</span>'}).join('')+'</div></div>'+
   '</div></div>';
- $('#prevJob').addEventListener('click',function(){renderJob(curJob-1,true)});
- $('#nextJob').addEventListener('click',function(){renderJob(curJob+1,true)});
+ $('#prevJob').addEventListener('click',function(){if(window.playComicSfx)window.playComicSfx('tab');renderJob(curJob-1,true)});
+ $('#nextJob').addEventListener('click',function(){if(window.playComicSfx)window.playComicSfx('tab');renderJob(curJob+1,true)});
  var tg=$('#expToggle');
  if(tg){tg.addEventListener('click',function(){var ul=$('#achList'),open=ul.classList.toggle('expanded');tg.setAttribute('aria-expanded',open);tg.textContent=currentLanguage==='ar'?(open?'- عرض أقل':'+ عرض جميع الإنجازات ('+x.ach.length+')'):(open?'- SHOW LESS':'+ SHOW ALL '+x.ach.length+' ACHIEVEMENTS')})}
  if(scrollToCard){
@@ -1269,7 +1384,7 @@ function renderJob(i,scrollToCard){
   if(rect.top<76){window.scrollTo({top:window.scrollY+rect.top-76,behavior:RM?'auto':'smooth'})}
  }
 }
-$$('.j-tab').forEach(function(b){b.addEventListener('click',function(){renderJob(+b.dataset.ji,false)})});
+$$('.j-tab').forEach(function(b){b.addEventListener('click',function(){if(window.playComicSfx)window.playComicSfx('tab');renderJob(+b.dataset.ji,false)})});
 renderJob(0,false);
 addEventListener('load',function(){
  XP.forEach(function(x){var im=new Image();im.src=imgSrc(x.img)});
@@ -1282,20 +1397,131 @@ $('#skillGrid').innerHTML=['cs','ops','tools','ai'].map(function(c,i){
   CATS[c][1].map(function(s,j){return '<span class="chip'+(c==='tools'?' exact':'')+'" style="--k:'+j+'">'+s.replace(/&/g,'&amp;')+'</span>'}).join('')+'</div></div>';
 }).join('');
 
-/* ================= BEFORE / AFTER IMPACT SLIDER ================= */
-var baStage=$('#baStage'),baRange=$('#baRange');
-baRange.addEventListener('input',function(){baStage.style.setProperty('--pos',baRange.value+'%')});
+/* ================= LIVE TRANSFORMATION SCRUBBER (IMPACT SIMULATOR) ================= */
+var baStage=$('#baStage'),baRange=$('#baRange'),baStateBadge=$('#baStateBadge'),baMetricLbl=$('#baMetricLbl');
+var baLiveNum=$('#baLiveNum'),baOrigNum=$('#baOrigNum'),baDelta=$('#baDelta'),baGhost=$('#baGhost'),baFill=$('#baFill');
+var baCapLow=$('#baCapLow'),baCapHigh=$('#baCapHigh'),baNoteTag=$('#baNoteTag'),baNoteText=$('#baNoteText');
+var baJumpBefore=$('#baJumpBefore'),baJumpAfter=$('#baJumpAfter'),baSummary=$('#baSummary');
+var curBaIdx=0,baDemoRaf=null,baUserInteracted=false,baDemoPlayed=false,baTracked={};
+
+function lerpColor(t){
+ /* Smooth crimson (#D81E4F) -> amber (#FFB547) -> cyan/green (#34D399) */
+ var r,g,b;
+ if(t<0.5){
+  var k=t*2;
+  r=Math.round(216+(255-216)*k);
+  g=Math.round(30+(181-30)*k);
+  b=Math.round(79+(71-79)*k);
+ }else{
+  var k=(t-0.5)*2;
+  r=Math.round(255+(52-255)*k);
+  g=Math.round(181+(211-181)*k);
+  b=Math.round(71+(153-71)*k);
+ }
+ return 'rgb('+r+','+g+','+b+')';
+}
+function fmtBaVal(v,c,ar){
+ return v.toFixed(c.dec)+(ar?c.unitAr:c.unit);
+}
+function updateBaUI(rawVal){
+ var p=clamp(+rawVal,0,100),t=p/100,c=BA_CASES[curBaIdx],ar=currentLanguage==='ar';
+ var curVal=c.from+(c.to-c.from)*t;
+ var dropPct=((c.from-curVal)/c.from)*100;
+ var accent=lerpColor(t);
+
+ baRange.value=Math.round(p);
+ baStage.style.setProperty('--accent',accent);
+ baStage.style.setProperty('--pct',p.toFixed(1)+'%');
+ baLiveNum.textContent=fmtBaVal(curVal,c,ar);
+ baMetricLbl.textContent=ar?c.lblAr:c.lblEn;
+ baOrigNum.textContent=p>8?(ar?('بدلاً من '+fmtBaVal(c.from,c,true)):('FROM '+fmtBaVal(c.from,c,false))):'';
+
+ var fillW=clamp((curVal/c.max)*100,6,100);
+ var ghostW=clamp((c.from/c.max)*100,10,100);
+ baFill.style.width=fillW.toFixed(1)+'%';
+ baGhost.style.width=ghostW.toFixed(1)+'%';
+ baCapLow.textContent=fmtBaVal(0,c,ar);
+ baCapHigh.textContent=(ar?'نقطة البداية: ':'BASELINE: ')+fmtBaVal(c.from,c,ar);
+
+ if(p<30){
+  baStage.dataset.phase='before';
+  baStateBadge.textContent=ar?'قبل':'BEFORE';
+  baNoteTag.textContent=ar?'التحدي':'CHALLENGE';
+  baNoteText.textContent=ar?c.bNoteAr:c.bNoteEn;
+ }else if(p<80){
+  baStage.dataset.phase='mid';
+  baStateBadge.textContent=ar?'أثناء التحسين':'IN PROGRESS';
+  baNoteTag.textContent=ar?'الإجراء':'ACTION';
+  baNoteText.textContent=ar?c.mNoteAr:c.mNoteEn;
+ }else{
+  baStage.dataset.phase='after';
+  baStateBadge.textContent=ar?'بعد':'AFTER';
+  baNoteTag.textContent=ar?'النتيجة':'RESULT';
+  baNoteText.textContent=ar?c.aNoteAr:c.aNoteEn;
+ }
+
+ if(p<=2){
+  baDelta.textContent=ar?'الوضع الأولي':'BASELINE STATE';
+ }else if(c.id==='kanz_churn'){
+  var pts=Math.round(c.from-curVal);
+  baDelta.textContent=ar?('-'+pts+' نقطة ('+Math.round(dropPct)+'% تحسن)'):('-'+pts+' PTS ('+Math.round(dropPct)+'% DROP)');
+ }else{
+  baDelta.textContent=ar?('أسرع بنسبة '+dropPct.toFixed(1)+'%'):(dropPct.toFixed(1)+'% FASTER');
+ }
+
+ baJumpBefore.textContent=ar?'قبل':'BEFORE';
+ baJumpAfter.textContent=ar?'بعد':'AFTER';
+ baJumpBefore.classList.toggle('active',p<30);
+ baJumpAfter.classList.toggle('active',p>=80);
+ baSummary.textContent=ar?c.sumAr:c.sumEn;
+}
+function stopBaDemo(){
+ if(baDemoRaf){cancelAnimationFrame(baDemoRaf);baDemoRaf=null}
+}
+function animateBaTo(targetP,dur){
+ stopBaDemo();
+ if(RM){updateBaUI(targetP);return}
+ var startP=+baRange.value,t0=null;
+ function step(ts){
+  if(!t0)t0=ts;
+  var k=clamp((ts-t0)/dur,0,1),e=1-Math.pow(1-k,3);
+  updateBaUI(startP+(targetP-startP)*e);
+  if(k<1)baDemoRaf=requestAnimationFrame(step);
+  else baDemoRaf=null;
+ }
+ baDemoRaf=requestAnimationFrame(step);
+}
+function onBaUserInteract(){
+ baUserInteracted=true;
+ stopBaDemo();
+ if(window.hideBuddyBubble)window.hideBuddyBubble();
+ var cid=BA_CASES[curBaIdx].id;
+ if(!baTracked[cid]){baTracked[cid]=true;trackEvent('impact_scrubber_use',{case_name:cid})}
+}
+baRange.addEventListener('input',function(){onBaUserInteract();updateBaUI(baRange.value)});
+baJumpBefore.addEventListener('click',function(){onBaUserInteract();if(window.playComicSfx)window.playComicSfx('tab');animateBaTo(0,550)});
+baJumpAfter.addEventListener('click',function(){onBaUserInteract();if(window.playComicSfx)window.playComicSfx('tab');animateBaTo(100,650)});
 $$('.ba-tab').forEach(function(btn){
  btn.addEventListener('click',function(){
-  var c=BA_CASES[+btn.dataset.ba];
+  onBaUserInteract();
+  curBaIdx=+btn.dataset.ba;
   $$('.ba-tab').forEach(function(b){b.setAttribute('aria-pressed',b===btn?'true':'false')});
-  $('#baBeforeNum').textContent=c.bNum;$('#baBeforeLbl').textContent=c.bLbl;$('#baBeforeSub').textContent=c.bSub;
-  $('#baAfterNum').textContent=c.aNum;$('#baAfterLbl').textContent=c.aLbl;$('#baAfterSub').textContent=c.aSub;
-  $('#baSummary').textContent=c.sum;
-  baRange.value=50;baStage.style.setProperty('--pos','50%');
-  if(currentLanguage==='ar'&&typeof translateStatic==='function')translateStatic();
+  if(window.playComicSfx)window.playComicSfx('tab');
+  updateBaUI(0);
+  setTimeout(function(){animateBaTo(100,950)},60);
  });
 });
+updateBaUI(0);
+var baIo=new IntersectionObserver(function(es){
+ es.forEach(function(e){
+  if(e.isIntersecting&&!baDemoPlayed&&!baUserInteracted){
+   baDemoPlayed=true;
+   baIo.unobserve(e.target);
+   setTimeout(function(){if(!baUserInteracted)animateBaTo(100,1500)},350);
+  }
+ });
+},{threshold:0.45});
+baIo.observe($('#baWrap'));
 
 /* ================= RENDER INTERACTIVE FLIP MISSIONS + UNLOCK COUNTER ================= */
 $('#missionsGrid').innerHTML=MIS.map(function(m,i){
@@ -1326,6 +1552,8 @@ function markUnlocked(idx,card){
   updateMissionCounter();
   if(count===MIS.length&&!allNotified){
    allNotified=true;
+   if(window.playComicSfx)window.playComicSfx('unlock');
+   trackEvent('all_missions_unlocked',{unlocked_count:count});
    toast(currentLanguage==='ar'?'تم فتح الملف الكامل':'FULL DOSSIER UNLOCKED',currentLanguage==='ar'?'لقد استكشفت جميع المهام الست!':'You inspected all 6 career missions!');
   }
  }
@@ -1334,7 +1562,11 @@ $$('.mi').forEach(function(card){
  function flip(){
   var on=card.classList.toggle('flipped');
   card.setAttribute('aria-pressed',on);
-  if(on)markUnlocked(+card.dataset.mi,card);
+  if(window.playComicSfx)window.playComicSfx('flip');
+  if(on){
+   markUnlocked(+card.dataset.mi,card);
+   trackEvent('mission_flip',{mission_id:MIS[+card.dataset.mi][0],unlocked_count:Object.keys(unlocked).length});
+  }
  }
  card.addEventListener('click',flip);
  card.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();flip()}});
@@ -1475,7 +1707,30 @@ function play(){
  if(pr&&pr.then)pr.then(go).catch(function(){M.on=false;ui();toast('AUDIO','Press the sound button again to allow playback.')});else go();
 }
 function pause(){fadeTo(0,450,function(){bgm.pause();M.on=false;ui()})}
-pPlay.addEventListener('click',function(){ensureAudioContext();M.resume=false;M.on?pause():play()});
+pPlay.addEventListener('click',function(){ensureAudioContext();M.resume=false;var nextOn=!M.on;trackEvent('music_toggle',{state:nextOn?'on':'off'});M.on?pause():play()});
+window.playComicSfx=function(type){
+ if(RM||!(window.isBuddyVoiceOn&&window.isBuddyVoiceOn()))return;
+ var ctx=ensureAudioContext();
+ if(!ctx||ctx.state==='suspended')return;
+ try{
+  var now=ctx.currentTime;
+  function tone(f1,f2,dur,gainVal,wave,delay){
+   var osc=ctx.createOscillator(),g=ctx.createGain();
+   osc.type=wave||'triangle';
+   osc.frequency.setValueAtTime(f1,now+(delay||0));
+   osc.frequency.exponentialRampToValueAtTime(f2,now+(delay||0)+dur);
+   g.gain.setValueAtTime(0.0001,now+(delay||0));
+   g.gain.linearRampToValueAtTime(gainVal,now+(delay||0)+0.012);
+   g.gain.exponentialRampToValueAtTime(0.0001,now+(delay||0)+dur);
+   osc.connect(g);g.connect(ctx.destination);
+   osc.start(now+(delay||0));osc.stop(now+(delay||0)+dur+0.02);
+  }
+  if(type==='flip'){tone(240,520,0.09,0.065,'triangle',0);tone(480,680,0.06,0.04,'sine',0.035)}
+  else if(type==='tab'){tone(360,580,0.055,0.05,'triangle',0)}
+  else if(type==='open'){tone(460,740,0.1,0.055,'sine',0)}
+  else if(type==='unlock'){tone(523,523,0.11,0.06,'triangle',0);tone(659,659,0.11,0.06,'triangle',0.08);tone(784,880,0.18,0.07,'triangle',0.16)}
+ }catch(e){}
+};
 pMute.addEventListener('click',function(){M.muted=!M.muted;bgm.muted=M.muted;persist();ui()});
 vol.addEventListener('input',function(){M.vol=vol.value/100;if(M.on&&!M.muted){cancelAnimationFrame(M.fade);bgm.volume=M.voiceDucked?M.vol*.2:M.vol}if(M.muted&&M.vol>0){M.muted=false;bgm.muted=false}persist();ui()});
 function duck(){if(M.on){M.resume=true;fadeTo(0,450,function(){bgm.pause();M.on=false;ui()})}}
@@ -1526,6 +1781,7 @@ function stopVideo(){if(!activeV)return;var card=activeV.card,v=activeV.el;activ
 $$('.vc').forEach(function(card){
  var d=VIDEOS[+card.dataset.i],media=$('.vm',card);
  $('.play',card).addEventListener('click',function(){
+  trackEvent('video_preview_play',{video_title:d.t});
   stopVideo();stopBuddyVoice();
   var v=document.createElement('video');v.src=d.v;v.poster=d.p;v.controls=true;v.playsInline=true;v.preload='auto';v.setAttribute('playsinline','');v.setAttribute('aria-label','Preview: '+d.t);
   media.appendChild(v);$('.play',card).style.display='none';$('.vbadge',card).style.display='none';var vt=$('.vt',card);if(vt)vt.style.display='none';activeV={card:card,el:v};
@@ -1611,6 +1867,8 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
   clearTimeout(hideBubTimer);
   buddy.classList.remove('show-bub');
  }
+ window.hideBuddyBubble=hideBubble;
+ window.isBuddyVoiceOn=function(){return !!voiceOn};
  function scheduleBubbleHide(ms){
   clearTimeout(hideBubTimer);
   if(!ms||ms<=0)return;
@@ -1932,7 +2190,9 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
 
  function setVoiceState(on){
   if(on)ensureAudioContext();
+  var prev=voiceOn;
   voiceOn=!!on;
+  if(prev!==voiceOn)trackEvent('voice_toggle',{state:voiceOn?'on':'off'});
   buddy.classList.toggle('voice-on',voiceOn);
   bVoice.setAttribute('aria-pressed',voiceOn?'true':'false');
   updateVoiceLabel();
@@ -2203,6 +2463,21 @@ Object.assign(AR_UI,{
  'Hey, I’m Karim! Grab the CV right here, or scroll down to open the story.':'أهلاً بيك في عالمي! أنا كريم. لو مستعجل، السي في قدامك أهو، بس لو عايز تعرف الحكاية بجد... انزل معايا وخلينا نبدأ!'
 });
 Object.assign(AR_UI,{
+ 'KARIM ALASHRY':'كريم العشري',
+ 'KARIM':'كريم',
+ 'ALASHRY':'العشري',
+ 'YRS':'سنوات',
+ 'THE':'',
+ 'EDUCATION &':'التعليم',
+ 'LANGUAGES.':'واللغات.',
+ 'RESUME.':'السيرة الذاتية.',
+ 'CONTINUED...':'قريباً...',
+ 'FINAL SCENE':'المشهد الأخير',
+ '“Every story creates a different version of you.”':'«كل حكاية بتخلق نسخة مختلفة منك.»',
+ '© 2026 Karim Alashry · The Story Behind the Character · Issue #01':'© 2026 كريم العشري · الحكاية وراء الشخصية · العدد #01',
+ '30s BRIEF':'ملخص سريع',
+ '30s':'ملخص',
+ '30s Brief':'ملخص 30 ثانية',
  'KANZ CHURN':'معدل فقد عملاء KANZ',
  'TGC HANDLING TIME':'وقت المعالجة في TGC',
  'AVG HANDLING TIME':'متوسط وقت المعالجة',
@@ -2215,21 +2490,60 @@ Object.assign(AR_UI,{
  'These are career achievements from my roles at KANZ and TGC, not independent client projects.':'هذه إنجازات مهنية من أدواري في KANZ وTGC وليست مشاريع مستقلة لعملاء.',
  'Bachelor of Arts in Sociology':'ليسانس آداب علم الاجتماع',
  'Mansoura University · Egypt · 2021':'جامعة المنصورة · مصر · 2021',
- '← DRAG SLIDER →':'← حرّك الشريط →'
+ '← DRAG TO TRANSFORM →':'← اسحب لترى التحول →',
+ '← TAP TO FLIP BACK':'اضغط للعودة ←',
+ 'ISSUE 01':'المحطة 01','ISSUE 02':'المحطة 02','ISSUE 03':'المحطة 03','ISSUE 04':'المحطة 04','ISSUE 05':'المحطة 05',
+ 'EXPERIENCE 01 • UK | Remote':'الخبرة 01 • المملكة المتحدة | عن بُعد',
+ 'EXPERIENCE 02 • Saudi Arabia | Remote':'الخبرة 02 • السعودية | عن بُعد',
+ 'EXPERIENCE 03 • Saudi Arabia | Remote':'الخبرة 03 • السعودية | عن بُعد',
+ 'EXPERIENCE 04 • Saudi Arabia | Remote':'الخبرة 04 • السعودية | عن بُعد',
+ 'EXPERIENCE 05 • Kuwait':'الخبرة 05 • الكويت',
+ 'Mentored 15+ agents':'تدريب أكثر من 15 موظفاً',
+ '-22 pts churn':'خفض فقد العملاء 22 نقطة',
+ '+40% documentation clarity':'+40% وضوح التوثيق',
+ '15+ agents mentored':'تدريب 15+ موظفاً',
+ '35% faster resolution':'حل أسرع بنسبة 35%',
+ 'CX Management':'إدارة تجربة العملاء',
+ 'Ranked #1 among agents':'المركز الأول بين الموظفين',
+ '#1 among agents':'المركز #1 بين الموظفين',
+ '30,836+ inquiries':'30,836+ استفساراً',
+ '77.1% CSAT':'77.1% CSAT',
+ '8h → 4.9h handling':'المعالجة: 8س ← 4.9س',
+ '88.6% FCR':'88.6% حل من أول تواصل',
+ '98% SLA':'98% التزام SLA',
+ '99.2% CRM accuracy':'99.2% دقة CRM',
+ 'Arabic / English':'عربي / إنجليزي',
+ '~250 inquiries a day':'~250 استفساراً يومياً',
+ '~250 inquiries / day':'~250 استفساراً / يوم',
+ '9 channels':'9 قنوات تواصل',
+ '88% FCR':'88% حل من أول تواصل',
+ '4/5 CSAT':'تقييم 4/5 CSAT',
+ 'Omnichannel Support':'دعم متعدد القنوات',
+ 'Complaint Management':'إدارة الشكاوى',
+ '+25% satisfaction':'+25% رضا العملاء',
+ '+30% first-call resolution':'+30% حل من أول مكالمة',
+ '-40% response time':'-40% وقت الاستجابة',
+ 'Complaint Resolution':'حل الشكاوى',
+ 'CRM Tools':'أدوات CRM',
+ 'New-Hire Training':'تدريب الموظفين الجدد',
+ 'Cross-team Coordination':'التنسيق بين الفرق',
+ 'Rap Project':'مشروع راب'
 });
 function translateStatic(){
  var root=document.body,walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),node;
  while((node=walker.nextNode())){
-  if(node.parentElement&&(node.parentElement.closest('#buddy')||node.parentElement.closest('#player')||node.parentElement.closest('#langToggle')||node.parentElement.closest('#hud')))continue;
+  if(node.parentElement&&(node.parentElement.closest('#buddy')||node.parentElement.closest('#player')||node.parentElement.closest('#langToggle')||node.parentElement.closest('#hud')||node.parentElement.closest('#baStage')||node.parentElement.closest('#baSummary')||node.parentElement.closest('#briefModal')))continue;
   if(!node.__enText)node.__enText=node.nodeValue;
   var original=node.__enText.trim();
   if(!original)continue;
-  var translated=AR_UI[original];
-  if(currentLanguage==='ar'&&translated){
-   var lead=node.__enText.match(/^\s*/)[0],trail=node.__enText.match(/\s*$/)[0],nextText=lead+translated+trail;
+  var hasTr=Object.prototype.hasOwnProperty.call(AR_UI,original);
+  if(currentLanguage==='ar'&&hasTr){
+   var translated=AR_UI[original];
+   var lead=node.__enText.match(/^\s*/)[0],trail=node.__enText.match(/\s*$/)[0];
+   var nextText=translated===''?'':(lead+translated+trail);
    if(node.nodeValue!==nextText)node.nodeValue=nextText;
   }else if(currentLanguage==='en'){
-   node.nodeValue=node.__enText;
+   if(node.nodeValue!==node.__enText)node.nodeValue=node.__enText;
   }
  }
  var navMap=currentLanguage==='ar'?['الرئيسية','الرحلة','المهارات','الإنجازات','التعليم','الجانب الإبداعي','تواصل']:['Home','Journey','Superpowers','Missions','Education','Creative Side','Contact'];
@@ -2246,28 +2560,98 @@ function translateStatic(){
  $$('a[download]').forEach(function(a){a.setAttribute('href','Karim_Alashry_CV.pdf')});
  var hudEl=$('#hud');if(hudEl){hudEl.setAttribute('dir',currentLanguage==='ar'?'rtl':'ltr')}
 }
-function setLanguage(l){
+function setLanguage(l,fromUser){
  currentLanguage=l==='ar'?'ar':'en';
  window.KARIM_LANG=currentLanguage;
  try{sessionStorage.setItem('karim-language',currentLanguage)}catch(e){}
+ if(fromUser)trackEvent('language_switch',{to_lang:currentLanguage});
  renderJob(curJob,false);
  updateMissionCounter();
+ updateBaUI(baRange.value);
+ if(typeof renderBrief==='function')renderBrief();
  translateStatic();
  if(typeof ui==='function')ui();
  if(window.setMiniLanguage)window.setMiniLanguage(currentLanguage);
  lastPage=-1;
  if(typeof frame==='function')frame();
- $('#baStage').setAttribute('dir','ltr');
 }
-$('#langToggle').addEventListener('click',function(){setLanguage(currentLanguage==='en'?'ar':'en')});
-setLanguage(currentLanguage);
+/* ================= 30-SECOND RECRUITER QUICK BRIEF MODAL ================= */
+var briefModal=$('#briefModal'),briefBody=$('#briefBody'),briefClose=$('#briefClose'),briefLastF=null;
+function renderBrief(){
+ if(!briefBody)return;
+ var ar=currentLanguage==='ar';
+ briefBody.innerHTML=
+  '<div class="brief-top"><span class="brief-badge">'+(ar?'ملخص الـ 30 ثانية لمسؤول التوظيف':'30-SECOND RECRUITER BRIEF')+'</span>'+
+  '<span class="brief-avail"><i aria-hidden="true"></i>'+(ar?'متاح للعمل عن بُعد • مصر / الخليج / عالمياً':'OPEN TO REMOTE • EGYPT / GCC / GLOBAL')+'</span></div>'+
+  '<h3 id="briefTitle">'+(ar?'كريم العشري | قيادة نجاح وتجربة العملاء':'KARIM ALASHRY | CS &amp; CX LEADERSHIP')+'</h3>'+
+  '<p class="brief-lead">'+(ar?'أكثر من 5 سنوات من الخبرة في قيادة فرق الدعم، خفض فقد العملاء (Churn)، وبناء عمليات خدمة عملاء عالية الجودة في بريطانيا والسعودية والكويت.':'5+ years driving customer retention, churn reduction, team coaching, and high-volume omnichannel support operations across UK, Saudi Arabia, and Kuwait.')+'</p>'+
+  '<div class="brief-kpis">'+
+   '<div class="bkpi"><b>5+ '+(ar?'سنوات':'YRS')+'</b><span>'+(ar?'خبرة CS وCX وعمليات الدعم':'CS, CX &amp; Support Ops')+'</span></div>'+
+   '<div class="bkpi"><b>56% &rarr; 27%</b><span>'+(ar?'خفض فقد العملاء في KANZ خلال 6 أشهر':'Churn Cut in 6 Months (KANZ)')+'</span></div>'+
+   '<div class="bkpi"><b>30,836+</b><span>'+(ar?'استفساراً بالمركز #1 بين الموظفين':'Inquiries Solved (#1 Agent)')+'</span></div>'+
+   '<div class="bkpi"><b>15+</b><span>'+(ar?'موظفاً تم تدريبهم وحل أسرع 35%':'Agents Mentored, 35% Faster')+'</span></div>'+
+  '</div>'+
+  '<div class="brief-sec"><div class="brief-sec-t">'+(ar?'الأدوار المستهدفة':'TARGET ROLES')+'</div><div class="brief-pills">'+
+   (ar?['مدير تجربة العملاء (CX)','مدير نجاح العملاء (CSM)','قائد فريق خدمة العملاء','مشرف مركز اتصال','إدارة عمليات الدعم']:['Customer Experience Manager','Customer Success Manager','Customer Support Team Leader','Contact Center Supervisor','Support Operations Lead']).map(function(r){return '<span>'+r+'</span>'}).join('')+
+  '</div></div>'+
+  '<div class="brief-sec"><div class="brief-sec-t">'+(ar?'الأدوات واللغات':'CORE STACK &amp; LANGUAGES')+'</div><div class="brief-pills accent">'+
+   ['Zendesk','Avaya','DelightChat','WATI','Circle.so','CRM / SLA / CSAT / FCR','Generative AI',ar?'العربية (اللغة الأم)':'Arabic (Native)',ar?'الإنجليزية (B2)':'English (B2)'].map(function(s){return '<span>'+s+'</span>'}).join('')+
+  '</div></div>'+
+  '<div class="brief-acts">'+
+   '<a class="btn primary" href="Karim_Alashry_CV.pdf" download="Karim_Alashry_CV.pdf" data-track-cv="brief_modal">'+(ar?'حمّل السيرة الذاتية (PDF)':'DOWNLOAD CV (PDF)')+'</a>'+
+   '<a class="btn amber" href="https://wa.me/201050956809" target="_blank" rel="noopener noreferrer" data-track-ct="whatsapp_brief">'+(ar?'تواصل عبر WhatsApp':'WHATSAPP ME')+'</a>'+
+   '<a class="btn ghost" href="https://www.linkedin.com/in/karimalashry/" target="_blank" rel="noopener noreferrer" data-track-ct="linkedin_brief">LinkedIn</a>'+
+   '<button class="btn ghost" id="briefCopyBtn" type="button">'+(ar?'نسخ الإيميل':'COPY EMAIL')+'</button>'+
+  '</div>';
+ var bCopy=$('#briefCopyBtn',briefBody);
+ if(bCopy){bCopy.addEventListener('click',function(){copyBtn.click()})}
+}
+function openBrief(){
+ renderBrief();
+ briefLastF=document.activeElement;
+ briefModal.classList.add('open');
+ document.body.classList.add('locked');
+ if(window.hideBuddyBubble)window.hideBuddyBubble();
+ if(window.playComicSfx)window.playComicSfx('open');
+ trackEvent('recruiter_brief_open',{});
+ briefClose.focus();
+}
+function closeBrief(){
+ briefModal.classList.remove('open');
+ document.body.classList.remove('locked');
+ if(briefLastF)briefLastF.focus();
+}
+$('#briefNavBtn').addEventListener('click',openBrief);
+$('#briefCoverBtn').addEventListener('click',openBrief);
+briefClose.addEventListener('click',closeBrief);
+briefModal.addEventListener('click',function(e){if(e.target===briefModal)closeBrief()});
+document.addEventListener('keydown',function(e){if(briefModal.classList.contains('open')&&e.key==='Escape')closeBrief()});
+$('#langToggle').addEventListener('click',function(){if(window.playComicSfx)window.playComicSfx('tab');setLanguage(currentLanguage==='en'?'ar':'en',true)});
+setLanguage(currentLanguage,false);
+
+/* ================= ANALYTICS CLICK DELEGATION (CV & CONTACT) ================= */
+document.addEventListener('click',function(e){
+ var a=e.target.closest('a');
+ if(!a)return;
+ var href=a.getAttribute('href')||'';
+ if(a.hasAttribute('download')||href.indexOf('Karim_Alashry_CV.pdf')!==-1){
+  trackEvent('cv_download',{location:a.dataset.trackCv||(a.closest('section')?a.closest('section').id:'page')});
+ }else if(href.indexOf('wa.me')!==-1){
+  trackEvent('contact_click',{channel:'whatsapp'});
+ }else if(href.indexOf('linkedin.com')!==-1){
+  trackEvent('contact_click',{channel:'linkedin'});
+ }else if(href.indexOf('mailto:')===0){
+  trackEvent('contact_click',{channel:'email'});
+ }else if(href.indexOf('instagram.com')!==-1){
+  trackEvent('contact_click',{channel:'instagram'});
+ }
+});
 var translationObserver=new MutationObserver(function(){if(currentLanguage==='ar')translateStatic()});
 translationObserver.observe($('#jobStage'),{childList:true,subtree:true,characterData:true});
 translationObserver.observe($('#skillGrid'),{childList:true,subtree:true,characterData:true});
 translationObserver.observe($('#missionsGrid'),{childList:true,subtree:true,characterData:true});
 translationObserver.observe($('#certs'),{childList:true,subtree:true,characterData:true});
 translationObserver.observe($('#vids'),{childList:true,subtree:true,characterData:true});
-translationObserver.observe($('#baStage'),{childList:true,subtree:true,characterData:true});
 translationObserver.observe($('#gallery'),{childList:true,subtree:true,characterData:true});
 
 /* hero portrait easter egg */
@@ -2308,7 +2692,7 @@ function show(i){
   lbCap.textContent=currentLanguage==='ar'?(AR_UI[PHOTOS[li]]||PHOTOS[li]):PHOTOS[li];
  }
 }
-function openLb(i,mode){lbMode=mode||'photo';lastF=document.activeElement;show(i);lb.classList.add('open');document.body.classList.add('locked');$('#lbClose').focus()}
+function openLb(i,mode){lbMode=mode||'photo';lastF=document.activeElement;show(i);lb.classList.add('open');document.body.classList.add('locked');if(window.playComicSfx)window.playComicSfx('open');if(lbMode==='cert')trackEvent('certificate_view',{cert_name:CERTS[li][0]});$('#lbClose').focus()}
 function closeLb(){lb.classList.remove('open');document.body.classList.remove('locked');if(lastF)lastF.focus()}
 $$('.shot').forEach(function(b){b.addEventListener('click',function(){openLb(+b.dataset.i,'photo')})});
 $$('.cert-btn').forEach(function(b){b.addEventListener('click',function(){openLb(+b.dataset.ci,'cert')})});
